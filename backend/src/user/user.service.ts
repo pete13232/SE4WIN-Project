@@ -3,13 +3,13 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
-export class UsersService {
+export class UserService {
   create(createUserInput: CreateUserInput) {
     return 'This action adds a new user';
   }
 
   findAll() {
-    return `This action returns all users`;
+    return `This action returns all user`;
   }
 
   findOne(id: number) {
