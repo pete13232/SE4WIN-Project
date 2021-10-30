@@ -1,0 +1,108 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Order {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Product {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Category {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type User {
+  id: Int!
+  username: String!
+  password: String!
+  firstname: String!
+  lastname: String!
+  address: String!
+  phoneNumber: String!
+  email: String!
+  roleId: Int!
+}
+
+type Query {
+  order(id: Int!): Order!
+  product(id: Int!): Product!
+  category(id: Int!): Category!
+  user(id: Int!): User!
+}
+
+type Mutation {
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  removeOrder(id: Int!): Order!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  removeProduct(id: Int!): Product!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): Category!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+}
+
+input CreateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateUserInput {
+  username: String!
+  password: String!
+  firstname: String!
+  lastname: String!
+  address: String!
+  phoneNumber: String!
+  email: String!
+  roleId: Int!
+}
+
+input UpdateUserInput {
+  username: String
+  password: String
+  firstname: String
+  lastname: String
+  address: String
+  phoneNumber: String
+  email: String
+  roleId: Int
+  id: Int!
+}
