@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ForbiddenError } from 'apollo-server-errors';
-import { DeleteResult, Repository } from 'typeorm';
+import { CategoryService } from 'src/category/category.service';
+import { Category } from 'src/category/entities/category.entity';
+import { Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
@@ -10,7 +12,10 @@ import { Product } from './entities/product.entity';
 export class ProductService {
   constructor(
     @InjectRepository(Product)
-    private productRepository: Repository<Product>, // private readonly categoryService: CategoryService,
+    private productRepository: Repository<Product>,
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>,
+    private categoryService: CategoryService,
   ) {}
   async create(createProductInput: CreateProductInput): Promise<Product> {
     const product = await this.productRepository.findOne({
@@ -21,14 +26,17 @@ export class ProductService {
     }
 
     const newProduct = this.productRepository.create(createProductInput);
-    // await this.productRepository.save(newProduct);
 
-    // const category = this.categoryRepository.findOne({
-    //   where: { id: createProductInput.category },
-    //   relations: ['product'],
-    // });
+    const category = await this.categoryRepository.findOne({
+      where: { id: createProductInput.categoryId },
+      relations: ['product'],
+    });
+    category.product.push(newProduct);
 
-    return await this.productRepository.save(newProduct);
+    await this.productRepository.save(newProduct);
+    await this.categoryRepository.save(category);
+
+    return newProduct;
   }
 
   async findAll(): Promise<Product[]> {
@@ -52,11 +60,11 @@ export class ProductService {
   }
 
   async remove(id: number): Promise<string> {
+    const product = await this.productRepository.findOne(id);
+    if (!product) {
+      throw new ForbiddenError('Product not found.');
+    }
     await this.productRepository.delete(id);
     return 'Delete success!';
   }
-
-  // getCategory(cateId: number): Promise<Category> {
-  //   return this.categoryService.findOne(cateId);
-  // }
 }

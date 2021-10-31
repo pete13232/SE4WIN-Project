@@ -14,6 +14,6 @@ export class Category {
   name: string;
 
   @OneToMany(() => Product, (product) => product.category, { eager: true })
-  @Field(() => [Category])
+  @Field(() => [Product])
   product: Product[];
 }

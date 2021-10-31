@@ -15,15 +15,15 @@ export class OrderService {
 
   async create(createOrderInput: CreateOrderInput): Promise<Order> {
     const newOrder = this.orderRepository.create(createOrderInput);
-    return this.orderRepository.save(newOrder);
+    return await this.orderRepository.save(newOrder);
   }
 
   async findAll(): Promise<Order[]> {
-    return this.orderRepository.find();
+    return await this.orderRepository.find();
   }
 
   async findOne(id: number): Promise<Order> {
-    return this.orderRepository.findOneOrFail(id);
+    return await this.orderRepository.findOneOrFail(id);
   }
 
   async update(id: number, updateOrderInput: UpdateOrderInput): Promise<Order> {
@@ -32,7 +32,7 @@ export class OrderService {
       throw new ForbiddenError('Order does not existed.');
     }
     const updatedOrder = Object.assign(order, updateOrderInput);
-    return this.orderRepository.save(updatedOrder);
+    return await this.orderRepository.save(updatedOrder);
   }
 
   async remove(id: number): Promise<string> {

@@ -33,10 +33,8 @@ export class UserResolver {
     return this.userService.update(updateUserInput.id, updateUserInput);
   }
 
-  @Mutation(() => User)
-  removeUser(
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<DeleteResult> {
+  @Mutation(() => String)
+  removeUser(@Args('id', { type: () => Int }) id: number): Promise<string> {
     return this.userService.remove(id);
   }
 }
