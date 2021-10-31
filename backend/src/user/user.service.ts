@@ -25,11 +25,11 @@ export class UserService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
   async findOne(id: number): Promise<User> {
-    return this.userRepository.findOneOrFail(id);
+    return await this.userRepository.findOneOrFail(id);
   }
 
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
@@ -42,6 +42,6 @@ export class UserService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.userRepository.delete(id);
   }
 }

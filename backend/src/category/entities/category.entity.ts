@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from 'src/product/entities/product.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -10,5 +11,9 @@ export class Category {
 
   @Column()
   @Field()
-  name: string;
+  cateName: string;
+
+  @OneToMany(() => Product, (product) => product.category, { eager: true })
+  @Field(() => [Category])
+  product: Product[];
 }

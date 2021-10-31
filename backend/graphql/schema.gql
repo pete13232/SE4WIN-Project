@@ -25,14 +25,18 @@ enum Order_Status {
   UNSUCCESS
 }
 
-type Product {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type Category {
+  id: Int!
+  cateName: String!
+  product: [Category!]!
 }
 
-type Category {
-  cateID: Int!
-  cateName: String!
+type Product {
+  id: Int!
+  name: String!
+  desc: String
+  price: Int!
+  picURL: String
 }
 
 type User {
@@ -56,7 +60,9 @@ enum Role {
 
 type Query {
   order(id: Int!): Order!
+  products: [Product!]!
   product(id: Int!): Product!
+  categories: [Category!]!
   category(id: Int!): Category!
   users: [User!]!
   user(id: Int!): User!
@@ -101,13 +107,19 @@ input UpdateOrderInput {
 }
 
 input CreateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
+  categoryId: Int!
+  desc: String
+  price: Int!
+  picURL: String
 }
 
 input UpdateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  name: String
+  categoryId: Int
+  desc: String
+  price: Int
+  picURL: String
   id: Int!
 }
 
