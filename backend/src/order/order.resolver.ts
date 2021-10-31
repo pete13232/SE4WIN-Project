@@ -9,17 +9,19 @@ export class OrderResolver {
   constructor(private readonly orderService: OrderService) {}
 
   @Mutation(() => Order)
-  createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
+  createOrder(
+    @Args('createOrderInput') createOrderInput: CreateOrderInput,
+  ): Promise<Order> {
     return this.orderService.create(createOrderInput);
   }
 
   @Query(() => [Order], { name: 'order' })
-  findAll() {
+  findAll(): Promise<Order[]> {
     return this.orderService.findAll();
   }
 
   @Query(() => Order, { name: 'order' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => Int }) id: number): Promise<Order> {
     return this.orderService.findOne(id);
   }
 
