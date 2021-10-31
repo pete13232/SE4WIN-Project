@@ -24,7 +24,7 @@ export class CategoryService {
     return this.categoryRepository.save(newCategory);
   }
 
-  async findAll(): Promise<Category[]>{
+  async findAll(): Promise<Category[]> {
     return this.categoryRepository.find();
   }
 

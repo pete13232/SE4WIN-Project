@@ -11,7 +11,7 @@ export class Category {
 
   @Column()
   @Field()
-  cateName: string;
+  name: string;
 
   @OneToMany(() => Product, (product) => product.category, { eager: true })
   @Field(() => [Category])
