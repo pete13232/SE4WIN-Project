@@ -32,9 +32,12 @@ export class CategoryService {
     return this.categoryRepository.findOneOrFail(id);
   }
 
-  async update(id: number, updateCategoryInput: UpdateCategoryInput): Promise<Category> {
+  async update(
+    id: number,
+    updateCategoryInput: UpdateCategoryInput,
+  ): Promise<Category> {
     const category = await this.categoryRepository.findOne(id);
-    if(!category){
+    if (!category) {
       throw new ForbiddenError('Category does not existed.');
     }
     const updatedCategory = Object.assign(category, updateCategoryInput);

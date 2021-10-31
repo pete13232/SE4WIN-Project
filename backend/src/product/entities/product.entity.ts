@@ -10,6 +10,7 @@ export class Product {
   id: number;
 
   @ManyToOne(() => Category, (category) => category.product)
+  @Field(() => Category)
   category: Category;
 
   @Column()
