@@ -23,7 +23,7 @@ registerEnumType(Order_Status, {
 export class Order {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
-  orderID: number;
+  id: number;
 
   @Column()
   @Field(() => Int)
@@ -39,11 +39,11 @@ export class Order {
 
   @Column()
   @Field()
-  orderTimestamp: Date;
+  timestamp: Date;
 
   @Column()
   @Field(() => Float)
-  orderPrice: number;
+  price: number;
 
   @Column()
   @Field()
@@ -51,5 +51,5 @@ export class Order {
 
   @Column({ type: 'enum', enum: Order_Status, default: Order_Status.AWAITING })
   @Field(() => Order_Status)
-  orderStatus: Order_Status;
+  status: Order_Status;
 }
