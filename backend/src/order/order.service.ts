@@ -12,17 +12,17 @@ export class OrderService {
     private orderRepository: Repository<Order>,
   ) {}
 
-  create(createOrderInput: CreateOrderInput) {
+  async create(createOrderInput: CreateOrderInput): Promise<Order>{   
     const newOrder = this.orderRepository.create(createOrderInput);
     return this.orderRepository.save(newOrder);
   }
 
-  findAll() {
-    return `This action returns all order`;
+  async findAll(): Promise<Order[]>{
+    return this.orderRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  async findOne(id: number): Promise<Order> {
+    return this.orderRepository.findOneOrFail(id);
   }
 
   update(id: number, updateOrderInput: UpdateOrderInput) {
