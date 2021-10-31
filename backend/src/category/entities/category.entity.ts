@@ -6,9 +6,9 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class Category {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
-  cateID: number;
+  id: number;
 
   @Column()
   @Field()
-  cateName: string;
+  name: string;
 }
