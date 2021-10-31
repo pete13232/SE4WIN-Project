@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ForbiddenError } from 'apollo-server-errors';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
@@ -51,9 +51,9 @@ export class ProductService {
     return await this.productRepository.save(updated);
   }
 
-  async remove(id: number): Promise<string> {
-    await this.productRepository.delete(id);
-    return 'Delete success!';
+  async remove(id: number): Promise<DeleteResult> {
+    // await this.productRepository.delete(id);
+    return await this.productRepository.delete(id);
   }
 
   // getCategory(cateId: number): Promise<Category> {
