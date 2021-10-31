@@ -3,27 +3,24 @@ import { Order_Status } from '../entities/order.entity';
 
 @InputType()
 export class CreateOrderInput {
-  @Field((type) => Int)
-  orderID: number;
-
-  @Field((type) => Int)
+  @Field(() => Int)
   userID: number;
 
-  @Field((type) => Int)
+  @Field(() => Int)
   prodID: number;
 
-  @Field((type) => Int)
+  @Field(() => Int)
   prodAmount: number;
 
   @Field()
-  orderTimestamp: Date;
+  timestamp: Date;
 
-  @Field((type) => Float)
-  orderPrice: number;
+  @Field(() => Float)
+  price: number;
 
   @Field()
   receiptURL: string;
 
   @Field()
-  orderStatus: Order_Status;
+  status: Order_Status;
 }
