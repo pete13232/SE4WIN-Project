@@ -26,12 +26,14 @@ export class OrderResolver {
   }
 
   @Mutation(() => Order)
-  updateOrder(@Args('updateOrderInput') updateOrderInput: UpdateOrderInput) {
+  updateOrder(
+    @Args('updateOrderInput') updateOrderInput: UpdateOrderInput,
+  ): Promise<Order> {
     return this.orderService.update(updateOrderInput.id, updateOrderInput);
   }
 
   @Mutation(() => Order)
-  removeOrder(@Args('id', { type: () => Int }) id: number) {
+  removeOrder(@Args('id', { type: () => Int }) id: number): Promise<String> {
     return this.orderService.remove(id);
   }
 }
