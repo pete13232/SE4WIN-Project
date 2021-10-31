@@ -1,26 +1,45 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+export enum Role {
+  CUSTOMER = 'customer',
+  ADMIN = 'admin',
+}
+
+registerEnumType(Role, {
+  name: 'Role',
+});
 
 @Entity()
 @ObjectType()
 export class User {
+  // TODO change to uuid in future
+  // @PrimaryGeneratedColumn('uuid')
+  // @Field()
+  // id: string;
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id: number;
 
-  @Column({ length: 500 })
+  @Column()
   @Field()
   username: string;
 
-  @Column({ length: 500 })
+  @Column()
   @Field()
   password: string;
 
-  @Column({ length: 500 })
+  @Column()
   @Field()
   firstname: string;
 
-  @Column({ length: 500 })
+  @Column()
   @Field()
   lastname: string;
 
@@ -36,11 +55,19 @@ export class User {
   @Field()
   email: string;
 
-  @Column('int')
-  @Field(() => Int)
-  roleId: number;
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.CUSTOMER,
+  })
+  @Field(() => Role)
+  role: Role;
 
-  // @Column()
-  // @Field()
-  // dateCreated: Date;
+  @CreateDateColumn()
+  @Field()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  @Field()
+  updated_at: Date;
 }

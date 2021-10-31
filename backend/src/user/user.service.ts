@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ForbiddenError } from 'apollo-server-errors';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -11,21 +12,33 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
-  create(createUserInput: CreateUserInput) {
+
+  async create(createUserInput: CreateUserInput): Promise<User> {
+    const user = await this.userRepository.findOne({
+      username: createUserInput.username,
+    });
+    if (user) {
+      throw new ForbiddenError('User already existed.');
+    }
     const newUser = this.userRepository.create(createUserInput);
-    return this.userRepository.save(newUser);
+    return await this.userRepository.save(newUser);
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<User> {
+    return this.userRepository.findOneOrFail(id);
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
+    const user = await this.userRepository.findOne(id);
+    if (!user) {
+      throw new ForbiddenError('User not found.');
+    }
+    const updated = Object.assign(user, updateUserInput);
+    return await this.userRepository.save(updated);
   }
 
   remove(id: number) {
