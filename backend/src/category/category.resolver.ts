@@ -28,7 +28,7 @@ export class CategoryResolver {
   @Mutation(() => Category)
   updateCategory(
     @Args('updateCategoryInput') updateCategoryInput: UpdateCategoryInput,
-  ) {
+  ): Promise<Category> {
     return this.categoryService.update(
       updateCategoryInput.id,
       updateCategoryInput,
@@ -36,7 +36,7 @@ export class CategoryResolver {
   }
 
   @Mutation(() => Category)
-  removeCategory(@Args('id', { type: () => Int }) id: number) {
+  removeCategory(@Args('id', { type: () => Int }) id: number): Promise<string> {
     return this.categoryService.remove(id);
   }
 }

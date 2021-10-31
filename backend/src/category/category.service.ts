@@ -32,11 +32,17 @@ export class CategoryService {
     return this.categoryRepository.findOneOrFail(id);
   }
 
-  update(id: number, updateCategoryInput: UpdateCategoryInput) {
-    return `This action updates a #${id} category`;
+  async update(id: number, updateCategoryInput: UpdateCategoryInput): Promise<Category> {
+    const category = await this.categoryRepository.findOne(id);
+    if(!category){
+      throw new ForbiddenError('Category does not existed.');
+    }
+    const updatedCategory = Object.assign(category, updateCategoryInput);
+    return await this.categoryRepository.save(updatedCategory);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: number): Promise<string> {
+    await this.categoryRepository.delete(id);
+    return 'Delete success';
   }
 }
