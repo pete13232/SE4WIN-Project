@@ -1,6 +1,6 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { type } from 'os';
-import { Column, Double, Entity, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 enum Order_Status {
   awaiting,
@@ -30,10 +30,10 @@ export class Order {
 
   @Column()
   @Field()
-  orderTimestamp: Timestamp;
+  orderTimestamp: Date;
 
   @Column()
-  @Field(type => Double)
+  @Field(type => Float)
   orderPrice: number;
 
   @Column()
