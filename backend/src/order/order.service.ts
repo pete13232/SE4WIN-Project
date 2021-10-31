@@ -9,8 +9,8 @@ import { Repository } from 'typeorm';
 export class OrderService {
   constructor(
     @InjectRepository(Order)
-    private orderRepository: Repository<Order>
-    ) {}  
+    private orderRepository: Repository<Order>,
+  ) {}
 
   create(createOrderInput: CreateOrderInput) {
     const newOrder = this.orderRepository.create(createOrderInput);

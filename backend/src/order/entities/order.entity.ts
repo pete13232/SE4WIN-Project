@@ -1,12 +1,22 @@
-import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
+import {
+  ObjectType,
+  Field,
+  Int,
+  Float,
+  registerEnumType,
+} from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-enum Order_Status {
-  awaiting,
-  pending,
-  success,
-  unsuccess
+export enum Order_Status {
+  AWAITING = 'awaiting',
+  PENDING = 'pending',
+  SUCCESS = 'success',
+  UNSUCCESS = 'unsuccess',
 }
+
+registerEnumType(Order_Status, {
+  name: 'Order_Status',
+});
 
 @Entity()
 @ObjectType()
@@ -39,7 +49,7 @@ export class Order {
   @Field()
   receiptURL: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: Order_Status, default: Order_Status.AWAITING })
   @Field(() => Order_Status)
   orderStatus: Order_Status;
 }

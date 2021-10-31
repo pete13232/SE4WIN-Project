@@ -1,35 +1,29 @@
 import { InputType, Int, Field, Float } from '@nestjs/graphql';
-
-enum Order_Status {
-  awaiting,
-  pending,
-  success,
-  unsuccess
-}
+import { Order_Status } from '../entities/order.entity';
 
 @InputType()
 export class CreateOrderInput {
-  @Field(type => Int)
+  @Field((type) => Int)
   orderID: number;
 
-  @Field(type => Int)
+  @Field((type) => Int)
   userID: number;
 
-  @Field(type => Int)
+  @Field((type) => Int)
   prodID: number;
 
-  @Field(type => Int)
+  @Field((type) => Int)
   prodAmount: number;
 
   @Field()
   orderTimestamp: Date;
 
-  @Field(type => Float)
+  @Field((type) => Float)
   orderPrice: number;
 
   @Field()
   receiptURL: string;
 
-  @Field(type => Order_Status)
+  @Field()
   orderStatus: Order_Status;
 }
