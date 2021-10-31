@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.Navbar {
+  width: 1320 px;
+  height: 86 px;
+  color: #FF6600;
+}

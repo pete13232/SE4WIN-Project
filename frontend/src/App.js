@@ -1,11 +1,10 @@
-import { Link, Route } from "react-router-dom";
+
 import NavbarBootstrap from "./components/NavbarBootstrap";
+import "bootstrap/dist/css/bootstrap.css";
 function App() {
   return (
     <div>
-      <Route path="/">
         <NavbarBootstrap />
-      </Route>
     </div>
   );
 }
