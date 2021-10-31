@@ -51,9 +51,9 @@ export class ProductService {
     return await this.productRepository.save(updated);
   }
 
-  async remove(id: number): Promise<DeleteResult> {
-    // await this.productRepository.delete(id);
-    return await this.productRepository.delete(id);
+  async remove(id: number): Promise<string> {
+    await this.productRepository.delete(id);
+    return 'Delete success!';
   }
 
   // getCategory(cateId: number): Promise<Category> {

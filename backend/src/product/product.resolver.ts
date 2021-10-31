@@ -36,10 +36,8 @@ export class ProductResolver {
     );
   }
 
-  @Mutation(() => DeleteResult.toString)
-  removeProduct(
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<DeleteResult> {
+  @Mutation(() => String)
+  removeProduct(@Args('id', { type: () => Int }) id: number): Promise<string> {
     return this.productService.remove(id);
   }
 }
