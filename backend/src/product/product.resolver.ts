@@ -3,7 +3,6 @@ import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
-import { DeleteResult } from 'typeorm';
 
 @Resolver(() => Product)
 export class ProductResolver {
