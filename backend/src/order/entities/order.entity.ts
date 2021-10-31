@@ -1,5 +1,4 @@
 import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
-import { type } from 'os';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 enum Order_Status {
@@ -13,19 +12,19 @@ enum Order_Status {
 @ObjectType()
 export class Order {
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
+  @Field(() => Int)
   orderID: number;
 
   @Column()
-  @Field(type => Int)
+  @Field(() => Int)
   userID: number;
 
   @Column()
-  @Field(type => Int)
+  @Field(() => Int)
   prodID: number;
 
   @Column()
-  @Field(type => Int)
+  @Field(() => Int)
   prodAmount: number;
 
   @Column()
@@ -33,7 +32,7 @@ export class Order {
   orderTimestamp: Date;
 
   @Column()
-  @Field(type => Float)
+  @Field(() => Float)
   orderPrice: number;
 
   @Column()
@@ -41,6 +40,6 @@ export class Order {
   receiptURL: string;
 
   @Column()
-  @Field(type => Order_Status)
+  @Field(() => Order_Status)
   orderStatus: Order_Status;
 }

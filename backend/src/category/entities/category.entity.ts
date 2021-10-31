@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @ObjectType()
 export class Category {
   @PrimaryGeneratedColumn()
-  @Field(type => Int)
+  @Field(() => Int)
   cateID: number;
 
   @Column()
