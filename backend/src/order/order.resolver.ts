@@ -33,7 +33,7 @@ export class OrderResolver {
   }
 
   @Mutation(() => Order)
-  removeOrder(@Args('id', { type: () => Int }) id: number): Promise<String> {
+  removeOrder(@Args('id', { type: () => Int }) id: number): Promise<string> {
     return this.orderService.remove(id);
   }
 }
