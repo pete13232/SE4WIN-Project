@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
+import { Order } from './entities/order.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class OrderService {
+  constructor(
+    @InjectRepository(Order)
+    private orderRepository: Repository<Order>
+    ) {}  
+
   create(createOrderInput: CreateOrderInput) {
-    return 'This action adds a new order';
+    const newOrder = this.orderRepository.create(createOrderInput);
+    return this.orderRepository.save(newOrder);
   }
 
   findAll() {
