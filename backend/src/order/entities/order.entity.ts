@@ -40,7 +40,7 @@ export class Order {
   @Field()
   receiptURL: string;
 
-  @Column('int')
-  @Field(type => Int)
+  @Column()
+  @Field(type => Order_Status)
   orderStatus: Order_Status;
 }
