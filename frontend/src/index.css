@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 body {
   margin: 0;
@@ -7,47 +7,47 @@ body {
     sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   /* font-weight: bold; */
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .Navbar {
   /* width: 1320 px;
   height: 86 px; */
-  color: #FF6600;
-  background-color: #FF6600;
+  color: #ff6600;
+  background-color: #ff6600;
 }
 
-.Navbar a{
+.Navbar a {
   text-decoration: none;
 }
 
 /* brand */
-body h1{ 
+body h1 {
   color: white;
   font-size: 32px;
   font-weight: bold;
 }
 
 /* Navbar head */
-body h2{
+body h2 {
   color: white;
   font-size: 18px;
   font-weight: bold;
 }
 
-body h3{
+body h3 {
   color: #000000;
   opacity: 50%;
   font-size: 18px;
 }
 
-body h4{
+body h4 {
   color: #000000;
   font-size: 14px;
 }
@@ -57,11 +57,24 @@ body h4{
   height: 145px ;
 } */
 
-.category img{
-  max-width: 100%;
+.category img {
+  /* max-width: 100%;
   width: auto;
-  height: auto;
+  height: auto; */
+  min-width: 220px;
+  max-width: 220px;
+  min-height: 168px;
+  max-height: 168px;
+  border: 1px solid;
 }
+
+/* .category h4 {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  width: 100%;
+  color: white;
+} */
 
 .space-sm {
   margin-top: 12px;
@@ -71,6 +84,14 @@ body h4{
   margin-top: 30px;
 }
 
-.footer-line{
-  border-top: 3px solid #FF6600;
+.footer-line {
+  border-top: 3px solid #ff6600;
+}
+
+.product-items img {
+  display: block;
+  min-height: 168px;
+  max-height: 168px;
+  /* width: auto; */
+  height: auto;
 }
