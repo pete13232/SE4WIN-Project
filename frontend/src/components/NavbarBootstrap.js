@@ -31,7 +31,7 @@ const NavbarBootstrap = () => {
       </Col>
       <Col md={1} className="d-flex justify-content-center">
         <a href="#">
-          <h2>Order</h2>
+          <h2>Home</h2>
         </a>
       </Col>
       <Col md={1} className="d-flex justify-content-center">

@@ -27,69 +27,85 @@ const Product = () => {
           {/* <Button variant="outline-success">Search</Button> */}
         </Form>
       </div>
-      <div className="product-items mt-2 mb-5 px-4">
+      <div className="product-items mt-2">
         <Row>
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://media.istockphoto.com/photos/programming-code-abstract-technology-background-of-software-developer-picture-id1224500457?b=1&k=20&m=1224500457&s=170667a&w=0&h=OOPEMFamnZo63_2t_W40mYSfU1WrFAHHZRBgNN-GSgI="
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>
@@ -97,66 +113,82 @@ const Product = () => {
 
         <Row className="mt-2">
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>
           <Col md={3}>
-            <Card style={{ padding: 20 }}>
-              <Card.Body>
-                <Card.Img
-                  variant="top"
-                  src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"
-                />
+            <Card>
+              <Card.Body style={{ padding: 0 }}>
+                <div className="product-background">
+                  <Card.Img
+                    variant="top"
+                    src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"
+                  />
+                </div>
                 <br />
-                <Card.Title>Some title</Card.Title>
-                <Card.Title>Our daily news to learn while reading</Card.Title>
-                <Card.Link href="##" target="_blank">
+                <Card.Title className="product-name">
+                  Keychron K2 Wireless Mechanical Keyboard
+                </Card.Title>
+                <Card.Title className="price mt-5 pe-3">$69</Card.Title>
+                {/* <Card.Link href="##" target="_blank">
                   <Button variant="warning">Read more</Button>
-                </Card.Link>
+                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>

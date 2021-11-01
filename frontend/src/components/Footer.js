@@ -2,7 +2,7 @@ import { Container, Col, Row, Image, Carousel } from "react-bootstrap";
 
 const Footer = () => {
   return (
-    <div className="footer-line">
+    <div className="footer-line mt-5">
       <Row className="px-3 py-3">
         <Col md={5}>
           <h4>Contact us: 087-xxxxxxx</h4>

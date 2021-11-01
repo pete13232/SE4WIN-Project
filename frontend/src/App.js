@@ -11,7 +11,7 @@ function App() {
         <NavbarBootstrap />
         <Category />
         <Product />
-        <Footer/>
+        <Footer />
       </Container>
     </div>
   );
