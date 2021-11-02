@@ -16,15 +16,19 @@ code {
     monospace;
 }
 
-.Navbar {
+.NavbarA {
   /* width: 1320 px;
   height: 86 px; */
   color: #ff6600;
   background-color: #ff6600;
+  padding-top: 15px!important;
+  padding-bottom: 15px!important;
 }
 
-.Navbar a {
-  text-decoration: none;
+.NavbarB {
+  background-color:BLACK;
+  padding-top: 15px!important;
+  padding-bottom: 15px!important;
 }
 
 /* brand */
@@ -130,4 +134,9 @@ body h4 {
 
 .product-name {
   padding-left: 10px;
+}
+
+.vl {
+  border-left: 1px solid grey;
+  height: 43px;
 }
