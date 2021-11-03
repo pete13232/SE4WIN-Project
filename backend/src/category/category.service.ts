@@ -14,32 +14,40 @@ export class CategoryService {
   ) {}
 
   async create(createCategoryInput: CreateCategoryInput): Promise<Category> {
+    //Check duplicate
     const category = await this.categoryRepository.findOne({
       name: createCategoryInput.name,
     });
     if (category) {
       throw new ForbiddenError('Category already existed.');
     }
+
     const newCategory = this.categoryRepository.create(createCategoryInput);
     return this.categoryRepository.save(newCategory);
   }
 
   async findAll(): Promise<Category[]> {
-    return this.categoryRepository.find();
+    const result = await this.categoryRepository.find();
+    console.log(result.length);
+
+    return result;
   }
 
   async findOne(id: number): Promise<Category> {
-    return this.categoryRepository.findOneOrFail(id);
+    return await this.categoryRepository.findOneOrFail(id);
   }
 
   async update(
     id: number,
     updateCategoryInput: UpdateCategoryInput,
   ): Promise<Category> {
+    //Check is it havd in db?
     const category = await this.categoryRepository.findOne(id);
     if (!category) {
       throw new ForbiddenError('Category does not existed.');
     }
+
+    //Copy from update to old one
     const updatedCategory = Object.assign(category, updateCategoryInput);
     return await this.categoryRepository.save(updatedCategory);
   }
