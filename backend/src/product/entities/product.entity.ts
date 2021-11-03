@@ -1,6 +1,15 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { Category } from 'src/category/entities/category.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Order } from 'src/order/entities/order.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -21,11 +30,23 @@ export class Product {
   @Field({ nullable: true })
   desc?: string;
 
-  @Column('int')
-  @Field(() => Int)
+  @Column('float')
+  @Field(() => Float)
   price: number;
 
   @Column({ nullable: true })
   @Field({ nullable: true })
   picURL?: string;
+
+  @CreateDateColumn()
+  @Field()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  @Field()
+  updated_at: Date;
+
+  @OneToMany(() => Order, (order) => order.user, { eager: true })
+  @Field(() => [Order])
+  order: Order[];
 }

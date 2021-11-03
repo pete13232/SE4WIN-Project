@@ -1,8 +1,10 @@
 import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Order } from 'src/order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -70,4 +72,8 @@ export class User {
   @UpdateDateColumn()
   @Field()
   updated_at: Date;
+
+  @OneToMany(() => Order, (order) => order.user, { eager: true })
+  @Field(() => [Order])
+  order: Order[];
 }

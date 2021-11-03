@@ -5,7 +5,16 @@ import {
   Float,
   registerEnumType,
 } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Product } from 'src/product/entities/product.entity';
+import { User } from 'src/user/entities/user.entity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 export enum Order_Status {
   AWAITING = 'awaiting',
@@ -25,25 +34,21 @@ export class Order {
   @Field(() => Int)
   id: number;
 
-  @Column()
-  @Field(() => Int)
-  userID: number;
+  @ManyToOne(() => User, (user) => user.order)
+  @Field(() => User)
+  user: User;
 
-  @Column()
-  @Field(() => Int)
-  prodID: number;
+  @ManyToOne(() => Product, (product) => product.order)
+  @Field(() => Product)
+  product: Product;
 
   @Column()
   @Field(() => Int)
   prodAmount: number;
 
-  @Column()
-  @Field()
-  timestamp: Date;
-
-  @Column()
+  @Column('float')
   @Field(() => Float)
-  price: number;
+  totalPrice: number;
 
   @Column()
   @Field()
@@ -52,4 +57,12 @@ export class Order {
   @Column({ type: 'enum', enum: Order_Status, default: Order_Status.AWAITING })
   @Field(() => Order_Status)
   status: Order_Status;
+
+  @CreateDateColumn()
+  @Field()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  @Field()
+  updated_at: Date;
 }
