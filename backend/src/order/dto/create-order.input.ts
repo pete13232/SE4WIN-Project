@@ -1,26 +1,19 @@
-import { InputType, Int, Field, Float } from '@nestjs/graphql';
-import { Order_Status } from '../entities/order.entity';
+import { InputType, Int, Field } from '@nestjs/graphql';
+import { IsNumber } from 'class-validator';
 
 @InputType()
 export class CreateOrderInput {
+  @IsNumber()
   @Field(() => Int)
-  userID: number;
-
+  userId: number;
+  @IsNumber()
   @Field(() => Int)
-  prodID: number;
+  productId: number;
 
+  @IsNumber()
   @Field(() => Int)
   prodAmount: number;
 
-  @Field()
-  timestamp: Date;
-
-  @Field(() => Float)
-  price: number;
-
-  @Field()
+  @Field({ nullable: true })
   receiptURL: string;
-
-  @Field()
-  status: Order_Status;
 }

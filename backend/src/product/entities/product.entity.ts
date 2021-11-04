@@ -46,7 +46,7 @@ export class Product {
   @Field()
   updated_at: Date;
 
-  @OneToMany(() => Order, (order) => order.user, { eager: true })
+  @OneToMany(() => Order, (order) => order.product, { eager: true })
   @Field(() => [Order])
   order: Order[];
 }

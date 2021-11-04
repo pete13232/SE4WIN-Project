@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ForbiddenError } from 'apollo-server-errors';
-import { CategoryService } from 'src/category/category.service';
 import { Category } from 'src/category/entities/category.entity';
 import { Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
@@ -15,7 +14,6 @@ export class ProductService {
     private productRepository: Repository<Product>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
-    private categoryService: CategoryService,
   ) {}
   async create(createProductInput: CreateProductInput): Promise<Product> {
     const product = await this.productRepository.findOne({
@@ -24,15 +22,20 @@ export class ProductService {
     if (product) {
       throw new ForbiddenError('Product already existed.');
     }
-
+    //Create new product
     const newProduct = this.productRepository.create(createProductInput);
 
+    //Add category relation
     const category = await this.categoryRepository.findOne({
       where: { id: createProductInput.categoryId },
       relations: ['product'],
     });
+    if (!category) {
+      throw new ForbiddenError('Category not found');
+    }
     category.product.push(newProduct);
 
+    //Save to db
     await this.productRepository.save(newProduct);
     await this.categoryRepository.save(category);
 
@@ -40,11 +43,16 @@ export class ProductService {
   }
 
   async findAll(): Promise<Product[]> {
-    return await this.productRepository.find();
+    return await this.productRepository.find({
+      relations: ['category', 'order'],
+    });
   }
 
   async findOne(id: number): Promise<Product> {
-    return await this.productRepository.findOneOrFail(id);
+    return await this.productRepository.findOneOrFail({
+      where: { id: id },
+      relations: ['category', 'order'],
+    });
   }
 
   async update(
@@ -52,10 +60,12 @@ export class ProductService {
     updateProductInput: UpdateProductInput,
   ): Promise<Product> {
     const product = await this.productRepository.findOne(id);
+
     if (!product) {
       throw new ForbiddenError('Product not found.');
     }
     const updated = Object.assign(product, updateProductInput);
+
     return await this.productRepository.save(updated);
   }
 
@@ -64,6 +74,7 @@ export class ProductService {
     if (!product) {
       throw new ForbiddenError('Product not found.');
     }
+
     await this.productRepository.delete(id);
     return 'Delete success!';
   }

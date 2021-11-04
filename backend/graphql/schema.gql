@@ -2,43 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Order {
+type Category {
   id: Int!
-  userID: Int!
-  prodID: Int!
-  prodAmount: Int!
-  timestamp: DateTime!
-  price: Float!
-  receiptURL: String!
-  status: Order_Status!
+  name: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  product: [Product!]!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-
-enum Order_Status {
-  AWAITING
-  PENDING
-  SUCCESS
-  UNSUCCESS
-}
-
-type Product {
-  id: Int!
-  category: Category!
-  name: String!
-  desc: String
-  price: Int!
-  picURL: String
-}
-
-type Category {
-  id: Int!
-  name: String!
-  product: [Product!]!
-}
 
 type User {
   id: Int!
@@ -52,6 +27,7 @@ type User {
   role: Role!
   created_at: DateTime!
   updated_at: DateTime!
+  order: [Order!]!
 }
 
 enum Role {
@@ -59,7 +35,39 @@ enum Role {
   ADMIN
 }
 
+type Order {
+  id: Int!
+  user: User!
+  product: Product!
+  prodAmount: Int!
+  totalPrice: Float!
+  receiptURL: String!
+  status: Order_Status!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum Order_Status {
+  AWAITING
+  PENDING
+  SUCCESS
+  UNSUCCESS
+}
+
+type Product {
+  id: Int!
+  category: Category!
+  name: String!
+  desc: String
+  price: Float!
+  picURL: String
+  created_at: DateTime!
+  updated_at: DateTime!
+  order: [Order!]!
+}
+
 type Query {
+  orders: [Order!]!
   order(id: Int!): Order!
   products: [Product!]!
   product(id: Int!): Product!
@@ -85,23 +93,17 @@ type Mutation {
 }
 
 input CreateOrderInput {
-  userID: Int!
-  prodID: Int!
+  userId: Int!
+  productId: Int!
   prodAmount: Int!
-  timestamp: DateTime!
-  price: Float!
-  receiptURL: String!
-  status: String!
+  receiptURL: String
 }
 
 input UpdateOrderInput {
-  userID: Int
-  prodID: Int
+  userId: Int
+  productId: Int
   prodAmount: Int
-  timestamp: DateTime
-  price: Float
   receiptURL: String
-  status: String
   id: Int!
 }
 
@@ -109,7 +111,7 @@ input CreateProductInput {
   name: String!
   categoryId: Int!
   desc: String
-  price: Int!
+  price: Float!
   picURL: String
 }
 
@@ -117,7 +119,7 @@ input UpdateProductInput {
   name: String
   categoryId: Int
   desc: String
-  price: Int
+  price: Float
   picURL: String
   id: Int!
 }
@@ -139,7 +141,7 @@ input CreateUserInput {
   address: String!
   phoneNumber: String!
   email: String!
-  roleId: Role!
+  role: Role!
 }
 
 input UpdateUserInput {
@@ -150,6 +152,6 @@ input UpdateUserInput {
   address: String
   phoneNumber: String
   email: String
-  roleId: Role
+  role: Role
   id: Int!
 }
