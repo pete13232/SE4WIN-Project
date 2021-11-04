@@ -8,6 +8,7 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+import "./style.css";
 
 const NavbarBootstrap = ({ themeStatus }) => {
   return (
@@ -16,7 +17,7 @@ const NavbarBootstrap = ({ themeStatus }) => {
         <Navbar collapseOnSelect expand="lg" className="NavbarB">
           <Col md={2}>
             <Navbar.Brand className="px-3 d-flex justify-content-center ">
-              <h1 style={{color: "#ff6600"}}>FAPP</h1>
+              <h1 style={{ color: "#ff6600" }}>FAPP</h1>
             </Navbar.Brand>
           </Col>
           <Col>
