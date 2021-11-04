@@ -1,8 +1,4 @@
 import { useState } from "react";
-import NavbarBootstrap from "./components/NavbarBootstrap";
-import Category from "./components/Category";
-import Product from "./components/Product";
-import Footer from "./components/Footer";
 import { Container } from "react-bootstrap";
 import { Route, Link, Switch } from "react-router-dom";
 import {
@@ -13,6 +9,8 @@ import {
   from,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import HomeContainer from "./container/HomeContainer/index.js";
+import LoginContainer from "./container/LoginContainer/index.js";
 
 /* ----------------- Graphql Setup ----------------------- */
 
@@ -40,27 +38,7 @@ function App() {
 
   return (
     <div>
-      <Container className="px-0" style={{ background: "#EAEAEA" }}>
-        <Switch>
-          <Route exact path="/">
-            <NavbarBootstrap themeStatus = {false}/>
-            <Category />
-            <Product />
-            <Footer />
-          </Route>
-          <Route exact path="/signup">
-            <NavbarBootstrap themeStatus = {true}/>
-            <h1>signup</h1>
-          </Route>
-          <Route exact path="/login">
-            <NavbarBootstrap themeStatus = {true}/>
-            <h1>login</h1>
-          </Route>
-          <Route path="/:id">
-            <h1>No page</h1>
-          </Route>
-        </Switch>
-      </Container>
+      <HomeContainer/>
     </div>
   );
 }
