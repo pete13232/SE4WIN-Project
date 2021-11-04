@@ -1,0 +1,21 @@
+.NavbarA {
+    /* width: 1320 px;
+    height: 86 px; */
+    color: #ff6600;
+    background-color: #ff6600;
+    padding-top: 15px!important;
+    padding-bottom: 15px!important;
+  }
+  
+  .NavbarB {
+    background-color:BLACK;
+    padding-top: 15px!important;
+    padding-bottom: 15px!important;
+  }
+
+  .vl {
+    border-left: 1px solid grey;
+    height: 43px;
+  }
+  
+  

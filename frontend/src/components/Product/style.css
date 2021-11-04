@@ -1,0 +1,29 @@
+.product-items img {
+  object-fit: scale-down;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.product-background {
+  max-width: 312px;
+  min-height: 209px;
+  position: relative;
+  background-color: #c4c4c4;
+}
+
+/* text format in card */
+.card .card-title {
+  color: #000000;
+  font-size: 14px;
+}
+
+.price {
+  text-align: right;
+}
+
+.product-name {
+  padding-left: 10px;
+}

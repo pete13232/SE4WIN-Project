@@ -8,6 +8,7 @@ import {
   Form,
   FormControl,
 } from "react-bootstrap";
+import "./style.css";
 
 const Product = () => {
   return (
