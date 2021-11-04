@@ -2,15 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Order {
+type Category {
   id: Int!
-  userID: Int!
-  prodID: Int!
-  prodAmount: Int!
-  timestamp: DateTime!
-  price: Float!
-  receiptURL: String!
-  status: Order_Status!
+  name: String!
+  created_at: DateTime!
+  updated_at: DateTime!
+  product: [Product!]!
 }
 
 """
@@ -18,26 +15,16 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-enum Order_Status {
-  AWAITING
-  PENDING
-  SUCCESS
-  UNSUCCESS
-}
-
 type Product {
   id: Int!
   category: Category!
   name: String!
   desc: String
-  price: Int!
+  price: Float!
   picURL: String
-}
-
-type Category {
-  id: Int!
-  name: String!
-  product: [Product!]!
+  created_at: DateTime!
+  updated_at: DateTime!
+  order: [Order!]!
 }
 
 type User {
@@ -52,11 +39,31 @@ type User {
   role: Role!
   created_at: DateTime!
   updated_at: DateTime!
+  order: [Order!]!
 }
 
 enum Role {
   CUSTOMER
   ADMIN
+}
+
+type Order {
+  id: Int!
+  user: User!
+  product: Product!
+  prodAmount: Int!
+  totalPrice: Float!
+  receiptURL: String!
+  status: Order_Status!
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
+enum Order_Status {
+  AWAITING
+  PENDING
+  SUCCESS
+  UNSUCCESS
 }
 
 type Query {
