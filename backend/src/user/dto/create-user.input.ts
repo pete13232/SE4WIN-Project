@@ -11,7 +11,7 @@ import { Role } from '../entities/user.entity';
 export class CreateUserInput {
   @IsAlphanumeric()
   @Field()
-  username: string;
+  email: string;
 
   @Field()
   password: string;

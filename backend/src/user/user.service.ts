@@ -15,7 +15,7 @@ export class UserService {
 
   async create(createUserInput: CreateUserInput): Promise<User> {
     const user = await this.userRepository.findOne({
-      username: createUserInput.username,
+      email: createUserInput.email,
     });
     if (user) {
       throw new ForbiddenError('User already existed.');
@@ -32,8 +32,8 @@ export class UserService {
     return await this.userRepository.findOneOrFail(id);
   }
 
-  async findByUsername(username: string): Promise<User> {
-    return await this.userRepository.findOneOrFail(username);
+  async findByEmail(email: string): Promise<User> {
+    return await this.userRepository.findOneOrFail(email);
   }
 
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
