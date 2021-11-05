@@ -1,4 +1,4 @@
-import { Get, Injectable, Post, UseGuards } from '@nestjs/common';
+import { Get, Injectable, Post, Request, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './authen/local-auth.guard';
 
 @Injectable()
@@ -7,8 +7,8 @@ export class AppService {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(): any{
-    return {}
+  login(@Request() req): any{
+    return req.user;
   }
 
   @Get('secured')
