@@ -9,7 +9,7 @@ import { Role } from '../entities/user.entity';
 
 @InputType()
 export class CreateUserInput {
-  @IsAlphanumeric()
+  @IsEmail()
   @Field()
   email: string;
 
@@ -30,10 +30,6 @@ export class CreateUserInput {
   @IsNumberString()
   @Field()
   phoneNumber: string;
-
-  @IsEmail()
-  @Field()
-  email: string;
 
   @Field(() => Role)
   role: Role;
