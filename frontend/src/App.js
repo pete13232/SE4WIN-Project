@@ -10,7 +10,9 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import HomeContainer from "./container/HomeContainer/index.js";
+import SignupContainer from "./container/SignupContainer/index.js";
 import LoginContainer from "./container/LoginContainer/index.js";
+import Footer from "./components/Footer/index.js";
 
 /* ----------------- Graphql Setup ----------------------- */
 
@@ -36,16 +38,24 @@ const client = new ApolloClient({
 
 function App() {
   return (
-    <ApolloProvider client = { client }>
-      <Switch>
-        <Route exact path="/">
-          <HomeContainer />
-        </Route>
-        <Route path="/login"></Route>
-        <Route path="/:id">
-          <p>Page not found</p>
-        </Route>
-      </Switch>
+    <ApolloProvider client={client}>
+      <Container className=" bg-container px-0">
+        <Switch>
+          <Route exact path="/">
+            <HomeContainer />
+          </Route>
+          <Route path="/signup">
+            <SignupContainer />
+          </Route>
+          <Route path="/login">
+            <LoginContainer/>
+          </Route>
+          <Route path="/:id">
+            <p>Page not found</p>
+          </Route>
+        </Switch>
+        <Footer/>
+      </Container>
     </ApolloProvider>
   );
 }

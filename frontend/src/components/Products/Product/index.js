@@ -24,9 +24,6 @@ const Product = ({ name, price, img }) => {
                   { name }
                 </Card.Title>
                 <Card.Title className="price mt-5 pe-3">{ price }</Card.Title>
-                {/* <Card.Link href="##" target="_blank">
-                  <Button variant="warning">Read more</Button>
-                </Card.Link> */}
               </Card.Body>
             </Card>
           </Col>

@@ -41,18 +41,17 @@ body h4 {
   font-size: 14px;
 }
 
-/* .category{
-  width: 220px;
-  height: 145px ;
-} */
+body h5{
+  color: #000000;
+  font-weight: bold;
+  font-size: 14px;
+}
 
-/* .category h4 {
-  position: absolute;
-  top: 45%;
-  left: 0;
-  width: 100%;
-  color: white;
-} */
+body h6{
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
+}
 
 .space-sm {
   margin-top: 12px;
@@ -67,4 +66,8 @@ body h4 {
   align-items: center;
   height: 40px;
   background-color: white;
+}
+
+.bg-container{
+  background-color: #EAEAEA;
 }

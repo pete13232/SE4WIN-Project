@@ -7,7 +7,7 @@ import { Container } from "react-bootstrap";
 const HomeContainer = () => {
   return (
     <div>
-      <Container className="px-0" style={{ background: "#EAEAEA" }}>
+      
         <NavbarBootstrap themeStatus={false} />
         <Category />
         <Products />
@@ -17,7 +17,7 @@ const HomeContainer = () => {
         <NavbarBootstrap themeStatus={true} />
         <h1>login</h1>
         <h1>No page</h1> */}
-      </Container>
+
     </div>
   );
 };

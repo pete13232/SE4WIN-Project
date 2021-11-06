@@ -4,7 +4,7 @@ import "./style.css";
 const Category = () => {
   return (
     <div className="space-md">
-      <div className="header">
+      <div className="header px-2">
         <h3>Category</h3>
       </div>
       <Carousel>
