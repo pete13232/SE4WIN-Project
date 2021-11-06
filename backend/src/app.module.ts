@@ -9,9 +9,11 @@ import { CategoryModule } from './category/category.module';
 import { UserModule } from './user/user.module';
 import graphql_config from './config/graphql.config';
 import typeorm_config from './config/orm.config';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     GraphQLModule.forRoot(graphql_config),
     TypeOrmModule.forRoot(typeorm_config),
     OrderModule,
