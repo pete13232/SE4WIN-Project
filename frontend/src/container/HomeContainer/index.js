@@ -11,7 +11,6 @@ const HomeContainer = () => {
         <NavbarBootstrap themeStatus={false} />
         <Category />
         <Products />
-        <Footer />
         {/* <NavbarBootstrap themeStatus={true} />
         <h1>signup</h1>
         <NavbarBootstrap themeStatus={true} />
