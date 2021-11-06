@@ -1,13 +1,6 @@
 import { useState } from "react";
-import { useRouteMatch } from "react-router-dom";
-import {
-  Navbar,
-  Container,
-  Col,
-  Form,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { useRouteMatch, Link } from "react-router-dom";
+import { Navbar, Col, Form, FormControl } from "react-bootstrap";
 import "./style.css";
 
 const NavbarBootstrap = ({ themeStatus }) => {
@@ -55,7 +48,9 @@ const NavbarBootstrap = ({ themeStatus }) => {
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
-              <h1>FAPP</h1>
+              <Link to="/">
+                <h1>FAPP</h1>
+              </Link>
             </Navbar.Brand>
           </Col>
           <Col md={7}>
@@ -70,19 +65,19 @@ const NavbarBootstrap = ({ themeStatus }) => {
             </Form>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            <a href="/">
+            <Link to="/">
               <h2>Home</h2>
-            </a>
+            </Link>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            <a href="/signup">
+            <Link to="/signup">
               <h2>Sign-up</h2>
-            </a>
+            </Link>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            <a href="/login">
+            <Link to="/login">
               <h2>Log-in</h2>
-            </a>
+            </Link>
           </Col>
         </Navbar>
       )}

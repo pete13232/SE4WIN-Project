@@ -6,6 +6,10 @@
     padding-top: 15px!important;
     padding-bottom: 15px!important;
   }
+
+.NavbarA a{
+  text-decoration: none;
+}
   
   .NavbarB {
     background-color:BLACK;

@@ -1,0 +1,38 @@
+.bg-signup {
+  background-color: #51d378;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-navsignup {
+  background-color: white !important;
+}
+
+.form {
+  box-shadow: 0 4px 4px 2px rgb(0 0 0 / 25%);
+  border-radius: 4px;
+}
+
+.form .btn {
+  width: 100% !important;
+  background-color: #ff6600;
+}
+
+.form h5 {
+  color: white;
+}
+
+.alternative {
+  text-align: end;
+  margin-bottom: 40px;
+}
+
+.alternative h4 {
+  opacity: 50%;
+  font-weight: bold;
+}
+
+.alternative a {
+  opacity: 100% !important;
+  color: #ff6600;
+}
