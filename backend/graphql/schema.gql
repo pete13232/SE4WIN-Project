@@ -15,18 +15,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Product {
-  id: Int!
-  category: Category!
-  name: String!
-  desc: String
-  price: Float!
-  picURL: String
-  created_at: DateTime!
-  updated_at: DateTime!
-  order: [Order!]!
-}
-
 type User {
   id: Int!
   username: String!
@@ -64,6 +52,18 @@ enum Order_Status {
   PENDING
   SUCCESS
   UNSUCCESS
+}
+
+type Product {
+  id: Int!
+  category: Category!
+  name: String!
+  desc: String
+  price: Float!
+  picURL: String
+  created_at: DateTime!
+  updated_at: DateTime!
+  order: [Order!]!
 }
 
 type Query {
