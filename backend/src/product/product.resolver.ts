@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { ProductService } from './product.service';
 import { Product } from './entities/product.entity';
 import { CreateProductInput } from './dto/create-product.input';
@@ -24,7 +32,10 @@ export class ProductResolver {
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Product> {
     return this.productService.findOne(id);
   }
-
+  @ResolveField(() => Int)
+  stock(@Parent() product: Product): Promise<number> {
+    return this.productService.countStock(product.id);
+  }
   @Mutation(() => Product)
   updateProduct(
     @Args('updateProductInput') updateProductInput: UpdateProductInput,
