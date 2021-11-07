@@ -36,7 +36,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOneOrFail(email);
+    return await this.userRepository.findOneOrFail({ email: email });
   }
 
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {

@@ -8,8 +8,8 @@ export class AuthenService {
 
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.userService.findByEmail(email);
-        const hashPassword = await bcrypt.hash(password, 10);
-        const passwordMatch = await bcrypt.compare(user.password, hashPassword);
+        // const hashPassword = await bcrypt.hash(password, 10);
+        const passwordMatch = await bcrypt.compare(password, user.password);
         
         if(user && passwordMatch){
             const {email, password, ...rest} = user;
