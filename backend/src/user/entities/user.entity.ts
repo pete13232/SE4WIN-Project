@@ -31,7 +31,7 @@ export class User {
 
   @Column()
   @Field()
-  username: string;
+  email: string;
 
   @Column()
   @Field()
@@ -52,10 +52,6 @@ export class User {
   @Column({ length: 10 })
   @Field()
   phoneNumber: string;
-
-  @Column()
-  @Field()
-  email: string;
 
   @Column({
     type: 'enum',

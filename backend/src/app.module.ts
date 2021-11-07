@@ -7,6 +7,7 @@ import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
 import { UserModule } from './user/user.module';
+import { AuthenModule } from './authen/authen.module';
 import graphql_config from './config/graphql.config';
 import typeorm_config from './config/orm.config';
 
@@ -18,6 +19,7 @@ import typeorm_config from './config/orm.config';
     ProductModule,
     CategoryModule,
     UserModule,
+    AuthenModule,
   ],
   controllers: [AppController],
   providers: [AppService],
