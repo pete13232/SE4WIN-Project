@@ -73,7 +73,8 @@ type Query {
   categories: [Category!]!
   category(id: Int!): Category!
   users: [User!]!
-  user(email: String!): User!
+  user(id: Int!): User!
+  email(email: String!): User!
 }
 
 type Mutation {

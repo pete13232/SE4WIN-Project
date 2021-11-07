@@ -3,7 +3,6 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { DeleteResult } from 'typeorm';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -26,8 +25,10 @@ export class UserResolver {
     return this.userService.findOne(id);
   }
 
-  @Query(() => User, { name: 'user' })
-  findByEmail(@Args('email', { type: () => String }) email: string): Promise<User> {
+  @Query(() => User, { name: 'email' })
+  findByEmail(
+    @Args('email', { type: () => String }) email: string,
+  ): Promise<User> {
     return this.userService.findByEmail(email);
   }
 
