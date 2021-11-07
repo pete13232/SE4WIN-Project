@@ -17,13 +17,12 @@ scalar DateTime
 
 type User {
   id: Int!
-  username: String!
+  email: String!
   password: String!
   firstname: String!
   lastname: String!
   address: String!
   phoneNumber: String!
-  email: String!
   role: Role!
   created_at: DateTime!
   updated_at: DateTime!
@@ -74,7 +73,7 @@ type Query {
   categories: [Category!]!
   category(id: Int!): Category!
   users: [User!]!
-  user(id: Int!): User!
+  user(email: String!): User!
 }
 
 type Mutation {
@@ -134,24 +133,22 @@ input UpdateCategoryInput {
 }
 
 input CreateUserInput {
-  username: String!
+  email: String!
   password: String!
   firstname: String!
   lastname: String!
   address: String!
   phoneNumber: String!
-  email: String!
   role: Role!
 }
 
 input UpdateUserInput {
-  username: String
+  email: String
   password: String
   firstname: String
   lastname: String
   address: String
   phoneNumber: String
-  email: String
   role: Role
   id: Int!
 }
