@@ -11,7 +11,6 @@ import { TypeOrmConfigModule } from './config/typeorm.module';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot(graphql_config),
     EnvironmentConfigModule,
     TypeOrmConfigModule,
     UserModule,
