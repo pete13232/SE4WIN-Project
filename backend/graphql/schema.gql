@@ -66,18 +66,26 @@ type Product {
 }
 
 type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  email(loginUserInput: LoginUserInput!): User!
   orders: [Order!]!
   order(id: Int!): Order!
   products: [Product!]!
   product(id: Int!): Product!
   categories: [Category!]!
   category(id: Int!): Category!
-  users: [User!]!
-  user(id: Int!): User!
-  email(email: String!): User!
+}
+
+input LoginUserInput {
+  email: String!
+  password: String!
 }
 
 type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): String!
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): Order!
@@ -87,9 +95,28 @@ type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   removeCategory(id: Int!): Category!
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): String!
+  login(loginUserInput: LoginUserInput!): String!
+}
+
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstname: String!
+  lastname: String!
+  address: String!
+  phoneNumber: String!
+  role: Role!
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  address: String
+  phoneNumber: String
+  role: Role
+  id: Int!
 }
 
 input CreateOrderInput {
@@ -130,26 +157,5 @@ input CreateCategoryInput {
 
 input UpdateCategoryInput {
   name: String
-  id: Int!
-}
-
-input CreateUserInput {
-  email: String!
-  password: String!
-  firstname: String!
-  lastname: String!
-  address: String!
-  phoneNumber: String!
-  role: Role!
-}
-
-input UpdateUserInput {
-  email: String
-  password: String
-  firstname: String
-  lastname: String
-  address: String
-  phoneNumber: String
-  role: Role
   id: Int!
 }
