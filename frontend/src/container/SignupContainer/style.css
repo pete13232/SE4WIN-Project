@@ -36,3 +36,7 @@
   opacity: 100% !important;
   color: #ff6600;
 }
+
+.errorMessage{
+  color: red
+}

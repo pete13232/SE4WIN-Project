@@ -19,7 +19,7 @@ export const CREATE_USER = gql`
             address: $address
             phoneNumber: $phoneNumber
             email: $email
-            roleId: CUSTOMER
+            role: CUSTOMER
             }
         )
         {
