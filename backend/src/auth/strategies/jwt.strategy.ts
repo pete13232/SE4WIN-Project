@@ -3,7 +3,6 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { jwtConstants } from '../constants';
 import { UserService } from 'src/user/user.service';
-import LoginUserInput from '../dto/login-user.input';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -15,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(loginUserInput: LoginUserInput) {
-    return this.userService.findByEmail(loginUserInput);
+  async validate(payload: any) {
+    return this.userService.findOne(payload.sub);
   }
 }
