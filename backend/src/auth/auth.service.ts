@@ -17,27 +17,27 @@ export class AuthService {
   async validateUser(loginUserInput: LoginUserInput): Promise<any> {
     const user = await this.usersService.findByEmail(loginUserInput);
 
-    const hashPassword = await bcrypt.hash(loginUserInput.password, 10);
-    const passwordMatch = await bcrypt.compare(hashPassword, user.password);
+    //Can compate with input password not need to hash
+    const passwordMatch = await bcrypt.compare(
+      loginUserInput.password,
+      user.password,
+    );
 
     if (user && passwordMatch) {
-      const { email, password, ...result } = user;
+      const { password, ...result } = user;
       return result;
     } else {
       throw new ForbiddenError('Incorrect pasword');
     }
   }
 
-  async login(
-    loginUserInput: LoginUserInput,
-  ): Promise<{ access_token: string }> {
-    const user = await this.usersService.findByEmail(loginUserInput);
+  async login(loginUserInput: LoginUserInput): Promise<string> {
+    const user = await this.validateUser(loginUserInput);
 
+    console.log(user);
     const payload = { email: user.email, sub: user.id };
 
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return this.jwtService.sign(payload);
   }
 
   async verify(token: string): Promise<User> {
