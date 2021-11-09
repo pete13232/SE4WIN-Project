@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { OrderService } from './order.service';
-import { Order } from './entities/order.entity';
+import { Order, Order_Status } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
 
@@ -29,11 +29,22 @@ export class OrderResolver {
   updateOrder(
     @Args('updateOrderInput') updateOrderInput: UpdateOrderInput,
   ): Promise<Order> {
-    return this.orderService.update(updateOrderInput.id, updateOrderInput);
+    return this.orderService.update({
+      id: updateOrderInput.id,
+      updateOrderInput,
+    });
   }
 
-  @Mutation(() => Order)
+  @Mutation(() => String)
   removeOrder(@Args('id', { type: () => Int }) id: number): Promise<string> {
     return this.orderService.remove(id);
+  }
+
+  @Mutation(() => String)
+  changeSatus(
+    @Args('id', { type: () => Int }) id: number,
+    @Args('status', { type: () => Order_Status }) status: Order_Status,
+  ): Promise<string> {
+    return this.orderService.changeStatus({ id, status });
   }
 }

@@ -6,7 +6,7 @@ import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
-import { Order } from './entities/order.entity';
+import { Order, Order_Status } from './entities/order.entity';
 
 @Injectable()
 export class OrderService {
@@ -66,7 +66,13 @@ export class OrderService {
     });
   }
 
-  async update(id: number, updateOrderInput: UpdateOrderInput): Promise<Order> {
+  async update({
+    id,
+    updateOrderInput,
+  }: {
+    id: number;
+    updateOrderInput: UpdateOrderInput;
+  }): Promise<Order> {
     const order = await this.orderRepository.findOne(id);
 
     if (!order) {
@@ -85,5 +91,26 @@ export class OrderService {
 
     await this.orderRepository.delete(id);
     return 'Delete success';
+  }
+
+  async changeStatus({
+    id,
+    status,
+  }: {
+    id: number;
+    status: Order_Status;
+  }): Promise<string> {
+    const order = await this.orderRepository.findOneOrFail(id);
+
+    if (!order) {
+      throw new ForbiddenError('Order not found');
+    }
+
+    const oldStatus = order.status;
+
+    order.status = status;
+    await this.orderRepository.save(order);
+
+    return `Order status id ${id} change from ${oldStatus} to ${order.status}`;
   }
 }
