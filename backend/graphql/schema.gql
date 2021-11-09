@@ -63,6 +63,7 @@ type Product {
   created_at: DateTime!
   updated_at: DateTime!
   order: [Order!]!
+  stock: Int!
 }
 
 type Query {
@@ -73,6 +74,7 @@ type Query {
   order(id: Int!): Order!
   products: [Product!]!
   product(id: Int!): Product!
+<<<<<<< HEAD
   categories: [Category!]!
   category(id: Int!): Category!
 }
@@ -80,6 +82,13 @@ type Query {
 input LoginUserInput {
   email: String!
   password: String!
+=======
+  users: [User!]!
+  user(id: Int!): User!
+  email(email: String!): User!
+  categories: [Category!]!
+  category(id: Int!): Category!
+>>>>>>> BE-Aggregation
 }
 
 type Mutation {
@@ -92,6 +101,7 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(id: Int!): String!
+<<<<<<< HEAD
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   removeCategory(id: Int!): Category!
@@ -117,6 +127,14 @@ input UpdateUserInput {
   phoneNumber: String
   role: Role
   id: Int!
+=======
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): String!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): Category!
+>>>>>>> BE-Aggregation
 }
 
 input CreateOrderInput {
@@ -151,6 +169,30 @@ input UpdateProductInput {
   id: Int!
 }
 
+<<<<<<< HEAD
+=======
+input CreateUserInput {
+  email: String!
+  password: String!
+  firstname: String!
+  lastname: String!
+  address: String!
+  phoneNumber: String!
+  role: Role!
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  address: String
+  phoneNumber: String
+  role: Role
+  id: Int!
+}
+
+>>>>>>> BE-Aggregation
 input CreateCategoryInput {
   name: String!
 }

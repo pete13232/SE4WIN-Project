@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ForbiddenError } from 'apollo-server-errors';
 import { Category } from 'src/category/entities/category.entity';
+import { Order } from 'src/order/entities/order.entity';
 import { Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
@@ -14,6 +15,8 @@ export class ProductService {
     private productRepository: Repository<Product>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
+    @InjectRepository(Order)
+    private orderRepository: Repository<Order>,
   ) {}
   async create(createProductInput: CreateProductInput): Promise<Product> {
     const product = await this.productRepository.findOne({
@@ -49,6 +52,7 @@ export class ProductService {
   }
 
   async findOne(id: number): Promise<Product> {
+    this.countStock(id);
     return await this.productRepository.findOneOrFail({
       where: { id: id },
       relations: ['category', 'order'],
@@ -77,5 +81,20 @@ export class ProductService {
 
     await this.productRepository.delete(id);
     return 'Delete success!';
+  }
+
+  async countStock(id: number): Promise<number> {
+    let stock = 0;
+    const product = await this.orderRepository.find({
+      select: ['prodAmount'],
+      where: { product: id },
+    });
+    if (!product) {
+      throw new ForbiddenError('Product not found');
+    }
+    product.forEach((element) => {
+      stock += element.prodAmount;
+    });
+    return stock;
   }
 }

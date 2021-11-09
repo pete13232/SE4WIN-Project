@@ -1,10 +1,5 @@
 import { InputType, Field } from '@nestjs/graphql';
-import {
-  IsAlpha,
-  IsAlphanumeric,
-  IsEmail,
-  IsNumberString,
-} from 'class-validator';
+import { IsAlpha, IsEmail, IsNumberString } from 'class-validator';
 import { Role } from '../entities/user.entity';
 
 @InputType()
