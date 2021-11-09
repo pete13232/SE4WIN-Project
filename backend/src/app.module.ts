@@ -6,9 +6,12 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { EnvironmentConfigModule } from './config/environment-config/environment-config.module';
 import { TypeOrmConfigModule } from './config/typeorm.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import graphql_config from './config/graphql.config';
 
 @Module({
   imports: [
+    GraphQLModule.forRoot(graphql_config),
     EnvironmentConfigModule,
     TypeOrmConfigModule,
     UserModule,
