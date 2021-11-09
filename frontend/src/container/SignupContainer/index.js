@@ -1,3 +1,4 @@
+import React from "react"
 import { useMutation } from "@apollo/client";
 import { Col, Row, Form, FloatingLabel, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -7,31 +8,24 @@ import { CREATE_USER } from "../../Graphql/Mutations";
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import InputMask from 'react-input-mask';
 import "./style.css";
 
 const SignupContainer = () => {
   const [createUser, { error }] = useMutation(CREATE_USER);
-
-  const [username, setUsername] = useState("pete");
-  const [password, setPassword] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [address, setAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
+  
 
 
   const addUser =  (data) => {
      console.log(data)
      createUser({
       variables: {
-        username: data.username,
+        email: data.email,
         password: data.password,
-        firstname: data.phoneNumberfirstname,
+        firstname: data.firstname,
         lastname: data.lastname,
         address:data.address,
         phoneNumber: data.phone,
-        email: email,
       },
     });
     if (error) {
@@ -73,7 +67,7 @@ const SignupContainer = () => {
       {
         label: "Phone",
         name: "phone",
-        type: "number",
+        type: "tel",
         placeholder: "Enter phone",
       },
       {
@@ -87,7 +81,7 @@ const SignupContainer = () => {
 
   const schema = yup.object().shape({
       email: yup.string().required("Please enter your email"),
-      password: yup.string().required("Please enter your password").min(7),
+      password: yup.string().required("Please enter your password").min(7,"Please enter at least 7 characters password"),
       firstname: yup.string().required("Please enter your first name"),
       lastname: yup.string().required("Please enter your last name"),
       phone: yup.string().required("Please enter phone number"),
@@ -103,7 +97,47 @@ const SignupContainer = () => {
     
   }
 
-
+  // const normalizePhoneNumber = (value) =>{
+  //   return value.replace(/\s/g, "").match(/.{1,4}/g)?.join(" ").substr(0, 11) || ""
+  // }
+  class Phone extends React.Component {
+    state = {
+      value: ''
+    }
+   
+    onChange = (event) => {
+      this.setState({
+        value: event.target.value
+      });
+    }
+   
+    beforeMaskedValueChange = (newState, oldState, userInput) => {
+      var { value } = newState;
+      var selection = newState.selection;
+      var cursorPosition = selection ? selection.start : null;
+   
+      // keep minus if entered by user
+      if (value.endsWith('-') && userInput !== '-' && !this.state.value.endsWith('-')) {
+        if (cursorPosition === value.length) {
+          cursorPosition--;
+          selection = { start: cursorPosition, end: cursorPosition };
+        }
+        value = value.slice(0, -1);
+      }
+   
+      return {
+        value,
+        selection
+      };
+    }
+   
+    render() {
+      return <InputMask mask="099-999-9999" maskChar={null} value={this.state.value} onChange={this.onChange} beforeMaskedValueChange={this.beforeMaskedValueChange} />;
+    }
+  }
+   
+    
+ 
   return (
     <>
       <div>
@@ -130,17 +164,17 @@ const SignupContainer = () => {
                   </Form.Group>
                 );
               })}
-              <Form.Group className="mb-1" controlId="formBasicEmail">
+              <Form.Group className="mb-1" >
                 <Form.Label>{ contactFormList.inputs[0].label }</Form.Label>
-                <Form.Control
-                  name={ contactFormList.inputs[0].name }
-                  type={ contactFormList.inputs[0].type }
-                  placeholder={ contactFormList.inputs[0].placeholder }
-                  {...register( contactFormList.inputs[0].name )}
+                <Phone
+                name={ contactFormList.inputs[0].name }
+                type={ contactFormList.inputs[0].type }
+                placeholder={ contactFormList.inputs[0].placeholder }
+                {...register( contactFormList.inputs[0].name )}
                 />
                 <p className = "errorMessage" > { errors[contactFormList.inputs[0].name]?.message }</p>
               </Form.Group>
-              <Form.Group controlId="formBasicEmail">
+              <Form.Group >
                 <Form.Label>{ contactFormList.inputs[1].label }</Form.Label>
                 <Form.Control
                   className="mb-1"
