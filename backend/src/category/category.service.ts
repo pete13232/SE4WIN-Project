@@ -28,8 +28,6 @@ export class CategoryService {
 
   async findAll(): Promise<Category[]> {
     const result = await this.categoryRepository.find();
-    console.log(result.length);
-
     return result;
   }
 

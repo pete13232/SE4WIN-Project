@@ -6,6 +6,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import LoginUserInput from 'src/auth/dto/login-user.input';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,7 @@ export class UserService {
     }
     const hashPassword = await bcrypt.hash(createUserInput.password, 10);
     createUserInput.password = hashPassword;
+
     const newUser = this.userRepository.create(createUserInput);
     return await this.userRepository.save(newUser);
   }
@@ -35,9 +37,9 @@ export class UserService {
     return await this.userRepository.findOneOrFail(id);
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(loginUserInput: LoginUserInput): Promise<User> {
     const user = await this.userRepository.findOne({
-      email: email,
+      email: loginUserInput.email,
     });
     if (!user) {
       throw new ForbiddenError('User not found');
