@@ -24,7 +24,7 @@ const LoginContainer = () => {
             </Form.Group>
 
             <Button type="submit" className="mt-4">
-              <h5>Sign-up</h5>
+              <h4 style={{color:"white"}}>Log-in</h4>
             </Button>
             <div className="alternative mt-2">
               <h4>

@@ -43,8 +43,7 @@ body h4 {
 
 body h5{
   color: #000000;
-  font-weight: bold;
-  font-size: 14px;
+  font-size: 18px;
 }
 
 body h6{
@@ -66,6 +65,8 @@ body h6{
   align-items: center;
   height: 40px;
   background-color: white;
+  /* box-shadow: 0 1px 4px rgb(0 0 0 / 25%); */
+  border-bottom: 1px solid rgba(0,0,0,0.25);
 }
 
 .bg-container{

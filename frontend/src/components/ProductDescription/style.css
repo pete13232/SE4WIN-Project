@@ -1,0 +1,8 @@
+.description {
+  min-width: 100%;
+  min-height: 130px;
+}
+
+.description h4{
+    opacity: 50%;
+}
