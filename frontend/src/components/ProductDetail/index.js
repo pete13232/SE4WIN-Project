@@ -1,5 +1,7 @@
 import { Row, Col, Button, Image } from "react-bootstrap";
 import "./style.css";
+import ButtonCustom from "../ButtonCustom";
+import ProductModal from "../ProductModal";
 
 const ProductDetail = () => {
   return (
@@ -33,10 +35,11 @@ const ProductDetail = () => {
                 </div>
               </div>
               <div className="ms-4 mb-4 d-flex align-items-center justify-content-center background-detail">
-                  <input className="center-block" type="number" />
+                  <input className="center-block text-center" type="number" placeholder="0" min="0"/>
               </div>
             </div>
-            <Button></Button>
+            {/* <Button className="ms-4 blue btn btn-success" href="#">Buy</Button> */}
+            <ProductModal/>
           </Row>
         </Col>
       </Row>
