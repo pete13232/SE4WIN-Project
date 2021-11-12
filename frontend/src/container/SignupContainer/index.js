@@ -111,7 +111,7 @@ const SignupContainer = () => {
             </Form.Group>
 
             <Button type="submit" className="mt-4" onClick = { addUser }>
-              <h5>Sign-up</h5>
+              <h4 style={{color:"white"}}>Sign-up</h4>
             </Button>
             <div className="alternative mt-2">
               <h4>
