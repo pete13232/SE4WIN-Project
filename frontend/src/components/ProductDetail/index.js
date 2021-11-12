@@ -1,7 +1,7 @@
 import { Row, Col, Button, Image } from "react-bootstrap";
 import "./style.css";
 import ButtonCustom from "../ButtonCustom";
-import ProductModal from "../ProductModal";
+import ProductModal from "../Modal/ProductModal";
 
 const ProductDetail = () => {
   return (

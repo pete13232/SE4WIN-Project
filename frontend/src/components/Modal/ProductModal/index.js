@@ -1,12 +1,15 @@
 import { Modal, Button, Image, Row } from "react-bootstrap";
 import React, { useState } from "react";
-import ButtonCustom from "../ButtonCustom";
+import ButtonCustom from "../../ButtonCustom";
+import SuccessModal from "../SuccessModal";
 import { FaEdit } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { BsFillXCircleFill } from "react-icons/bs";
 import "./style.css";
 
 const ProductModal = () => {
   const [show, setShow] = useState(false);
-
+  const [showSuccess, setShowSuccess] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
@@ -68,11 +71,11 @@ const ProductModal = () => {
                   126 Pracha Uthit Rd., Bang Mod, Thung Khru, Bangkok 10140,
                   Thailand.
                 </h3>
-                <span className="pe-3">
+                {/* <span className="pe-3">
                   <a href="#">
                     <FaEdit />
                   </a>
-                </span>
+                </span> */}
               </div>
             </div>
           </Row>
@@ -81,9 +84,18 @@ const ProductModal = () => {
           <Button className="grey btn-small" onClick={handleClose}>
             Cancel
           </Button>
-          <Button className="green btn-small">Confirm</Button>
+          <Button
+            className="green btn-small"
+            onClick={() => {
+              setShowSuccess(true);
+              handleClose();
+            }}
+          >
+            Confirm
+          </Button>
         </Modal.Footer>
       </Modal>
+      <SuccessModal showSuccess={showSuccess} setShowSuccess={setShowSuccess} text="Order Confirmed"/>
     </div>
   );
 };
