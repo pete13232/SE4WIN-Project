@@ -16,6 +16,7 @@ import SignupContainer from "./container/SignupContainer/index.js";
 import LoginContainer from "./container/LoginContainer/index.js";
 import Footer from "./components/Footer/index.js";
 import ProductSelectContainer from "./container/ProductSelectContainer/index.js";
+import OrderContainer from "./container/OrderContainer/index.js";
 
 /* ----------------- Graphql Setup ----------------------- */
 
