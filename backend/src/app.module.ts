@@ -19,6 +19,7 @@ import { GqlConfigModule } from './config/gql-config/gql.module';
     ProductModule,
     CategoryModule,
     AuthModule,
+    DefaultModule,
   ],
   controllers: [AppController],
   providers: [],

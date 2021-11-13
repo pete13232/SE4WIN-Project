@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
-import { Category } from 'src/category/entities/category.entity';
-import { Order } from 'src/order/entities/order.entity';
+import { Category } from '../../category/entities/category.entity';
+import { Order } from '../../order/entities/order.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
