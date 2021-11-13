@@ -20,7 +20,7 @@ export class UserService {
       email: createUserInput.email,
     });
     if (user) {
-      throw new ForbiddenError('User already existed.');
+      throw new ForbiddenError('This email is already being used.');
     }
     const hashPassword = await bcrypt.hash(createUserInput.password, 10);
     createUserInput.password = hashPassword;
