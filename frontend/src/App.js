@@ -14,6 +14,7 @@ import SignupContainer from "./container/SignupContainer/index.js";
 import LoginContainer from "./container/LoginContainer/index.js";
 import Footer from "./components/Footer/index.js";
 import ProductSelectContainer from "./container/ProductSelectContainer/index.js";
+import OrderContainer from "./container/OrderContainer/index.js";
 
 /* ----------------- Graphql Setup ----------------------- */
 
@@ -53,6 +54,9 @@ function App() {
           </Route>
           <Route path="/product">
             <ProductSelectContainer/>
+          </Route>
+          <Route path="/order">
+            <OrderContainer/>
           </Route>
           <Route path="/:id">
             <p>Page not found</p>

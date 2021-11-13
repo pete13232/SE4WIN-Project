@@ -1,7 +1,7 @@
-import { Modal, Button, Image, Row } from "react-bootstrap";
+import { Modal, Button, Image, Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
-import ButtonCustom from "../../ButtonCustom";
 import SuccessModal from "../SuccessModal";
+import ButtonCustom from "../../ButtonCustom";
 import { FaEdit } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { BsFillXCircleFill } from "react-icons/bs";
@@ -30,14 +30,14 @@ const ProductModal = () => {
         </Modal.Header>
         <Modal.Body>
           <Row className="gap-3">
-            <div className="confirm-image d-flex justify-content-center">
+            <div md={4} className="confirm-image d-flex justify-content-center">
               <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png" />
             </div>
             <div className="d-flex align-items-center">
               <div className="title-block d-flex align-items-center justify-content-end">
                 <h5>Product:</h5>
               </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center">
+              <div className="d-flex align-items-center justify-content-center">
                 <h3>
                   Keychron K3 Ultra-slim Wireless Mechanical Keyboard (Version2)
                 </h3>
@@ -48,16 +48,16 @@ const ProductModal = () => {
               <div className="title-block d-flex align-items-center justify-content-end">
                 <h5>Quantity:</h5>
               </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center quantity-background">
+              <div className="d-flex align-items-center justify-content-center quantity-background">
                 <h3>3</h3>
               </div>
             </div>
 
             <div className="d-flex align-items-center">
               <div className="title-block d-flex align-items-center justify-content-end">
-                <h5>TotalPricey:</h5>
+                <h5>TotalPrice:</h5>
               </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center total-background">
+              <div className="d-flex align-items-center justify-content-center total-background">
                 <h3>$138</h3>
               </div>
             </div>
@@ -66,7 +66,7 @@ const ProductModal = () => {
               <div className="title-block d-flex align-items-center justify-content-end">
                 <h5>Delivery address:</h5>
               </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center address-background">
+              <div className="d-flex align-items-center justify-content-center address-background">
                 <h3>
                   126 Pracha Uthit Rd., Bang Mod, Thung Khru, Bangkok 10140,
                   Thailand.
