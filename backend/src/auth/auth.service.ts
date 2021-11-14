@@ -34,7 +34,7 @@ export class AuthService {
   async login(loginUserInput: LoginUserInput): Promise<string> {
     const user = await this.validateUser(loginUserInput);
 
-    const payload = { email: user.email, sub: user.id };
+    const payload = { email: user.email, role: user.role, sub: user.id };
 
     return this.jwtService.sign(payload);
   }
@@ -44,7 +44,7 @@ export class AuthService {
       secret: jwtConstants.secret,
     });
 
-    const user = this.usersService.findByEmail(decoded.email);
+    const user = this.usersService.findByEmail({ email: decoded.email });
 
     if (!user) {
       throw new Error('Unable to get the user from decoded token.');

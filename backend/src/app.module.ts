@@ -8,6 +8,7 @@ import { EnvironmentConfigModule } from './config/environment-config/environment
 import { TypeOrmConfigModule } from './config/typeorm.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import graphql_config from './config/graphql.config';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import graphql_config from './config/graphql.config';
     CategoryModule,
     AuthModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

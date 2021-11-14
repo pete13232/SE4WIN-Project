@@ -76,6 +76,7 @@ type Query {
   product(id: Int!): Product!
   categories: [Category!]!
   category(id: Int!): Category!
+  verify(token: String!): User!
 }
 
 input LoginUserInput {
