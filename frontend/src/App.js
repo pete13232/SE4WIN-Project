@@ -12,6 +12,7 @@ import { onError } from "@apollo/client/link/error";
 import HomeContainer from "./container/HomeContainer/index.js";
 import SignupContainer from "./container/SignupContainer/index.js";
 import LoginContainer from "./container/LoginContainer/index.js";
+import EditProfileContainer from "./container/EditProfildContainer";
 import Footer from "./components/Footer/index.js";
 
 /* ----------------- Graphql Setup ----------------------- */
@@ -48,13 +49,16 @@ function App() {
             <SignupContainer />
           </Route>
           <Route path="/login">
-            <LoginContainer/>
+            <LoginContainer />
+          </Route>
+          <Route path="/editProfile">
+            <EditProfileContainer />
           </Route>
           <Route path="/:id">
             <p>Page not found</p>
           </Route>
         </Switch>
-        <Footer/>
+        <Footer />
       </Container>
     </ApolloProvider>
   );
