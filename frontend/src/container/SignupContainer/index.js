@@ -24,7 +24,7 @@ const SignupContainer = () => {
           title: "Sign up success!",
           html: "Press Ok to login page",
           icon: "success",
-          allowEscapeKey: false,
+          allowOutsideClick: false,
           allowEscapeKey: false,
           didClose: () => {
             window.location.replace("/login")
@@ -33,16 +33,12 @@ const SignupContainer = () => {
       })
       .catch((error) => {
         const err = error.message;
-        let timerInterval;
         Swal.fire({
-          title: "Opps! !",
+          title: "Oops! !",
           html: err,
-          timer: 2000,
-          timerProgressBar: true,
           icon: "error",
-          willClose: () => {
-            clearInterval(timerInterval);
-          },
+          allowOutsideClick: false,
+          allowEscapeKey: false,
         });
       });
   };
@@ -157,7 +153,7 @@ const SignupContainer = () => {
   return (
     <>
       <div>
-        <NavbarBootstrap />
+        <NavbarBootstrap secondTheme={true} page={"Sign-up"}/>
         <Row className="bg-signup mx-0 justify-content-center">
           <Col md={4} className="form bg-light my-5">
             <div className="border-bottom border-dark py-3 mb-3">
