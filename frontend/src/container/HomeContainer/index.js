@@ -8,14 +8,9 @@ const HomeContainer = () => {
   return (
     <div>
       
-        <NavbarBootstrap themeStatus={false} />
+        <NavbarBootstrap/>
         <Category />
         <Products />
-        {/* <NavbarBootstrap themeStatus={true} />
-        <h1>signup</h1>
-        <NavbarBootstrap themeStatus={true} />
-        <h1>login</h1>
-        <h1>No page</h1> */}
 
     </div>
   );
