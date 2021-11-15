@@ -21,6 +21,7 @@ import ProductSelectContainer from "./container/ProductSelectContainer/index.js"
 import ProfileContainer from "./container/ProfileContainer/index.js";
 import OrderContainer from "./container/OrderContainer/index.js";
 import { AuthContext } from "./context/auth.js";
+import AdminContainer from "./container/AdminContainer/index.js";
 
 function App() {
   /* ----------------- Graphql Setup ----------------------- */
