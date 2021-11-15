@@ -22,11 +22,11 @@ export class Category {
 
   @CreateDateColumn()
   @Field()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Field()
-  updated_at: Date;
+  updatedAt: Date;
 
   @OneToMany(() => Product, (product) => product.category, { eager: true })
   @Field(() => [Product])

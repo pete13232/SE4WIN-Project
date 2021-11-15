@@ -44,11 +44,11 @@ export class Order {
 
   @Column()
   @Field(() => Int)
-  prodAmount: number;
+  quantity: number;
 
   @Column('float')
   @Field(() => Float)
-  totalPrice: number;
+  netPrice: number;
 
   @Column()
   @Field()
@@ -60,9 +60,9 @@ export class Order {
 
   @CreateDateColumn()
   @Field()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Field()
-  updated_at: Date;
+  updatedAt: Date;
 }

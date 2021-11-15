@@ -5,8 +5,8 @@
 type Category {
   id: Int!
   name: String!
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   product: [Product!]!
 }
 
@@ -24,8 +24,8 @@ type User {
   address: String!
   phoneNumber: String!
   role: Role!
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   order: [Order!]!
 }
 
@@ -38,12 +38,12 @@ type Order {
   id: Int!
   user: User!
   product: Product!
-  prodAmount: Int!
-  totalPrice: Float!
+  quantity: Int!
+  netPrice: Float!
   receiptURL: String!
   status: Order_Status!
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 enum Order_Status {
@@ -60,8 +60,8 @@ type Product {
   desc: String
   price: Float!
   picURL: String
-  created_at: DateTime!
-  updated_at: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   order: [Order!]!
   stock: Int!
 }
@@ -125,14 +125,14 @@ input UpdateUserInput {
 input CreateOrderInput {
   userId: Int!
   productId: Int!
-  prodAmount: Int!
+  quantity: Int!
   receiptURL: String
 }
 
 input UpdateOrderInput {
   userId: Int
   productId: Int
-  prodAmount: Int
+  quantity: Int
   receiptURL: String
   id: Int!
 }

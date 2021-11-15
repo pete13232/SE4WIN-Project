@@ -12,7 +12,7 @@ export class CreateOrderInput {
 
   @IsNumber()
   @Field(() => Int)
-  prodAmount: number;
+  quantity: number;
 
   @Field({ nullable: true })
   receiptURL: string;

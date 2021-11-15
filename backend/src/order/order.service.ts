@@ -43,7 +43,7 @@ export class OrderService {
     product.order.push(newOrder);
 
     //Calculate total price
-    newOrder.totalPrice = product.price * createOrderInput.prodAmount;
+    newOrder.netPrice = product.price * createOrderInput.quantity;
 
     //save Order first
     await this.orderRepository.save(newOrder);

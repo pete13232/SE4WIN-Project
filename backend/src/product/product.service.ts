@@ -86,14 +86,14 @@ export class ProductService {
   async countStock(id: number): Promise<number> {
     let stock = 0;
     const product = await this.orderRepository.find({
-      select: ['prodAmount'],
+      select: ['quantity'],
       where: { product: id },
     });
     if (!product) {
       throw new ForbiddenError('Product not found');
     }
     product.forEach((element) => {
-      stock += element.prodAmount;
+      stock += element.quantity;
     });
     return stock;
   }

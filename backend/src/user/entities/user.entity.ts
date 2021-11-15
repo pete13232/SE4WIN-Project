@@ -63,11 +63,11 @@ export class User {
 
   @CreateDateColumn()
   @Field()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Field()
-  updated_at: Date;
+  updatedAt: Date;
 
   @OneToMany(() => Order, (order) => order.user, { eager: true })
   @Field(() => [Order])

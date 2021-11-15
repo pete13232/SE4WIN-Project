@@ -40,11 +40,11 @@ export class Product {
 
   @CreateDateColumn()
   @Field()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Field()
-  updated_at: Date;
+  updatedAt: Date;
 
   @OneToMany(() => Order, (order) => order.product, { eager: true })
   @Field(() => [Order])
