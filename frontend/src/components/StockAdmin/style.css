@@ -1,0 +1,25 @@
+.table-head tr {
+  background: rgba(0, 153, 255, 0.3);
+}
+
+/* .cursor{
+    cursor: pointer;
+} */
+
+.modify svg {
+  cursor: pointer;
+}
+
+.add svg {
+  color: #0099ff;
+}
+
+.edit svg {
+  background-color: #ffe455;
+  color: black;
+}
+
+.bin svg {
+  color: black;
+  background-color: #ff7b7b;
+}

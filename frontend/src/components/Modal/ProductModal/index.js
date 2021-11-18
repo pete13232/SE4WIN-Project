@@ -84,12 +84,12 @@ const ProductModal = ({
 
   return (
     <div>
-      <Button className="ms-4 blue btn btn-large" onClick={handleShow}>
-        Buy
+      <Button className={`${space}`} onClick={handleShow}>
+        {text}
       </Button>
 
       <Modal
-        size="lg"
+        size={size}
         show={show}
         onHide={handleClose}
         backdrop="static"
