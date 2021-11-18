@@ -4,18 +4,14 @@ import NavbarBootstrap from "../../components/NavbarBoostrap";
 import Sidebar from "../../components/Sidebar";
 import StockAdmin from "../../components/StockAdmin";
 
-const AdminContainer = () => {
+const AdminContainer = ({ match }) => {
+  // console.log(match.params.id);
   return (
     <div>
       <NavbarBootstrap />
       <Row className="m-0">
-        <Sidebar />
-        {/* <Switch>
-          <Route path="/admin/stock">
-            <StockAdmin />
-          </Route>
-        </Switch> */}
-        <StockAdmin/>
+        <Sidebar id={match.params.id}/>
+        <StockAdmin id={match.params.id}/>
       </Row>
     </div>
   );

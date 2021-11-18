@@ -2,17 +2,14 @@ import React, { useState } from "react";
 import { Modal, Button, Form, Image } from "react-bootstrap";
 import "./style.css";
 
-const AddProductModal = ({ shows, setShows }) => {
-  // const [show, setShow] = useState({shows});
+const AddProductModal = ({ showProduct, setShowProduct }) => {
+  const handleClose = () => setShowProduct(false);
 
-  const handleClose = () => setShows(false);
-  // const handleShow = () => setShow(true);
-  console.log(shows);
   return (
     <div>
       <Modal
         size="lg"
-        show={shows}
+        show={showProduct}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}

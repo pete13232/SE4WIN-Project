@@ -50,19 +50,17 @@ function App() {
             <SignupContainer />
           </Route>
           <Route path="/login">
-            <LoginContainer/>
+            <LoginContainer />
           </Route>
           <Route path="/product">
-            <ProductSelectContainer/>
+            <ProductSelectContainer />
           </Route>
-          <Route path="/admin">
-            <AdminContainer/>
-          </Route>
+          <Route path="/admin/:id" component={AdminContainer} />
           <Route path="/:id">
             <p>Page not found</p>
           </Route>
         </Switch>
-        <Footer/>
+        <Footer />
       </Container>
     </ApolloProvider>
   );
