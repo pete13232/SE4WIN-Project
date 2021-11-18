@@ -160,7 +160,7 @@ const Profile = () => {
                 <Form.Label className="title-block">
                   <h5>Email:</h5>
                 </Form.Label>
-                <Form.Control type="email" placeholder="pete@hotmail.com" />
+                <Form.Control type="email" placeholder="pete@hotmail.com" readOnly={false}/>
               </Form.Group>
               <Form.Group className="d-flex mb-3" controlId="formBasicPassword">
                 <Form.Label className="title-block">
