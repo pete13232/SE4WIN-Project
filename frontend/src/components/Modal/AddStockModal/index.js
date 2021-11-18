@@ -1,29 +1,22 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Image } from "react-bootstrap";
 
-const AddStockModal = ({ shows, setShows }) => {
-  // const [show, setShow] = useState({shows});
-
-  const handleClose = () => setShows(false);
-  // const handleShow = () => setShow(true);
-  console.log(shows);
+const AddStockModal = ({ showAdd, setShowAdd }) => {
+  const handleClose = () => setShowAdd(false);
   return (
     <div>
       <Modal
-        size="sm"
-        show={shows}
+        size="lg"
+        show={showAdd}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <h2>Stock</h2>
+          <h2>Add Stock</h2>
         </Modal.Header>
         <Modal.Body className="d-flex gap-4 p-5">
           <div>
-            {/* <div className="product-image d-flex justify-content-center mb-3">
-              <Image src="https://www.gannett-cdn.com/-mm-/05398f80e3bde0326c872a093f3784aeee1c8a90/c=880-323-1833-861/local/-/media/2018/05/14/USATODAY/usatsports/wp-USAT-allthemoms-front1-19975-winnie-the-pooh-day.jpg?auto=webp&format=pjpg&width=1200" />
-            </div> */}
             <div className="text-center upload-btn">
               {/* <Button className="btn-medium blue">Upload</Button> */}
               <label htmlFor="files" className="btn btn-medium blue">
