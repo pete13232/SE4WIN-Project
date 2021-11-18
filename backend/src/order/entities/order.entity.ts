@@ -50,9 +50,9 @@ export class Order {
   @Field(() => Float)
   netPrice: number;
 
-  @Column()
-  @Field()
-  receiptURL: string;
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  receiptURL?: string;
 
   @Column({ type: 'enum', enum: Order_Status, default: Order_Status.AWAITING })
   @Field(() => Order_Status)

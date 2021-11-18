@@ -40,7 +40,7 @@ type Order {
   product: Product!
   quantity: Int!
   netPrice: Float!
-  receiptURL: String!
+  receiptURL: String
   status: Order_Status!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -72,6 +72,7 @@ type Query {
   email(loginUserInput: LoginUserInput!): User!
   orders: [Order!]!
   order(id: Int!): Order!
+  orderByUser(id: Int!): Order!
   products: [Product!]!
   product(id: Int!): Product!
   categories: [Category!]!

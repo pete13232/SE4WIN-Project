@@ -65,6 +65,12 @@ export class OrderService {
       relations: ['user', 'product'],
     });
   }
+  async findByUser(id: number): Promise<Order> {
+    return await this.orderRepository.findOneOrFail({
+      where: { user: id },
+      relations: ['user', 'product'],
+    });
+  }
 
   async update({
     id,
