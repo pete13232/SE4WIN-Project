@@ -49,8 +49,10 @@
 }
 
 .title-block {
-  width: 160px;
+  width: 140px;
   height: 36px;
+  text-align: end;
+  margin-right: 20px;
 }
 
 span svg{

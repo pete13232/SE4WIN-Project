@@ -1,0 +1,14 @@
+.sidebar{
+    background-color: #5b5b5b;
+    height: auto;
+}
+
+.sidebar h5{
+    color: white;
+}
+
+.menu {
+    margin-top: 80px;
+    width: 120px;
+    height: 300px;
+}

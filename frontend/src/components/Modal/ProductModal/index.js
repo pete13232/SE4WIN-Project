@@ -7,19 +7,19 @@ import { FaCheckCircle } from "react-icons/fa";
 import { BsFillXCircleFill } from "react-icons/bs";
 import "./style.css";
 
-const ProductModal = () => {
+const ProductModal = ({text,space,size}) => {
   const [show, setShow] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
     <div>
-      <Button className="ms-4 blue btn btn-large" onClick={handleShow}>
-        Buy
+      <Button className={`${space}`} onClick={handleShow}>
+        {text}
       </Button>
 
       <Modal
-        size="lg"
+        size={size}
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -31,7 +31,7 @@ const ProductModal = () => {
         <Modal.Body>
           <Row className="gap-3">
             <div className="confirm-image d-flex justify-content-center">
-              <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png" />
+              <Image src="https://www.gannett-cdn.com/-mm-/05398f80e3bde0326c872a093f3784aeee1c8a90/c=880-323-1833-861/local/-/media/2018/05/14/USATODAY/usatsports/wp-USAT-allthemoms-front1-19975-winnie-the-pooh-day.jpg?auto=webp&format=pjpg&width=1200" />
             </div>
             <div className="d-flex align-items-center">
               <div className="title-block d-flex align-items-center justify-content-end">
