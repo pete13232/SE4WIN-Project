@@ -30,6 +30,12 @@ export class OrderService {
     if (!user) {
       throw new ForbiddenError('User not found');
     }
+
+    //check address
+    if (createOrderInput.order_address == null) {
+      newOrder.order_address = user.address;
+    }
+
     user.order.push(newOrder);
 
     //Add product

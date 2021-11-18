@@ -46,6 +46,10 @@ export class Order {
   @Field(() => Int)
   quantity: number;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  order_address?: string;
+
   @Column('float')
   @Field(() => Float)
   netPrice: number;

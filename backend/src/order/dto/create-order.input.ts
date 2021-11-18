@@ -15,5 +15,8 @@ export class CreateOrderInput {
   quantity: number;
 
   @Field({ nullable: true })
-  receiptURL: string;
+  order_address?: string;
+
+  @Field({ nullable: true })
+  receiptURL?: string;
 }
