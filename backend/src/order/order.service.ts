@@ -65,11 +65,17 @@ export class OrderService {
       relations: ['user', 'product'],
     });
   }
-  async findByUser(id: number): Promise<Order> {
-    return await this.orderRepository.findOneOrFail({
+  async findByUser(id: number): Promise<Order[]> {
+    // const user = await this.userRepository.findOneOrFail(id);
+    const orders = await this.orderRepository.find({
       where: { user: id },
       relations: ['user', 'product'],
     });
+
+    if (!orders) {
+      throw new ForbiddenError('There is no order yet.');
+    }
+    return orders;
   }
 
   async update({

@@ -72,7 +72,7 @@ type Query {
   email(loginUserInput: LoginUserInput!): User!
   orders: [Order!]!
   order(id: Int!): Order!
-  orderByUser(id: Int!): Order!
+  orderByUser(id: Int!): [Order!]!
   products: [Product!]!
   product(id: Int!): Product!
   categories: [Category!]!

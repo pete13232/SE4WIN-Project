@@ -24,8 +24,8 @@ export class OrderResolver {
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Order> {
     return this.orderService.findOne(id);
   }
-  @Query(() => Order, { name: 'orderByUser' })
-  findByUser(@Args('id', { type: () => Int }) id: number): Promise<Order> {
+  @Query(() => [Order], { name: 'orderByUser' })
+  findByUser(@Args('id', { type: () => Int }) id: number): Promise<Order[]> {
     return this.orderService.findByUser(id);
   }
 
