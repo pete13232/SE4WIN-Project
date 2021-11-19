@@ -7,7 +7,7 @@ import AddProductModal from "../Modal/AddProductModal";
 import AddStockModal from "../Modal/AddStockModal";
 import "./style.css";
 
-const StockAdmin = ({ id }) => {
+const AdminStock = ({ id }) => {
   const [showProduct, setShowProduct] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -127,4 +127,4 @@ const StockAdmin = ({ id }) => {
     </>
   );
 };
-export default StockAdmin;
+export default AdminStock;

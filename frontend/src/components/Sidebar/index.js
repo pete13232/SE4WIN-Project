@@ -22,13 +22,13 @@ const Sidebar = ({id}) => {
               Stock
             </h5>
           </Link>
-          <Link to="#">
+          <Link to="/admin/order">
             <h5 className="d-flex gap-2 ">
               <AiOutlineUnorderedList />
               Order
             </h5>
           </Link>
-          <Link to="#">
+          <Link to="/admin/category">
             <h5 className="d-flex gap-2">
               <BiCategory />
               Category
