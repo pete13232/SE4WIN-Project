@@ -9,7 +9,8 @@ import {
   from,
 } from "@apollo/client";
 import { AuthProvider } from "./context/auth.js";
-import AuthRoute from "./util/AuthRoute.js";
+import GuestRoute from "./util/GuestRoute.js";
+import UserRoute from "./util/UserRoute.js";
 import { onError } from "@apollo/client/link/error";
 import HomeContainer from "./container/HomeContainer/index.js";
 import SignupContainer from "./container/SignupContainer/index.js";
@@ -49,8 +50,9 @@ function App() {
             <Route exact path="/">
               <HomeContainer />
             </Route>
-            <AuthRoute path="/signup" component={SignupContainer}/>
-            <AuthRoute path="/login" component={LoginContainer}/>
+            <GuestRoute path="/signup" component={SignupContainer}/>
+            <GuestRoute path="/login" component={LoginContainer}/>
+            <UserRoute path="/order" component={OrderContainer}/>
             <Route path="/:id">
               <p>Page not found</p>
             </Route>

@@ -25,3 +25,19 @@
   height: 100%;
   padding-inline: 40px;
 }
+
+.status-awaiting{
+  color: #FEB905
+}
+
+.status-pending{
+  color: #59BCB0
+}
+
+.status-success{
+  color: #77D068
+}
+
+.status-fail{
+  color: #FF7B7B
+}

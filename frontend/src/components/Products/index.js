@@ -1,7 +1,7 @@
 import { Col, Row, Card, Dropdown } from "react-bootstrap";
 // import "./style.css";
 import { useEffect, useState } from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery} from "@apollo/client";
 import { GET_PRODUCTS } from "../../Graphql/Queries";
 import Product from "./Product/index";
 
