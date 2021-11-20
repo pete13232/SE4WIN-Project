@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
@@ -15,6 +16,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    return this.userService.findOne(payload.sub);
+    const {
+      id,
+      password,
+      address,
+      phoneNumber,
+      createdAt,
+      updatedAt,
+      ...rest
+    } = await this.userService.findOne(payload.sub);
+    return rest;
   }
 }

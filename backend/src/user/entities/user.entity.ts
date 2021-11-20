@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Order } from 'src/order/entities/order.entity';
 import {
   Column,
@@ -8,15 +8,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export enum Role {
-  CUSTOMER = 'customer',
-  ADMIN = 'admin',
-}
-
-registerEnumType(Role, {
-  name: 'Role',
-});
+import { Role } from '../enums/role.enum';
 
 @Entity()
 @ObjectType()
