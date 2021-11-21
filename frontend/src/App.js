@@ -44,15 +44,21 @@ const client = new ApolloClient({
 function App() {
   return (
     <AuthProvider>
-      <ApolloProvider client={client}>
-        <Container className=" bg-container px-0">
-          <Switch>
-            <Route exact path="/">
-              <HomeContainer />
-            </Route>
+    <ApolloProvider client={client}>
+      <Container className=" bg-container px-0">
+        <Switch>
+          <Route exact path="/">
+            <HomeContainer />
+          </Route>
             <GuestRoute path="/signup" component={SignupContainer}/>
             <GuestRoute path="/login" component={LoginContainer}/>
             <UserRoute path="/order" component={OrderContainer}/>
+          <Route path="/products/:id">
+            <ProductSelectContainer />
+          </Route>
+          <Route exact path="/products">
+            <h4>no product</h4>
+          </Route>
             <Route path="/:id">
               <p>Page not found</p>
             </Route>

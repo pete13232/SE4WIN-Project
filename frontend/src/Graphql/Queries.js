@@ -25,3 +25,18 @@ export const GET_USER_ORDERS = gql`
     }
   }
 `;
+
+export const GET_PRODUCT_INFO = gql`
+  query($input:Int!) {
+    product(id:$input){
+      category{
+        name
+      }
+      name
+      desc
+      price
+      picURL
+      stock
+    }
+  }
+`;

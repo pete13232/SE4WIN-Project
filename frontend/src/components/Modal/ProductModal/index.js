@@ -1,17 +1,22 @@
 import { Modal, Button, Image, Row, Col } from "react-bootstrap";
 import React, { useState } from "react";
-import SuccessModal from "../SuccessModal";
 import ButtonCustom from "../../ButtonCustom";
-import { FaEdit } from "react-icons/fa";
-import { FaCheckCircle } from "react-icons/fa";
-import { BsFillXCircleFill } from "react-icons/bs";
+
+
 import "./style.css";
 
-const ProductModal = () => {
+const ProductModal = ({picURL, name, selectQuantity, totalPrice}) => {
   const [show, setShow] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+
+
+
+
+
+
   return (
     <div>
       <Button className="ms-4 blue btn btn-large" onClick={handleShow}>
@@ -30,8 +35,8 @@ const ProductModal = () => {
         </Modal.Header>
         <Modal.Body>
           <Row className="gap-3">
-            <div md={4} className="confirm-image d-flex justify-content-center">
-              <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png" />
+            <div className="confirm-image d-flex justify-content-center">
+              <Image src={picURL} />
             </div>
             <div className="d-flex align-items-center">
               <div className="title-block d-flex align-items-center justify-content-end">
@@ -39,7 +44,7 @@ const ProductModal = () => {
               </div>
               <div className="d-flex align-items-center justify-content-center">
                 <h3>
-                  Keychron K3 Ultra-slim Wireless Mechanical Keyboard (Version2)
+                  {name}
                 </h3>
               </div>
             </div>
@@ -48,8 +53,8 @@ const ProductModal = () => {
               <div className="title-block d-flex align-items-center justify-content-end">
                 <h5>Quantity:</h5>
               </div>
-              <div className="d-flex align-items-center justify-content-center quantity-background">
-                <h3>3</h3>
+              <div className="ms-4 d-flex align-items-center justify-content-center quantity-background">
+                <h3>{selectQuantity}</h3>
               </div>
             </div>
 
@@ -57,8 +62,8 @@ const ProductModal = () => {
               <div className="title-block d-flex align-items-center justify-content-end">
                 <h5>TotalPrice:</h5>
               </div>
-              <div className="d-flex align-items-center justify-content-center total-background">
-                <h3>$138</h3>
+              <div className="ms-4 d-flex align-items-center justify-content-center total-background">
+                <h3>{totalPrice} ฿</h3>
               </div>
             </div>
 
@@ -95,7 +100,7 @@ const ProductModal = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <SuccessModal showSuccess={showSuccess} setShowSuccess={setShowSuccess} text="Order Confirmed"/>
+      {/* <SuccessModal showSuccess={showSuccess} setShowSuccess={setShowSuccess} text="Order Confirmed"/> */}
     </div>
   );
 };
