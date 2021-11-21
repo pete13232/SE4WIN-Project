@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ForbiddenError } from 'apollo-server-errors';
 import { Category } from 'src/category/entities/category.entity';
+import { CreateOrderInput } from 'src/order/dto/create-order.input';
 import { Order } from 'src/order/entities/order.entity';
+import { OrderService } from 'src/order/order.service';
 import { Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
@@ -22,6 +24,8 @@ export class ProductService {
     private categoryRepository: Repository<Category>,
     @InjectRepository(Order)
     private orderRepository: Repository<Order>,
+    @Inject(forwardRef(() => OrderService))
+    private readonly orderService: OrderService,
   ) {}
 
   /**
@@ -65,59 +69,114 @@ export class ProductService {
    * @returns List of product
    */
   async findAll(): Promise<Product[]> {
+    //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
     });
+    //Throw error if not found any
     if (!products) {
       throw new ForbiddenError('Product not found');
     }
     return products;
   }
 
+  /**
+   * Find user by id
+   *
+   * @param id
+   * @returns Product
+   */
   async findOne(id: number): Promise<Product> {
+    //count latest stock of product
     this.countStock(id);
-    return await this.productRepository.findOneOrFail({
+
+    //Find proudct by id
+    const product = await this.productRepository.findOne({
       where: { id: id },
       relations: ['category', 'order'],
     });
+
+    //Throw error if not found
+    if (!product) {
+      throw new ForbiddenError('Product not found');
+    }
+    return product;
   }
 
+  /**
+   * Update product information
+   *
+   * @param id
+   * @param updateProductInput
+   * @returns updated product
+   */
   async update(
     id: number,
     updateProductInput: UpdateProductInput,
   ): Promise<Product> {
-    const product = await this.productRepository.findOne(id);
+    //Find product
+    const product = this.findOne(id);
 
-    if (!product) {
-      throw new ForbiddenError('Product not found.');
-    }
+    //Copy update info to current info
     const updated = Object.assign(product, updateProductInput);
 
+    //Save to db
     return await this.productRepository.save(updated);
   }
 
+  /**
+   * Remove product
+   *
+   * @param id
+   * @returns success message
+   */
   async remove(id: number): Promise<string> {
-    const product = await this.productRepository.findOne(id);
-    if (!product) {
-      throw new ForbiddenError('Product not found.');
-    }
+    //Find product
+    this.findOne(id);
 
+    //Delete product in db
     await this.productRepository.delete(id);
+
     return 'Delete success!';
   }
 
+  /**
+   * Count quantity of product left in stock
+   *
+   * @param id
+   * @returns number of stock
+   */
   async countStock(id: number): Promise<number> {
     let stock = 0;
-    const product = await this.orderRepository.find({
+
+    //Find order by product id
+    const orders = await this.orderRepository.find({
       select: ['quantity'],
       where: { product: id },
     });
-    if (!product) {
+    if (!orders) {
       throw new ForbiddenError('Product not found');
     }
-    product.forEach((element) => {
-      stock += element.quantity;
+
+    //map to all order found and count their quantity
+    orders.map((product) => {
+      stock += product.quantity;
     });
+
     return stock;
+  }
+
+  async updateStock(
+    userId: number,
+    productId: number,
+    quantity: number,
+  ): Promise<number> {
+    const createOrderInput = new CreateOrderInput();
+    createOrderInput.userId = userId;
+    createOrderInput.productId = productId;
+    createOrderInput.quantity = quantity;
+    await this.orderService.create(createOrderInput);
+
+    return this.countStock(productId);
   }
 }

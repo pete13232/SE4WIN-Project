@@ -96,6 +96,7 @@ type Mutation {
   removeOrder(id: Int!): String!
   changeSatus(status: Order_Status!, id: Int!): String!
   createProduct(createProductInput: CreateProductInput!): Product!
+  updateStock(quantity: Int!, productId: Int!): Int!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(id: Int!): String!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
