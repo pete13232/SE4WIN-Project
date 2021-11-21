@@ -1,0 +1,27 @@
+.count svg{
+    cursor: pointer;
+}
+
+.plus svg{
+width: 24px;
+height: 24px;
+color: #43B05C;
+}
+
+.plus svg:hover{
+width: 24px;
+height: 24px;
+color: #358b49;
+}
+
+.minus svg{
+    width: 24px;
+    height: 24px;
+    color: #ED8A19;
+}
+
+.minus svg:hover{
+    width: 24px;
+    height: 24px;
+    color: #c77416;
+}
