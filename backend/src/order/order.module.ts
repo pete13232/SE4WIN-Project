@@ -10,7 +10,7 @@ import { User } from 'src/user/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Order, Product]),
+    TypeOrmModule.forFeature([Order, Product, User]),
     ProductModule,
     UserModule,
   ],
