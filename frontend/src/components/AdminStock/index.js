@@ -1,10 +1,12 @@
 import { Row, Col, Table, Button } from "react-bootstrap";
-import { FaRegEdit, FaEdit } from "react-icons/fa";
+import { FaRegEdit } from "react-icons/fa";
 import { AiFillPlusCircle, AiFillPicture } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
 import React, { useState } from "react";
 import AddProductModal from "../Modal/AddProductModal";
 import AddStockModal from "../Modal/AddStockModal";
+import EditStockModal from "../Modal/EditStockModal";
+import SweetAlert from "react-bootstrap-sweetalert";
 import "./style.css";
 
 const AdminStock = ({ id }) => {
@@ -17,7 +19,7 @@ const AdminStock = ({ id }) => {
   return (
     <>
       {id === "stock" && (
-        <Col md={10} className="bg-white">
+        <Col md={10} className="bg-white admin-stock">
           <Button
             onClick={() => {
               setShowProduct(true);
@@ -68,19 +70,13 @@ const AdminStock = ({ id }) => {
                           setShowAdd(true);
                         }}
                       />
-                      <AddStockModal
-                        showAdd={showAdd}
-                        setShowAdd={setShowAdd}
-                      />
                     </div>
                     <div className="edit">
                       <FaRegEdit
                         onClick={() => {
                           setShowEdit(true);
                         }}
-                      >
-                        {/* <AddProductModal showEdit={showEdit} setShowEdit={setShowEdit} /> */}
-                      </FaRegEdit>
+                      />
                     </div>
                     <div className="bin">
                       <ImBin
@@ -88,7 +84,6 @@ const AdminStock = ({ id }) => {
                           setShowDelete(true);
                         }}
                       >
-                        {/* <AddProductModal showDelete={showDelete} setShowDelete={setShowDelete} /> */}
                       </ImBin>
                     </div>
                   </div>
@@ -124,6 +119,9 @@ const AdminStock = ({ id }) => {
           </Table>
         </Col>
       )}
+      {/* Modal */}
+      <AddStockModal showAdd={showAdd} setShowAdd={setShowAdd} />
+      <EditStockModal showEdit={showEdit} setShowEdit={setShowEdit} />
     </>
   );
 };
