@@ -1,0 +1,10 @@
+.confirm-image svg {
+  color: #25AE88;
+  height: 108px !important;
+  width: 108px !important;
+}
+
+.success-text{
+    font-size: 40px;
+    font-weight: 400;
+}

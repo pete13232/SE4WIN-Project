@@ -1,8 +1,4 @@
 import { useState } from "react";
-import NavbarBootstrap from "./components/NavbarBootstrap";
-import Category from "./components/Category";
-import Product from "./components/Product";
-import Footer from "./components/Footer";
 import { Container } from "react-bootstrap";
 import { Route, Link, Switch } from "react-router-dom";
 import {
@@ -12,7 +8,14 @@ import {
   HttpLink,
   from,
 } from "@apollo/client";
+import { AuthProvider } from "./context/auth.js";
+import AuthRoute from "./util/AuthRoute.js";
 import { onError } from "@apollo/client/link/error";
+import HomeContainer from "./container/HomeContainer/index.js";
+import SignupContainer from "./container/SignupContainer/index.js";
+import LoginContainer from "./container/LoginContainer/index.js";
+import Footer from "./components/Footer/index.js";
+import ProductSelectContainer from "./container/ProductSelectContainer/index.js";
 
 /* ----------------- Graphql Setup ----------------------- */
 
@@ -26,7 +29,7 @@ const errorLink = onError(({ graphqlErrors, networkError }) => {
 
 const link = from([
   errorLink,
-  new HttpLink({ uri: "http://localhost:5000/graphql " }),
+  new HttpLink({ uri: "http://20.212.81.174/graphql" }),
 ]);
 
 const client = new ApolloClient({
@@ -37,31 +40,24 @@ const client = new ApolloClient({
 /* -------------------------------------------------------- */
 
 function App() {
-
   return (
-    <div>
-      <Container className="px-0" style={{ background: "#EAEAEA" }}>
-        <Switch>
-          <Route exact path="/">
-            <NavbarBootstrap themeStatus = {false}/>
-            <Category />
-            <Product />
-            <Footer />
-          </Route>
-          <Route exact path="/signup">
-            <NavbarBootstrap themeStatus = {true}/>
-            <h1>signup</h1>
-          </Route>
-          <Route exact path="/login">
-            <NavbarBootstrap themeStatus = {true}/>
-            <h1>login</h1>
-          </Route>
-          <Route path="/:id">
-            <h1>No page</h1>
-          </Route>
-        </Switch>
-      </Container>
-    </div>
+    <AuthProvider>
+      <ApolloProvider client={client}>
+        <Container className=" bg-container px-0">
+          <Switch>
+            <Route exact path="/">
+              <HomeContainer />
+            </Route>
+            <AuthRoute path="/signup" component={SignupContainer}/>
+            <AuthRoute path="/login" component={LoginContainer}/>
+            <Route path="/:id">
+              <p>Page not found</p>
+            </Route>
+          </Switch>
+          <Footer />
+        </Container>
+      </ApolloProvider>
+    </AuthProvider>
   );
 }
 

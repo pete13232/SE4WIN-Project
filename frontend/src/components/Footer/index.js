@@ -1,4 +1,5 @@
-import { Container, Col, Row, Image, Carousel } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
+import "./style.css";
 
 const Footer = () => {
   return (

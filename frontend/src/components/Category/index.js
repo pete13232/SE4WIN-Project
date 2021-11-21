@@ -1,26 +1,28 @@
-import { Container, Col, Row, Image, Carousel } from "react-bootstrap";
+import { Col, Row, Image, Carousel } from "react-bootstrap";
+import "./style.css";
 
 const Category = () => {
   return (
-    <div className="space-md" style={{ background: "white" }}>
-      <Row>
+    <div className="space-md">
+      <div className="header px-2">
         <h3>Category</h3>
-      </Row>
-      {/* <div style={{ background: "white" }} className="py-1">
-        <h3 className="px-2">Category</h3>
-      </div> */}
+      </div>
       <Carousel>
         <Carousel.Item interval={100000000}>
-          <Row className="g-0 category" style={{ background: "pink" }}>
+          <Row className="g-0 category">
             {/*ใส่สไตล์เพื่อเช็ค padding เดี๋ยวมาลบ*/}
             <Col className="card">
-              <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"></Image>
+              <a href="#">
+                <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"></Image>
+              </a>
               <div className="card-img-overlay text-center">
                 <h4>test2</h4>
               </div>
             </Col>
             <Col className="card">
-              <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"></Image>
+              <a href="#">
+                <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"></Image>
+              </a>
               <div className="card-img-overlay text-center">
                 <h4>test2</h4>
               </div>
@@ -44,13 +46,9 @@ const Category = () => {
               <Image src="https://media.istockphoto.com/photos/programming-code-abstract-technology-background-of-software-developer-picture-id1224500457?b=1&k=20&m=1224500457&s=170667a&w=0&h=OOPEMFamnZo63_2t_W40mYSfU1WrFAHHZRBgNN-GSgI="></Image>
             </Col>
           </Row>
-          {/* <Carousel.Caption>
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </Carousel.Caption> */}
         </Carousel.Item>
         <Carousel.Item interval={100000000}>
-          <Row className="g-0 category" style={{ background: "pink" }}>
+          <Row className="g-0 category">
             {/*ใส่สไตล์เพื่อเช็ค padding เดี๋ยวมาลบ*/}
             <Col className="card">
               <Image src="https://ae01.alicdn.com/kf/Hfc71b9e78e54414f9e1f87a928fedbb1F/Beats-Powerbeats-Pro.jpg_q50.jpg"></Image>

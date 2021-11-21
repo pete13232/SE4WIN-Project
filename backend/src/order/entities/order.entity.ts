@@ -1,22 +1,15 @@
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
+import { Product } from 'src/product/entities/product.entity';
+import { User } from 'src/user/entities/user.entity';
 import {
-  ObjectType,
-  Field,
-  Int,
-  Float,
-  registerEnumType,
-} from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-export enum Order_Status {
-  AWAITING = 'awaiting',
-  PENDING = 'pending',
-  SUCCESS = 'success',
-  UNSUCCESS = 'unsuccess',
-}
-
-registerEnumType(Order_Status, {
-  name: 'Order_Status',
-});
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Order_Status } from '../enums/order-status.enum';
 
 @Entity()
 @ObjectType()
@@ -25,31 +18,39 @@ export class Order {
   @Field(() => Int)
   id: number;
 
-  @Column()
-  @Field(() => Int)
-  userID: number;
+  @ManyToOne(() => User, (user) => user.order)
+  @Field(() => User)
+  user: User;
+
+  @ManyToOne(() => Product, (product) => product.order)
+  @Field(() => Product)
+  product: Product;
 
   @Column()
   @Field(() => Int)
-  prodID: number;
+  quantity: number;
 
-  @Column()
-  @Field(() => Int)
-  prodAmount: number;
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  order_address?: string;
 
-  @Column()
-  @Field()
-  timestamp: Date;
-
-  @Column()
+  @Column('float')
   @Field(() => Float)
-  price: number;
+  netPrice: number;
 
-  @Column()
-  @Field()
-  receiptURL: string;
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  receiptURL?: string;
 
   @Column({ type: 'enum', enum: Order_Status, default: Order_Status.AWAITING })
   @Field(() => Order_Status)
   status: Order_Status;
+
+  @CreateDateColumn()
+  @Field()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  @Field()
+  updatedAt: Date;
 }

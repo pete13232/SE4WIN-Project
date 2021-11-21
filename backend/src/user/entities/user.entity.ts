@@ -1,20 +1,14 @@
-import { Field, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Order } from 'src/order/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export enum Role {
-  CUSTOMER = 'customer',
-  ADMIN = 'admin',
-}
-
-registerEnumType(Role, {
-  name: 'Role',
-});
+import { Role } from '../enums/role.enum';
 
 @Entity()
 @ObjectType()
@@ -29,7 +23,7 @@ export class User {
 
   @Column()
   @Field()
-  username: string;
+  email: string;
 
   @Column()
   @Field()
@@ -51,10 +45,6 @@ export class User {
   @Field()
   phoneNumber: string;
 
-  @Column()
-  @Field()
-  email: string;
-
   @Column({
     type: 'enum',
     enum: Role,
@@ -65,9 +55,13 @@ export class User {
 
   @CreateDateColumn()
   @Field()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
   @Field()
-  updated_at: Date;
+  updatedAt: Date;
+
+  @OneToMany(() => Order, (order) => order.user, { eager: true })
+  @Field(() => [Order])
+  order: Order[];
 }

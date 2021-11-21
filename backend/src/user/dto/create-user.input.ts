@@ -1,22 +1,31 @@
 import { InputType, Field } from '@nestjs/graphql';
-import { Role } from '../entities/user.entity';
+import { IsAlpha, IsEmail, IsNumberString } from 'class-validator';
+import { Role } from '../enums/role.enum';
 
 @InputType()
 export class CreateUserInput {
-  @Field()
-  username: string;
-  @Field()
-  password: string;
-  @Field()
-  firstname: string;
-  @Field()
-  lastname: string;
-  @Field()
-  address: string;
-  @Field()
-  phoneNumber: string;
+  @IsEmail()
   @Field()
   email: string;
+
+  @Field()
+  password: string;
+
+  @IsAlpha()
+  @Field()
+  firstname: string;
+
+  @IsAlpha()
+  @Field()
+  lastname: string;
+
+  @Field()
+  address: string;
+
+  @IsNumberString()
+  @Field()
+  phoneNumber: string;
+
   @Field(() => Role)
-  roleId: Role;
+  role: Role;
 }
