@@ -51,7 +51,7 @@ enum Order_Status {
   AWAITING
   PENDING
   SUCCESS
-  UNSUCCESS
+  FAIL
 }
 
 type Product {
@@ -74,7 +74,7 @@ type Query {
   me: User!
   orders: [Order!]!
   order(id: Int!): Order!
-  orderByUser(id: Int!): [Order!]!
+  orderByUser: [Order!]!
   products: [Product!]!
   product(id: Int!): Product!
   categories: [Category!]!

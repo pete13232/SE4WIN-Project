@@ -1,10 +1,4 @@
-import {
-  ObjectType,
-  Field,
-  Int,
-  Float,
-  registerEnumType,
-} from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { Product } from 'src/product/entities/product.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -15,17 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-export enum Order_Status {
-  AWAITING = 'awaiting',
-  PENDING = 'pending',
-  SUCCESS = 'success',
-  UNSUCCESS = 'unsuccess',
-}
-
-registerEnumType(Order_Status, {
-  name: 'Order_Status',
-});
+import { Order_Status } from '../enums/order-status.enum';
 
 @Entity()
 @ObjectType()

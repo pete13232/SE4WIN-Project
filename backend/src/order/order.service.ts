@@ -6,7 +6,8 @@ import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
-import { Order, Order_Status } from './entities/order.entity';
+import { Order } from './entities/order.entity';
+import { Order_Status } from './enums/order-status.enum';
 
 @Injectable()
 export class OrderService {

@@ -8,6 +8,9 @@ import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import LoginUserInput from 'src/auth/dto/login-user.input';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { Role } from './enums/role.enum';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -21,20 +24,22 @@ export class UserResolver {
   }
 
   @Query(() => [User], { name: 'users' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   async findAll(): Promise<User[]> {
     return await this.userService.findAll();
   }
 
   @Query(() => User, { name: 'user' })
-  @UseGuards(GqlAuthGuard)
-  async findOne(
-    @CurrentUser() user: User,
-    @Args('id', { type: () => Int }) id: number,
-  ): Promise<User> {
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  async findOne(@Args('id', { type: () => Int }) id: number): Promise<User> {
     return await this.userService.findOne(id);
   }
 
   @Query(() => User, { name: 'email' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   async findByEmail(
     @Args('loginUserInput') loginUserInput: LoginUserInput,
   ): Promise<User> {
@@ -42,6 +47,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
+  @UseGuards(GqlAuthGuard)
   async updateUser(
     @Args('updateUserInput') updateUserInput: UpdateUserInput,
   ): Promise<User> {
@@ -49,6 +55,8 @@ export class UserResolver {
   }
 
   @Mutation(() => String)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   async removeUser(
     @Args('id', { type: () => Int }) id: number,
   ): Promise<string> {

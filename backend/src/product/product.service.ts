@@ -10,6 +10,11 @@ import { Product } from './entities/product.entity';
 
 @Injectable()
 export class ProductService {
+  /**
+   *
+   * Inject to database repository
+   *
+   */
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
@@ -18,14 +23,23 @@ export class ProductService {
     @InjectRepository(Order)
     private orderRepository: Repository<Order>,
   ) {}
+
+  /**
+   * Create product
+   *
+   * @param createProductInput
+   * @returns Created product
+   */
   async create(createProductInput: CreateProductInput): Promise<Product> {
+    //Check exist product name
     const product = await this.productRepository.findOne({
       name: createProductInput.name,
     });
     if (product) {
       throw new ForbiddenError('Product already existed.');
     }
-    //Create new product
+
+    //Create new product instance
     const newProduct = this.productRepository.create(createProductInput);
 
     //Add category relation
@@ -45,10 +59,19 @@ export class ProductService {
     return newProduct;
   }
 
+  /**
+   * Show all product
+   *
+   * @returns List of product
+   */
   async findAll(): Promise<Product[]> {
-    return await this.productRepository.find({
+    const products = await this.productRepository.find({
       relations: ['category', 'order'],
     });
+    if (!products) {
+      throw new ForbiddenError('Product not found');
+    }
+    return products;
   }
 
   async findOne(id: number): Promise<Product> {
