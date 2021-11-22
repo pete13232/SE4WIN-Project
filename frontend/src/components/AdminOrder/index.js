@@ -165,8 +165,6 @@ const AdminOrder = ({ id }) => {
         </Col>
       )}
 
-      {/* Modal */}
-      <OrderDetail showOrder={showOrder} setShowOrder={setShowOrder} />
     </>
   );
 };

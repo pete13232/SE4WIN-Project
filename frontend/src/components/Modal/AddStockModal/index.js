@@ -26,7 +26,7 @@ const AddStockModal = ({ showAdd, setShowAdd }) => {
   };
 
   return (
-    <div>
+    <>
       <Modal
         size="md"
         show={showAdd}
@@ -81,7 +81,7 @@ const AddStockModal = ({ showAdd, setShowAdd }) => {
           <Button className="green btn-small" onClick={()=>{confirmAlert(); handleClose();}}>Confirm</Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 };
 export default AddStockModal;

@@ -83,7 +83,7 @@ const ProductModal = ({
   };
 
   return (
-    <div>
+    <>
       <Button className={`${space}`} onClick={handleShow}>
         {text}
       </Button>
