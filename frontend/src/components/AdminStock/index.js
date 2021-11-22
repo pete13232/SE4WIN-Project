@@ -28,10 +28,6 @@ const AdminStock = ({ id }) => {
           >
             +Product
           </Button>
-          <AddProductModal
-            showProduct={showProduct}
-            setShowProduct={setShowProduct}
-          />
           <Table striped bordered hover className="px-1">
             <thead className="table-head">
               <tr className="text-center">
@@ -39,7 +35,7 @@ const AdminStock = ({ id }) => {
                 <th>P_Name</th>
                 <th>Category</th>
                 <th>Price</th>
-                <th>Describtion</th>
+                <th>Description</th>
                 <th>Picture</th>
                 <th>Quantity</th>
                 <th>modify</th>
@@ -83,43 +79,18 @@ const AdminStock = ({ id }) => {
                         onClick={() => {
                           setShowDelete(true);
                         }}
-                      >
-                      </ImBin>
+                      ></ImBin>
                     </div>
                   </div>
                 </td>
-              </tr>
-              <tr>
-                <td>P_001</td>
-                <td>Keychron K4V2</td>
-                <td>Keyboard</td>
-                <td>4389 B.</td>
-                <td>
-                  Keychron K3 Ultra-slim Wireless Bluetooth Mechanical Keyboard
-                  version 2 has included keycaps for both Windows and macOS, and
-                  users can hot-swap every switch in seconds with the
-                  hot-swappable version. Please drop your email on "Notify Me
-                  When Available" if the product model is out of stock.
-                </td>
-                <td>@mdo</td>
-                <td>5</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td colSpan="2">Larry the Bird</td>
-                <td>@twitter</td>
               </tr>
             </tbody>
           </Table>
         </Col>
       )}
+
       {/* Modal */}
+      <AddProductModal showProduct={showProduct} setShowProduct={setShowProduct}/>
       <AddStockModal showAdd={showAdd} setShowAdd={setShowAdd} />
       <EditStockModal showEdit={showEdit} setShowEdit={setShowEdit} />
     </>

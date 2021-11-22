@@ -7,6 +7,7 @@ import React, { useState } from "react";
 const AdminCategory = ({ id }) => {
   const [choose, setChoose] = useState(true);
   const [confirm, setConfirm] = useState(true);
+  const [text, setText] = useState("");
   const handleEdit = () => {
     setChoose(false);
     setConfirm(false);
@@ -17,6 +18,18 @@ const AdminCategory = ({ id }) => {
     setChoose(true);
   };
 
+  //   const handleText = (event) => {
+  //     console.log(event.nativeEvent.data);
+  //   };
+
+  //   const handleText = (event) => {
+  //       setText(event.nativeEvent.data)
+  //   }
+
+//   const handleText = (event) => {
+//     setText(event.nativeEvent.data)
+//   };
+
   const switchShow = () => {
     if (choose === true) {
       return <td>Keyboard</td>;
@@ -24,14 +37,14 @@ const AdminCategory = ({ id }) => {
       return (
         <td>
           <Form>
-            <FormControl type="text" placeholder="pete" />
+            <FormControl type="text" placeholder="put text here"/>
           </Form>
         </td>
       );
     }
   };
 
-  const swichConfirm = () => {
+  const switchConfirm = () => {
     if (confirm === true) {
       return (
         <div className="edit">
@@ -41,7 +54,9 @@ const AdminCategory = ({ id }) => {
     } else {
       return (
         <div className="check">
-          <AiOutlineCheckSquare onClick={handleConfirm} />
+          <AiOutlineCheckSquare
+            onClick={handleConfirm}
+          />
         </div>
       );
     }
@@ -82,14 +97,10 @@ const AdminCategory = ({ id }) => {
             <tbody>
               <tr className="modify">
                 <td>C_001</td>
-                {/* <td>Keyboard</td> */}
                 {switchShow()}
                 <td>
                   <div className="d-flex gap-3">
-                    <div className="edit">
-                      {/* <FaRegEdit onClick={handleEdit} /> */}
-                      {swichConfirm()}
-                    </div>
+                    <div className="edit">{switchConfirm()}</div>
                     <div className="bin">
                       <ImBin />
                     </div>
