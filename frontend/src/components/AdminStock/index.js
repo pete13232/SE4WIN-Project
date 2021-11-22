@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import AddProductModal from "../Modal/AddProductModal";
 import AddStockModal from "../Modal/AddStockModal";
 import EditStockModal from "../Modal/EditStockModal";
-import SweetAlert from "react-bootstrap-sweetalert";
+import Swal from "sweetalert2";
 import "./style.css";
 
 const AdminStock = ({ id }) => {
@@ -14,7 +14,27 @@ const AdminStock = ({ id }) => {
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
-  // const handle = () => setShows(true);
+  const deleteAlert = () => {
+    Swal.fire({
+      position: "top",
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "top",
+          title: "Deleted!",
+          text: "This product has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   return (
     <>
@@ -75,11 +95,7 @@ const AdminStock = ({ id }) => {
                       />
                     </div>
                     <div className="bin">
-                      <ImBin
-                        onClick={() => {
-                          setShowDelete(true);
-                        }}
-                      ></ImBin>
+                      <ImBin onClick={deleteAlert} />
                     </div>
                   </div>
                 </td>
@@ -90,7 +106,10 @@ const AdminStock = ({ id }) => {
       )}
 
       {/* Modal */}
-      <AddProductModal showProduct={showProduct} setShowProduct={setShowProduct}/>
+      <AddProductModal
+        showProduct={showProduct}
+        setShowProduct={setShowProduct}
+      />
       <AddStockModal showAdd={showAdd} setShowAdd={setShowAdd} />
       <EditStockModal showEdit={showEdit} setShowEdit={setShowEdit} />
     </>

@@ -3,6 +3,8 @@ import { FaRegEdit, FaEdit } from "react-icons/fa";
 import { AiOutlineCheckSquare } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
+import "./style.css";
 
 const AdminCategory = ({ id }) => {
   const [choose, setChoose] = useState(true);
@@ -26,9 +28,9 @@ const AdminCategory = ({ id }) => {
   //       setText(event.nativeEvent.data)
   //   }
 
-//   const handleText = (event) => {
-//     setText(event.nativeEvent.data)
-//   };
+  //   const handleText = (event) => {
+  //     setText(event.nativeEvent.data)
+  //   };
 
   const switchShow = () => {
     if (choose === true) {
@@ -37,7 +39,7 @@ const AdminCategory = ({ id }) => {
       return (
         <td>
           <Form>
-            <FormControl type="text" placeholder="put text here"/>
+            <FormControl type="text" placeholder="put text here" />
           </Form>
         </td>
       );
@@ -54,18 +56,38 @@ const AdminCategory = ({ id }) => {
     } else {
       return (
         <div className="check">
-          <AiOutlineCheckSquare
-            onClick={handleConfirm}
-          />
+          <AiOutlineCheckSquare onClick={handleConfirm} />
         </div>
       );
     }
   };
 
+  const deleteAlert = () => {
+    Swal.fire({
+      position: "top",
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "top",
+          title: "Deleted!",
+          text: "This category has been deleted.",
+          icon: "success",
+        });
+      }
+    });
+  };
+
   return (
     <>
       {id === "category" && (
-        <Col md={10} className="bg-white">
+        <Col md={10} className="bg-white admin-category">
           <div className="d-flex gap-5">
             <Form className="search-order my-3">
               <FormControl
@@ -102,7 +124,7 @@ const AdminCategory = ({ id }) => {
                   <div className="d-flex gap-3">
                     <div className="edit">{switchConfirm()}</div>
                     <div className="bin">
-                      <ImBin />
+                      <ImBin onClick={deleteAlert} />
                     </div>
                   </div>
                 </td>
