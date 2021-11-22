@@ -1,9 +1,17 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Image } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 const EditStockModal = ({ showEdit, setShowEdit }) => {
   const handleClose = () => setShowEdit(false);
-
+  const confirmAlert = () => {
+    Swal.fire({
+      position: "top",
+      title: "Success",
+      text: "Edit product success",
+      icon: "success",
+    });
+  };
   return (
     <div>
       <Modal
@@ -59,7 +67,7 @@ const EditStockModal = ({ showEdit, setShowEdit }) => {
                 <Form.Label className="title-block">
                   <h5>Quantity:</h5>
                 </Form.Label>
-                <Form.Control type="number" readOnly/>
+                <Form.Control type="number" readOnly />
               </Form.Group>
               <Form.Group className="d-flex mb-3 align-items-baseline">
                 <Form.Label className="title-block">
@@ -74,7 +82,15 @@ const EditStockModal = ({ showEdit, setShowEdit }) => {
           <Button className="grey btn-small" onClick={handleClose}>
             Close
           </Button>
-          <Button className="green btn-small">Confirm</Button>
+          <Button
+            className="green btn-small"
+            onClick={() => {
+              confirmAlert();
+              handleClose();
+            }}
+          >
+            Confirm
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

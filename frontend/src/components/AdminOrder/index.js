@@ -129,15 +129,15 @@ const AdminOrder = ({ id }) => {
             </thead>
             <tbody>
               <tr className="modify">
+                <td>O_001</td>
                 <td
                   onClick={() => {
                     setShowOrder(true);
                   }}
                   className="order-detail"
                 >
-                  O_001
+                  P_001
                 </td>
-                <td>P_001</td>
                 <td>U_001</td>
                 <td>Puthabucha44...</td>
                 <td>Keychron K4V2</td>
@@ -166,7 +166,7 @@ const AdminOrder = ({ id }) => {
       )}
 
       {/* Modal */}
-      <OrderDetail showOrder={showOrder} setShowOrder={setShowOrder}/>
+      <OrderDetail showOrder={showOrder} setShowOrder={setShowOrder} />
     </>
   );
 };

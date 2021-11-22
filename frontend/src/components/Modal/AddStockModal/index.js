@@ -1,10 +1,30 @@
 import React, { useState } from "react";
 import { Modal, Button, Form, Image } from "react-bootstrap";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
-import "./style.css"
+import Swal from "sweetalert2";
+import "./style.css";
 
 const AddStockModal = ({ showAdd, setShowAdd }) => {
+  const [count, setCount] = useState(0);
   const handleClose = () => setShowAdd(false);
+  const handleIncrement = () => {
+    setCount((prevCount) => prevCount + 1);
+  };
+  const handleDecrement = () => {
+    if (count > 1) {
+      setCount((prevCount) => prevCount - 1);
+    }
+  };
+
+  const confirmAlert = () => {
+    Swal.fire({
+      position: "top",
+      title: "Success",
+      text: "Add stock success",
+      icon: "success",
+    })
+  };
+
   return (
     <div>
       <Modal
@@ -44,13 +64,13 @@ const AddStockModal = ({ showAdd, setShowAdd }) => {
           </div>
           <div className="d-flex justify-content-center count">
             <div className="minus">
-              <AiFillMinusCircle />
+              <AiFillMinusCircle onClick={handleDecrement} />
             </div>
             <div>
-              <h5 className="total-background mx-2">5</h5>
+              <h5 className="total-background mx-2">{count}</h5>
             </div>
             <div className="plus">
-              <AiFillPlusCircle/>
+              <AiFillPlusCircle onClick={handleIncrement} />
             </div>
           </div>
         </Modal.Body>
@@ -58,7 +78,7 @@ const AddStockModal = ({ showAdd, setShowAdd }) => {
           <Button className="grey btn-small" onClick={handleClose}>
             Close
           </Button>
-          <Button className="green btn-small">Confirm</Button>
+          <Button className="green btn-small" onClick={()=>{confirmAlert(); handleClose();}}>Confirm</Button>
         </Modal.Footer>
       </Modal>
     </div>
