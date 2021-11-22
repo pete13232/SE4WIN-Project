@@ -6,7 +6,7 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
   const handleClose = () => setShowProduct(false);
 
   return (
-    <div>
+    <>
       <Modal
         size="lg"
         show={showProduct}
@@ -78,7 +78,7 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
           <Button className="green btn-small">Confirm</Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 };
 export default AddProductModal;

@@ -5,7 +5,7 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
   const handleClose = () => setShowOrder(false);
 
   return (
-    <div>
+    <>
       <Modal
         size="lg"
         show={showOrder}
@@ -77,7 +77,7 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
           </Row>
         </Modal.Body>
       </Modal>
-    </div>
+    </>
   );
 };
 export default OrderDetail;

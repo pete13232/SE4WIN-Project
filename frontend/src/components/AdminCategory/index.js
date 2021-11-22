@@ -2,61 +2,83 @@ import { Row, Col, Table, Button, Form, FormControl } from "react-bootstrap";
 import { FaRegEdit, FaEdit } from "react-icons/fa";
 import { AiOutlineCheckSquare } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "./style.css";
 
 const AdminCategory = ({ id }) => {
-  const [choose, setChoose] = useState(true);
-  const [confirm, setConfirm] = useState(true);
+  const [showName, setShowName] = useState([true, true]);
   const [text, setText] = useState("");
-  const handleEdit = () => {
-    setChoose(false);
-    setConfirm(false);
+  const [test, setTest] = useState([
+    { id: 1, name: "keyboard" },
+    {
+      id: 2,
+      name: "switch",
+    }]);
+  // useEffect(() => {
+  //   // console.log('useEFECT');
+  //   setTest([
+  //     { id: 1, name: "keyboard" },
+  //     {
+  //       id: 2,
+  //       name: "switch",
+  //     },
+  //   ]);
+  //   setShowName(c);
+  //   setShowDelete([true, true]);
+  // }, []);
+  
+  const handleEdit = (index) => {
+    setText(test[index].name);
+    const newShowName = Array.from({length: showName.length}, i => i = true);
+    newShowName[index] = false;
+    setShowName(newShowName);
   };
 
-  const handleConfirm = () => {
-    setConfirm(true);
-    setChoose(true);
+  const handleConfirm = (index) => {
+    /// DO SOMETHINH WITH BE
+    const newTest = [...test];
+    newTest[index].name = text;
+    setTest(newTest);
+    const newShowName = Array.from({length: showName.length}, i => i = true);
+    setShowName(newShowName);
   };
 
-  //   const handleText = (event) => {
-  //     console.log(event.nativeEvent.data);
-  //   };
+  const handleText = (event) => {
+    setText(event.target.value);
+  };
 
-  //   const handleText = (event) => {
-  //       setText(event.nativeEvent.data)
-  //   }
-
-  //   const handleText = (event) => {
-  //     setText(event.nativeEvent.data)
-  //   };
-
-  const switchShow = () => {
-    if (choose === true) {
-      return <td>Keyboard</td>;
+  const textFieldShow = (index) => {
+    if (showName[index] === true) {
+      return <td>{test[index].name}</td>;
     } else {
       return (
         <td>
           <Form>
-            <FormControl type="text" placeholder="put text here" />
+            <FormControl
+              value={text}
+              type="text"
+              placeholder="put text here"
+              onChange={handleText}
+            />
           </Form>
         </td>
       );
     }
   };
 
-  const switchConfirm = () => {
-    if (confirm === true) {
+  const editConfirmButton = (index) => {
+    // return <a>{ showName}</a>;
+    if (showName[index] === true) {
       return (
         <div className="edit">
-          <FaRegEdit onClick={handleEdit} />
+          <FaRegEdit onClick={() => handleEdit(index)} />
         </div>
       );
     } else {
       return (
         <div className="check">
-          <AiOutlineCheckSquare onClick={handleConfirm} />
+          <AiOutlineCheckSquare onClick={() => handleConfirm(index)} />
         </div>
       );
     }
@@ -69,8 +91,8 @@ const AdminCategory = ({ id }) => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -117,18 +139,22 @@ const AdminCategory = ({ id }) => {
               </tr>
             </thead>
             <tbody>
-              <tr className="modify">
-                <td>C_001</td>
-                {switchShow()}
-                <td>
-                  <div className="d-flex gap-3">
-                    <div className="edit">{switchConfirm()}</div>
-                    <div className="bin">
-                      <ImBin onClick={deleteAlert} />
-                    </div>
-                  </div>
-                </td>
-              </tr>
+              {test.map((e, index) => {
+                return (
+                  <tr className="modify" key={index}>
+                    <td>{e.id}</td>
+                    {textFieldShow(index)}
+                    <td>
+                      <div className="d-flex gap-3">
+                        <div className="edit">{editConfirmButton(index)}</div>
+                        <div className="bin">
+                          <ImBin onClick={deleteAlert} />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </Table>
         </Col>

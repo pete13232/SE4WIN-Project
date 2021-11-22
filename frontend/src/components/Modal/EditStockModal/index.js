@@ -13,7 +13,7 @@ const EditStockModal = ({ showEdit, setShowEdit }) => {
     });
   };
   return (
-    <div>
+    <>
       <Modal
         size="lg"
         show={showEdit}
@@ -93,7 +93,7 @@ const EditStockModal = ({ showEdit, setShowEdit }) => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </div>
+    </>
   );
 };
 export default EditStockModal;

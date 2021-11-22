@@ -13,7 +13,7 @@ const ProductModal = ({text,space,size}) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   return (
-    <div>
+    <>
       <Button className={`${space}`} onClick={handleShow}>
         {text}
       </Button>
@@ -96,7 +96,7 @@ const ProductModal = ({text,space,size}) => {
         </Modal.Footer>
       </Modal>
       <SuccessModal showSuccess={showSuccess} setShowSuccess={setShowSuccess} text="Order Confirmed"/>
-    </div>
+    </>
   );
 };
 export default ProductModal;
