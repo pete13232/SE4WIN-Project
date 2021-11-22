@@ -1,9 +1,14 @@
 import NavbarBootstrap from "../../components/NavbarBoostrap";
 import Header from "../../components/Header";
 import { Row, Col, Button, Image, Form } from "react-bootstrap";
+import React, { useState } from "react";
 import "./style.css";
 
 const Profile = () => {
+  const [edit, setEdit] = useState(true);
+  const handleEdit = () => {
+    setEdit(false);
+  };
   return (
     <div>
       <Row className="d-flex mt-3 bg-white profile-container gx-0">
@@ -150,48 +155,88 @@ const Profile = () => {
             <Image src="https://wallpaperaccess.com/full/2161330.jpg" />
           </div>
           <div className="text-center">
-            <Button className="btn-medium blue">Edit Profile</Button>
+            <Button className="btn-medium blue" onClick={handleEdit}>
+              Edit Profile
+            </Button>
           </div>
         </Col>
         <Col md={3}>
           <Row className="gap-3">
             <Form>
-              <Form.Group className="d-flex mb-3" controlId="formBasicEmail">
+              <Form.Group
+                className="d-flex mb-3 align-items-baseline"
+                controlId="formBasicEmail"
+              >
                 <Form.Label className="title-block">
                   <h5>Email:</h5>
                 </Form.Label>
-                <Form.Control type="email" placeholder="pete@hotmail.com" readOnly={false}/>
+                <Form.Control
+                  type="email"
+                  placeholder="pete@hotmail.com"
+                  disabled={edit}
+                />
               </Form.Group>
-              <Form.Group className="d-flex mb-3" controlId="formBasicPassword">
+              <Form.Group
+                className="d-flex mb-3 align-items-baseline"
+                controlId="formBasicPassword"
+              >
                 <Form.Label className="title-block">
                   <h5>Password:</h5>
                 </Form.Label>
-                <Form.Control type="password" placeholder="*******" />
+                <Form.Control
+                  type="password"
+                  placeholder="*******"
+                  disabled={edit}
+                />
               </Form.Group>
-              <Form.Group className="d-flex mb-3" controlId="formBasicPassword">
+              <Form.Group
+                className="d-flex mb-3 align-items-baseline"
+                controlId="formBasicPassword"
+              >
                 <Form.Label className="title-block">
                   <h5>First name:</h5>
                 </Form.Label>
-                <Form.Control type="password" placeholder="Pete" />
+                <Form.Control
+                  type="password"
+                  placeholder="Pete"
+                  disabled={edit}
+                />
               </Form.Group>
-              <Form.Group className="d-flex mb-3" controlId="formBasicPassword">
+              <Form.Group
+                className="d-flex mb-3 align-items-baseline"
+                controlId="formBasicPassword"
+              >
                 <Form.Label className="title-block">
                   <h5>Last name:</h5>
                 </Form.Label>
-                <Form.Control type="password" placeholder="Vongchanapibul" />
+                <Form.Control
+                  type="password"
+                  placeholder="Vongchanapibul"
+                  disabled={edit}
+                />
               </Form.Group>
             </Form>
           </Row>
         </Col>
         <Col md={5}>
           <Form>
-            <Form.Group className="d-flex mb-3" controlId="formBasicEmail">
+            <Form.Group
+              className="d-flex mb-3 align-items-baseline"
+              controlId="formBasicEmail"
+            >
               <Form.Label className="title-block">
                 <h5>Phone:</h5>
               </Form.Label>
-              <Form.Control type="email" placeholder="081-2356322" />
+              <Form.Control
+                type="email"
+                placeholder="081-2356322"
+                disabled={edit}
+              />
             </Form.Group>
-            <Form.Group className="d-flex mb-3" controlId="formBasicPassword">
+            <Form.Group
+              className="d-flex mb-3 align-items-baseline"
+              controlId="formBasicPassword"
+            >
               <Form.Label className="title-block">
                 <h5>address:</h5>
               </Form.Label>
@@ -201,6 +246,7 @@ const Profile = () => {
                 Thailand. 126 Pracha Uthit Rd., Bang Mod, Thung Khru, Bangkok
                 10140, Thailand."
                 as="textarea"
+                disabled={edit}
               />
             </Form.Group>
           </Form>
