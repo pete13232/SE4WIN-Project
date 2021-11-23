@@ -22,10 +22,7 @@ const ProductSelectContainer = () => {
     }
   }, [data]);
 
-   console.log(id);
-   console.log(useParams());
-   console.log(data);
-   console.log(product);
+
   return (
     <>
       {product && (
@@ -37,6 +34,7 @@ const ProductSelectContainer = () => {
             name={product.name}
             price={product.price}
             stock={product.stock}
+            productId={id}
           />
           <Header text="Description" />
           <ProductDescription category={product.category.name} desc={product.desc} />

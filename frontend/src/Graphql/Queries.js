@@ -40,3 +40,11 @@ export const GET_PRODUCT_INFO = gql`
     }
   }
 `;
+export const GET_USER_ADDRESS = gql`
+  query($input:Int!) {
+    user(id:$input){
+      address
+    }
+  }
+`;
+

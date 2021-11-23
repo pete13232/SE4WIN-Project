@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import "./style.css";
 
 const SignupContainer = () => {
-  const [createUser, { error }] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(CREATE_USER);
 
   const addUser = (data) => {
     createUser({

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
-import { Navbar, Col, Form, FormControl } from "react-bootstrap";
+import { Navbar, Col, Form, Button, FormControl } from "react-bootstrap";
 import { AuthContext } from "../../context/auth";
 import "./style.css";
 import { boolean } from "yup/lib/locale";

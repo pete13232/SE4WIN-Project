@@ -47,7 +47,7 @@ const Products = () => {
         </Dropdown>
       </div>
       <div className="product-items mt-3">
-        <Row>
+        <Row className="d-flex ">
           {products.map((val) => (
             <Link to={`products/${val.id}`} key={val.id}>
               <Product
