@@ -1,8 +1,14 @@
 import { Row, Col, Button, Image } from "react-bootstrap";
 import "./style.css";
 import ProductModal from "../Modal/ProductModal";
+import { useState } from "react";
 
-const ProductDetail = ({ picURL, name, price, stock }) => {
+const ProductDetail = ({ picURL, name, price, stock, productId }) => {
+
+  const [selectQuantity, setSelectQuantity] = useState(1)
+
+
+  console.log(selectQuantity)
   return (
     <div>
       <Row className="detail mt-3">
@@ -34,11 +40,14 @@ const ProductDetail = ({ picURL, name, price, stock }) => {
                 </div>
               </div>
               <div className="ms-4 mb-4 d-flex align-items-center justify-content-center background-detail">
-                  <input className="center-block text-center" type="number" placeholder="0" min="0"/>
+                  <input className="center-block text-center" type="number" placeholder="1" min="1" onChange={(e)=> {
+                    setSelectQuantity(e.target.value)
+                  }}/>
+                   
               </div>
             </div>
             {/* <Button className="ms-4 blue btn btn-success" href="#">Buy</Button> */}
-            <ProductModal/>
+            <ProductModal picURL={picURL} name={name} totalPrice={price*selectQuantity} selectQuantity={selectQuantity} productId= {productId}/>
           </Row>
         </Col>
       </Row>

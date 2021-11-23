@@ -18,3 +18,12 @@ export const LOGIN_USER = gql`
     login(loginUserInput: $input) 
   }
 `;
+
+export const CREATE_ORDER = gql`
+  mutation ($input: CreateOrderInput!) {
+    createOrder(createOrderInput: $input){
+      id
+    }
+    
+  }
+`;
