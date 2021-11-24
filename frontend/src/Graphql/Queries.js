@@ -48,3 +48,16 @@ export const GET_USER_ADDRESS = gql`
   }
 `;
 
+export const GET_USER_INFO = gql`
+  query($input:Int!) {
+    user(id:$input){
+      email
+      password
+      firstname
+      lastname
+      address
+      phoneNumber
+    }
+  }
+`;
+

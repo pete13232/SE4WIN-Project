@@ -64,31 +64,6 @@ function App() {
 
   /* -------------------------------------------------------- */
   return (
-    <ApolloProvider client={client}>
-      <Container className=" bg-container px-0">
-        <Switch>
-          <Route exact path="/">
-            <HomeContainer />
-          </Route>
-          <Route path="/signup">
-            <SignupContainer />
-          </Route>
-          <Route path="/login">
-            <LoginContainer/>
-          </Route>
-          <Route path="/product">
-            <ProductSelectContainer/>
-          </Route>
-          <Route path="/profile">
-            <ProfileContainer/>
-          </Route>
-          <Route path="/:id">
-            <p>Page not found</p>
-          </Route>
-        </Switch>
-        <Footer/>
-      </Container>
-    </ApolloProvider>
     <AuthProvider>
       <ApolloProvider client={client}>
         <Container className=" bg-container px-0">
@@ -99,6 +74,7 @@ function App() {
             <GuestRoute path="/signup" component={SignupContainer} />
             <GuestRoute path="/login" component={LoginContainer} />
             <UserRoute path="/order" component={OrderContainer} />
+            <UserRoute path="/profile" component={ProfileContainer}/>
             <Route path="/products/:id">
               <ProductSelectContainer />
             </Route>
