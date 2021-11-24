@@ -55,7 +55,7 @@ const ProductModal = ({
     };
     console.log(param);
     createOrder({
-      variables: {input: param},
+      variables: { input: param },
     })
       .then(() => {
         Swal.fire({
@@ -84,89 +84,87 @@ const ProductModal = ({
 
   return (
     <>
-      <Button className={`${space}`} onClick={handleShow}>
-        {text}
-      </Button>
-
-      <Modal
-        size={size}
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <h2>Confirmation</h2>
-        </Modal.Header>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Modal.Body>
-            <Row className="gap-3">
-              <div className="confirm-image d-flex justify-content-center">
-                <Image src={picURL} />
-              </div>
-              <div className="d-flex align-items-center">
-                <div className="title-block d-flex align-items-center justify-content-end">
-                  <h5>Product:</h5>
+      <div>
+        <Button className={`${space}`} onClick={handleShow}>
+          {text}
+        </Button>
+        <Modal
+          size={size}
+          show={show}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <h2>Confirmation</h2>
+          </Modal.Header>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Modal.Body>
+              <Row className="gap-3">
+                <div className="confirm-image d-flex justify-content-center">
+                  <Image src={picURL} />
                 </div>
-                <div className="d-flex align-items-center justify-content-center">
-                  <h3>{name}</h3>
+                <div className="d-flex align-items-center">
+                  <div className="title-block d-flex align-items-center justify-content-end">
+                    <h5>Product:</h5>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-center">
+                    <h3>{name}</h3>
+                  </div>
                 </div>
-              </div>
-
-              <div className="d-flex align-items-center">
-                <div className="title-block d-flex align-items-center justify-content-end">
-                  <h5>Quantity:</h5>
+                <div className="d-flex align-items-center">
+                  <div className="title-block d-flex align-items-center justify-content-end">
+                    <h5>Quantity:</h5>
+                  </div>
+                  <div className="ms-4 d-flex align-items-center justify-content-center quantity-background">
+                    <h3>{selectQuantity}</h3>
+                  </div>
                 </div>
-                <div className="ms-4 d-flex align-items-center justify-content-center quantity-background">
-                  <h3>{selectQuantity}</h3>
+                <div className="d-flex align-items-center">
+                  <div className="title-block d-flex align-items-center justify-content-end">
+                    <h5>TotalPrice:</h5>
+                  </div>
+                  <div className="ms-4 d-flex align-items-center justify-content-center total-background">
+                    <h3>{totalPrice} ฿</h3>
+                  </div>
                 </div>
-              </div>
-
-              <div className="d-flex align-items-center">
-                <div className="title-block d-flex align-items-center justify-content-end">
-                  <h5>TotalPrice:</h5>
+                <div className="d-flex align-items-center">
+                  <div className="title-block d-flex align-items-center justify-content-end">
+                    <h5>Delivery address:</h5>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-center address-background">
+                    <Form.Control
+                      name="address"
+                      defaultValue={address}
+                      type="text"
+                      placeholder="Enter address"
+                      {...register("address")}
+                    />
+                  </div>
                 </div>
-                <div className="ms-4 d-flex align-items-center justify-content-center total-background">
-                  <h3>{totalPrice} ฿</h3>
-                </div>
-              </div>
-
-              <div className="d-flex align-items-center">
-                <div className="title-block d-flex align-items-center justify-content-end">
-                  <h5>Delivery address:</h5>
-                </div>
-                <div className="d-flex align-items-center justify-content-center address-background">
-                  <Form.Control
-                    name="address"
-                    defaultValue={address}
-                    type="text"
-                    placeholder="Enter address"
-                    {...register("address")}
-                  />
-                </div>
-              </div>
-              <p className="errorMessage">{errors["address"]?.message}</p>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button className="grey btn-small" onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button
-              className="green btn-small"
-              type="submit"
-              onClick={() => {
-                if (!errors["address"]?.message) {
-                  handleClose();
-                }
-              }}
-            >
-              Confirm
-            </Button>
-          </Modal.Footer>
-        </Form>
-      </Modal>
-    </div>
+                <p className="errorMessage">{errors["address"]?.message}</p>
+              </Row>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button className="grey btn-small" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button
+                className="green btn-small"
+                type="submit"
+                onClick={() => {
+                  if (!errors["address"]?.message) {
+                    handleClose();
+                  }
+                }}
+              >
+                Confirm
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal>
+      </div>
+    </>
   );
 };
 export default ProductModal;
