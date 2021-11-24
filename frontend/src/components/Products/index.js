@@ -1,14 +1,14 @@
 import { Col, Row, Card, Dropdown } from "react-bootstrap";
 // import "./style.css";
 import { useEffect, useState } from "react";
+import { Route, Link, useRouteMatch } from "react-router-dom";
 import { useQuery, gql } from "@apollo/client";
 import { GET_PRODUCTS } from "../../Graphql/Queries";
 import Product from "./Product/index";
+import ProductSelectContainer from "../../container/ProductSelectContainer/index.js";
 
 const Products = () => {
-
   const [sort, setSort] = useState("Price, low to High");
-
   const inputSort = (event) => {
     setSort(event.target.innerText);
     console.log(event.target.innerHTML);
@@ -16,7 +16,6 @@ const Products = () => {
 
   const { data, error } = useQuery(GET_PRODUCTS);
   const [products, setProducts] = useState([]);
-
   useEffect(() => {
     if (data) {
       setProducts(data.products);
@@ -48,17 +47,20 @@ const Products = () => {
         </Dropdown>
       </div>
       <div className="product-items mt-3">
-        <Row>
+        <Row className="d-flex ">
           {products.map((val) => (
-            <Product
-              key={val.id}
-              name={val.name}
-              price={val.price}
-              img={val.picURL}
-            />
+            <Link to={`products/${val.id}`} key={val.id}>
+              <Product
+                name={val.name}
+                price={val.price}
+                img={val.picURL}
+              />
+            </Link>
           ))}
         </Row>
       </div>
+      
+
     </div>
   );
 };

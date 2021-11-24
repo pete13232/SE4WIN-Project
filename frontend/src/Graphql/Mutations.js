@@ -18,3 +18,26 @@ export const LOGIN_USER = gql`
     login(loginUserInput: $input) 
   }
 `;
+
+export const CREATE_ORDER = gql`
+  mutation ($input: CreateOrderInput!) {
+    createOrder(createOrderInput: $input){
+      id
+    }
+    
+  }
+`;
+
+export const UPDATE_USER_INFO = gql`
+  mutation ($input: UpdateUserInput!) {
+    updateUser(updateUserInput: $input){
+      id
+      email
+      firstname
+      lastname
+      phoneNumber
+      address
+    }
+    
+  }
+`;
