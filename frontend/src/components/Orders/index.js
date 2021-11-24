@@ -9,9 +9,7 @@ import Order from "./Order";
 
 const Orders = () => {
   const context = useContext(AuthContext);
-  const { data, error } = useQuery(GET_USER_ORDERS, {
-    variables: { input: context.user.sub },
-  });
+  const { data, error } = useQuery(GET_USER_ORDERS);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {

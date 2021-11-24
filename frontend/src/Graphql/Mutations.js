@@ -32,6 +32,11 @@ export const UPDATE_USER_INFO = gql`
   mutation ($input: UpdateUserInput!) {
     updateUser(updateUserInput: $input){
       id
+      email
+      firstname
+      lastname
+      phoneNumber
+      address
     }
     
   }

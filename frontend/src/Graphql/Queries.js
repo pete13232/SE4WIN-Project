@@ -11,8 +11,8 @@ export const GET_PRODUCTS = gql`
   }
 `;
 export const GET_USER_ORDERS = gql`
-  query($input:Int!) {
-    orderByUser(id:$input){
+  query{
+    orderByUser{
       id
       product{
         name
@@ -41,23 +41,22 @@ export const GET_PRODUCT_INFO = gql`
   }
 `;
 export const GET_USER_ADDRESS = gql`
-  query($input:Int!) {
-    user(id:$input){
+  query{
+    me{
       address
     }
   }
 `;
 
 export const GET_USER_INFO = gql`
-  query($input:Int!) {
-    user(id:$input){
+  query {
+    me{
       email
-      password
       firstname
       lastname
       address
       phoneNumber
-    }
   }
+}
 `;
 

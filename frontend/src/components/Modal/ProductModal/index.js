@@ -25,14 +25,12 @@ const ProductModal = ({
   const handleShow = () => setShow(true);
 
   const context = useContext(AuthContext);
-  const { data, error } = useQuery(GET_USER_ADDRESS, {
-    variables: { input: context.user.sub },
-  });
+  const { data, error } = useQuery(GET_USER_ADDRESS);
   const [address, setAddress] = useState("");
 
   useEffect(() => {
     if (data) {
-      setAddress(data.user.address);
+      setAddress(data.me.address);
     }
   }, [data]);
 

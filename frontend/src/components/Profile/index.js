@@ -17,17 +17,14 @@ const Profile = () => {
   const context = useContext(AuthContext);
 
   /*-------------------------Query----------------------------- */
-  const { data, error } = useQuery(GET_USER_INFO, {
-    variables: { input: Number(context.user.sub) },
-  });
+  const { data, error } = useQuery(GET_USER_INFO);
   const [user, setUser] = useState();
 
   useEffect(() => {
     if (data) {
-      setUser(data.user);
+      setUser(data.me);
     }
   }, [data]);
-  // console.log(user);
 
   /*-------------------------Query----------------------------- */
 
@@ -72,37 +69,39 @@ const Profile = () => {
   /*--------------------------Submit Form---------------------------- */
   const [updateUser] = useMutation(UPDATE_USER_INFO);
 
-  const schema = yup.object().shape({
-    email: yup.string().notRequired(),
-    password: yup
-      .string()
-      .notRequired()
-      .nullable()
-      .when('password', {
-        is: (value) => value?.length,
-        then: (rule) =>
-          rule.min(7, "Please enter at least 7 characters password"),
-      }),
-    firstname: yup.string().notRequired(),
-    lastname: yup.string().notRequired(),
-    phoneNumber: yup
-      .string()
-      .notRequired()
-      .nullable()
-      .when("phoneNumber", {
-        is: (value) => value?.length,
-        then: (rule) =>
-          rule
-            .min(12, "Please enter valid phone number")
-            .max(12, "Please enter valid phone number"),
-      }),
-    address: yup.string().notRequired(),
-  },
-  [
-        // Add Cyclic deps here because when require itself
-        ['password', 'password'],
-        ['phoneNumber', 'phoneNumber']
-    ]);
+  const schema = yup.object().shape(
+    {
+      email: yup.string().notRequired(),
+      password: yup
+        .string()
+        .notRequired()
+        .nullable()
+        .when("password", {
+          is: (value) => value?.length,
+          then: (rule) =>
+            rule.min(7, "Please enter at least 7 characters password"),
+        }),
+      firstname: yup.string().notRequired(),
+      lastname: yup.string().notRequired(),
+      phoneNumber: yup
+        .string()
+        .notRequired()
+        .nullable()
+        .when("phoneNumber", {
+          is: (value) => value?.length,
+          then: (rule) =>
+            rule
+              .min(12, "Please enter valid phone number")
+              .max(12, "Please enter valid phone number"),
+        }),
+      address: yup.string().notRequired(),
+    },
+    [
+      // Add Cyclic deps here because when require itself
+      ["password", "password"],
+      ["phoneNumber", "phoneNumber"],
+    ]
+  );
 
   const {
     register,
@@ -114,13 +113,16 @@ const Profile = () => {
   });
 
   const onSubmit = (submit) => {
-    const userId ={ id: context.user.sub}
+    const userId = { id: context.user.sub };
     console.log(submit);
+    if(submit.phoneNumber){
+      submit.phoneNumber = submit.phoneNumber.replaceAll("-", "")
+    }
     Object.keys(submit).forEach((key) =>
-      (submit[key] === undefined || submit[key] === "") ? delete submit[key] : {}
+      submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
     );
     if (Object.keys(submit).length !== 0) {
-      submit = Object.assign(userId,submit)
+      submit = Object.assign(userId, submit);
       updateUser({
         variables: { input: submit },
       })
@@ -161,7 +163,6 @@ const Profile = () => {
   };
 
   /*--------------------------Button and Form display-----------------------------------*/
-
   return (
     <>
       {user && (
@@ -277,7 +278,10 @@ const Profile = () => {
                       )}
                     />
                   )}
-                  <p className="errorMessage"> {errors["phoneNumber"]?.message}</p>
+                  <p className="errorMessage">
+                    {" "}
+                    {errors["phoneNumber"]?.message}
+                  </p>
                 </Form.Group>
                 <Form.Group className="d-flex mb-3 align-items-baseline">
                   <Form.Label className="title-block">
