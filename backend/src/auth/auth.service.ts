@@ -3,10 +3,10 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
-import { jwtConstants } from './constants';
 import * as bcrypt from 'bcrypt';
 import { ForbiddenError } from 'apollo-server-errors';
 import LoginUserInput from './dto/login-user.input';
+import { JwtConstants } from './constants';
 
 @Injectable()
 export class AuthService {
@@ -42,7 +42,7 @@ export class AuthService {
 
   async verify(token: string): Promise<User> {
     const decoded = this.jwtService.verify(token, {
-      secret: jwtConstants.secret,
+      secret: JwtConstants.secret,
     });
 
     const user = this.usersService.findByEmail({ email: decoded.email });
