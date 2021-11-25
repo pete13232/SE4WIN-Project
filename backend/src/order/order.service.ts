@@ -33,8 +33,8 @@ export class OrderService {
     }
 
     //check address
-    if (createOrderInput.order_address == null) {
-      newOrder.order_address = user.address;
+    if (createOrderInput.orderAddress == null) {
+      newOrder.orderAddress = user.address;
     }
 
     user.order.push(newOrder);
