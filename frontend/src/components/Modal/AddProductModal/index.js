@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ADD_PRODUCT } from "../../../Graphql/Mutations";
 import { ADMIN_GET_CATEGORIES } from "../../../Graphql/Queries";
-import  axios  from "axios";
+import axios from "axios";
 import Swal from "sweetalert2";
 
 const AddProductModal = ({ showProduct, setShowProduct }) => {
@@ -66,27 +66,37 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
     resolver: yupResolver(schema),
   });
 
-  const [pictureFile, setPictureFile] = useState({
-    file: null,
-  });
+  const [pictureFile, setPictureFile] = useState("");
 
   const onSubmit = (submit) => {
-    const token = localStorage.getItem("jwtToken") || "";
+    // const token = localStorage.getItem("jwtToken") || "";
     let formdata = new FormData();
-    formdata.append("file", pictureFile);
-
+    formdata.append("file", pictureFile, pictureFile.name);
+    // console.log(pictureFile.name);
+    // console.log(formdata);
     axios({
       url: "http://20.212.81.174/upload",
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
       },
       data: formdata,
-    }).then((res) => {
-      console.log(res)
-    }).catch((err) => {
-      console.log(err)
-    });
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // axios
+    //   .post("http://20.212.81.174/upload", formdata, {})
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
 
     // addProduct({
     //   variables: { input: submit },
@@ -114,8 +124,8 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
 
   /*------------------------Submit--------------------------*/
 
-  console.log(errors);
-  console.log(pictureFile);
+  // console.log(errors);
+  // console.log(pictureFile);
   return (
     <>
       <Modal
@@ -145,9 +155,9 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
                   id="files"
                   type="file"
                   // style={{ visibility: "hidden" }}
-                  {...register("picURL")}
+                  // {...register("picURL")}
                   onChange={(event) => {
-                    setPictureFile(event.target.files);
+                    setPictureFile(event.target.files[0]);
                   }}
                 />
                 {/*------------------------Pic upload--------------------------*/}
