@@ -8,12 +8,14 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => String)
-  async login(@Args('loginUserInput') loginUserInput: LoginUserInput) {
+  async login(
+    @Args('loginUserInput') loginUserInput: LoginUserInput,
+  ): Promise<string> {
     return this.authService.login(loginUserInput);
   }
 
   @Query(() => User)
-  async verify(@Args('token') token: string) {
+  async verify(@Args('token') token: string): Promise<User> {
     return this.authService.verify(token);
   }
 }
