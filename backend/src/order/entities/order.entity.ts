@@ -32,7 +32,7 @@ export class Order {
 
   @Column({ nullable: true })
   @Field({ nullable: true })
-  order_address?: string;
+  orderAddress?: string;
 
   @Column('float')
   @Field(() => Float)

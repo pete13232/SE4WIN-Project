@@ -40,7 +40,7 @@ type Order {
   user: User!
   product: Product!
   quantity: Int!
-  order_address: String
+  orderAddress: String
   netPrice: Float!
   receiptURL: String
   status: Order_Status!
@@ -131,7 +131,7 @@ input CreateOrderInput {
   userId: Int!
   productId: Int!
   quantity: Int!
-  order_address: String
+  orderAddress: String
   receiptURL: String
 }
 
@@ -139,7 +139,7 @@ input UpdateOrderInput {
   userId: Int
   productId: Int
   quantity: Int
-  order_address: String
+  orderAddress: String
   receiptURL: String
   id: Int!
 }
