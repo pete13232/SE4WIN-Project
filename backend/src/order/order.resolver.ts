@@ -75,4 +75,10 @@ export class OrderResolver {
   ): Promise<string> {
     return this.orderService.changeStatus({ id, status });
   }
+
+  /**
+   * TODO findByName
+   * @param productName
+   * @returns lsit of product
+   */
 }

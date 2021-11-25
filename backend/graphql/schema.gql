@@ -5,6 +5,7 @@
 type Category {
   id: Int!
   name: String!
+  picURL: String
   createdAt: DateTime!
   updatedAt: DateTime!
   product: [Product!]!

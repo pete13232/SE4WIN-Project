@@ -70,6 +70,12 @@ export class ProductResolver {
     return this.productService.countStock(product.id);
   }
 
+  /**
+   * TODO findByName
+   * @param productName
+   * @returns lsit of product
+   */
+
   @Mutation(() => Int)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
