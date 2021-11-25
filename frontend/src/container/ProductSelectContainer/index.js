@@ -14,14 +14,13 @@ const ProductSelectContainer = () => {
     variables: { input: Number(id) },
   });
 
-  const [product, setProduct] =  useState();
+  const [product, setProduct] = useState();
 
   useEffect(() => {
     if (data) {
-       setProduct(data.product);
+      setProduct(data.product);
     }
   }, [data]);
-
 
   return (
     <>
@@ -34,10 +33,14 @@ const ProductSelectContainer = () => {
             name={product.name}
             price={product.price}
             stock={product.stock}
+            s
             productId={id}
           />
-          <Header text="Description" />
-          <ProductDescription category={product.category.name} desc={product.desc} />
+            <Header text="Description" />
+          <ProductDescription
+            category={product.category.name}
+            desc={product.desc}
+          />
         </div>
       )}
       {/* <div>

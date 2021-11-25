@@ -31,7 +31,7 @@ const LoginContainer = () => {
           allowOutsideClick: false,
           allowEscapeKey: false,
           didClose: () => {
-            window.location.replace("/");
+              window.location.replace("/");
           },
         });
       })
@@ -71,7 +71,7 @@ const LoginContainer = () => {
 
   return (
     <div>
-      <NavbarBootstrap secondTheme={true} page={"Log-in"}/>
+      <NavbarBootstrap secondTheme={true} page={"Log-in"} />
       <Row className="bg-signup mx-0 justify-content-center">
         <Col md={4} className="form bg-light my-5">
           <div className="border-bottom border-dark py-3 mb-3">

@@ -19,10 +19,10 @@ const ProductModal = ({
   selectQuantity,
   totalPrice,
   productId,
+  showProduct,
+  setShowProduct,
 }) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => setShowProduct(false);
 
   const context = useContext(AuthContext);
   const { data, error } = useQuery(GET_USER_ADDRESS);
@@ -81,16 +81,13 @@ const ProductModal = ({
       });
     console.log(param);
   };
-
+  console.log(showProduct)
   return (
     <>
       <div>
-        <Button className={`${space}`} onClick={handleShow}>
-          {text}
-        </Button>
         <Modal
-          size={size}
-          show={show}
+          size="lg"
+          show={showProduct}
           onHide={handleClose}
           backdrop="static"
           keyboard={false}

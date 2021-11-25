@@ -60,3 +60,27 @@ export const GET_USER_INFO = gql`
 }
 `;
 
+export const ADMIN_GET_PRODUCTS = gql`
+  query {
+    products{
+      id
+      name
+      category{
+        name
+      }
+      desc
+      price
+      picURL
+      stock
+  }
+}
+`;
+
+export const ADMIN_GET_CATEGORIES = gql`
+  query {
+    categories{
+      id
+      name
+  }
+}
+`;

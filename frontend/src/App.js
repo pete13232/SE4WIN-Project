@@ -1,6 +1,13 @@
 import { useState, useContext } from "react";
 import { Container } from "react-bootstrap";
-import { Router, Route, Switch, Redirect, Link } from "react-router-dom";
+import {
+  Router,
+  Route,
+  Switch,
+  Redirect,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
@@ -10,6 +17,7 @@ import {
   ApolloLink,
 } from "@apollo/client";
 import { AuthProvider } from "./context/auth.js";
+import AdminRoute from "./util/AdminRoute.js";
 import GuestRoute from "./util/GuestRoute.js";
 import UserRoute from "./util/UserRoute.js";
 import { onError } from "@apollo/client/link/error";
@@ -48,7 +56,7 @@ function App() {
         },
       });
     } else {
-      <Redirect to="/login" />
+      <Redirect to="/login" />;
     }
     return forward(operation);
   });
@@ -63,6 +71,8 @@ function App() {
     link: logoutLink.concat(authMiddleware.concat(link)),
   });
 
+  const history = useHistory();
+
   /* -------------------------------------------------------- */
   return (
     <AuthProvider>
@@ -75,12 +85,16 @@ function App() {
             <GuestRoute path="/signup" component={SignupContainer} />
             <GuestRoute path="/login" component={LoginContainer} />
             <UserRoute path="/order" component={OrderContainer} />
-            <UserRoute path="/profile" component={ProfileContainer}/>
+            <UserRoute path="/profile" component={ProfileContainer} />
+            <AdminRoute path="/admin/:id" component={AdminContainer} />
             <Route path="/products/:id">
               <ProductSelectContainer />
             </Route>
             <Route exact path="/products">
-              <Redirect to="/" />
+              <Redirect to="/"/>
+            </Route>
+            <Route exact path="/admin">
+              <Redirect to="/admin/stock"/>
             </Route>
             <Route path="/:id">
               <p>Page not found</p>

@@ -4,24 +4,20 @@ import ProductModal from "../Modal/ProductModal";
 import { useState } from "react";
 
 const ProductDetail = ({ picURL, name, price, stock, productId }) => {
+  const [selectQuantity, setSelectQuantity] = useState(1);
+  const [showProduct, setShowProduct] = useState(false);
 
-  const [selectQuantity, setSelectQuantity] = useState(1)
-
-
-  console.log(selectQuantity)
   return (
     <div>
       <Row className="detail mt-3">
         <Col md={5} className="pe-0 border-end border-2">
           <div className="background-head">
-            <Image src={ picURL } />
+            <Image src={picURL} />
           </div>
         </Col>
         <Col md={7} className="ps-0 bg-white">
           <Row className="detail-head g-0">
-            <h6 className="ps-4 d-flex align-items-center">
-              { name }
-            </h6>
+            <h6 className="ps-4 d-flex align-items-center">{name}</h6>
           </Row>
           <Row className="ps-5 pt-4 gap-4">
             <div className="d-flex align-items-center">
@@ -29,7 +25,7 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
                 <h5>Price:</h5>
               </div>
               <div className="ms-4 d-flex align-items-center justify-content-center background-detail">
-                <h5>{ price } ฿</h5>
+                <h5>{price} ฿</h5>
               </div>
             </div>
             <div className="d-flex align-items-center">
@@ -40,17 +36,37 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
                 </div>
               </div>
               <div className="ms-4 mb-4 d-flex align-items-center justify-content-center background-detail">
-                  <input className="center-block text-center" type="number" placeholder="1" min="1" onChange={(e)=> {
-                    setSelectQuantity(e.target.value)
-                  }}/>
-                   
+                <input
+                  className="center-block text-center"
+                  type="number"
+                  placeholder="1"
+                  min="1"
+                  onChange={(e) => {
+                    setSelectQuantity(e.target.value);
+                  }}
+                />
               </div>
             </div>
-            {/* <Button className="ms-4 blue btn btn-success" href="#">Buy</Button> */}
-            <ProductModal picURL={picURL} name={name} totalPrice={price*selectQuantity} selectQuantity={selectQuantity} productId= {productId}/>
+            <Button
+              className="btn-large blue"
+              onClick={() => {
+                setShowProduct(true);
+              }}
+            >
+              Buy
+            </Button>
           </Row>
         </Col>
       </Row>
+      <ProductModal
+        picURL={picURL}
+        name={name}
+        totalPrice={price * selectQuantity}
+        selectQuantity={selectQuantity}
+        productId={productId}
+        showProduct={showProduct}
+        setShowProduct={setShowProduct}
+      />
     </div>
   );
 };

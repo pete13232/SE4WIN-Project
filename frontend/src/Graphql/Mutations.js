@@ -41,3 +41,12 @@ export const UPDATE_USER_INFO = gql`
     
   }
 `;
+
+export const ADD_PRODUCT = gql`
+  mutation ($input: CreateProductInput!) {
+    updateUser(createProductInput: $input){
+      name
+    }
+    
+  }
+`;
