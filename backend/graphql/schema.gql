@@ -95,7 +95,7 @@ type Mutation {
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): String!
-  changeSatus(status: Order_Status!, id: Int!): String!
+  changeStatus(status: Order_Status!, id: Int!): String!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateStock(quantity: Int!, productId: Int!): Int!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
@@ -163,9 +163,11 @@ input UpdateProductInput {
 
 input CreateCategoryInput {
   name: String!
+  picURL: String
 }
 
 input UpdateCategoryInput {
   name: String
+  picURL: String
   id: Int!
 }

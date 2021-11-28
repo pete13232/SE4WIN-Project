@@ -69,7 +69,7 @@ export class OrderResolver {
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
-  changeSatus(
+  changeStatus(
     @Args('id', { type: () => Int }) id: number,
     @Args('status', { type: () => Order_Status }) status: Order_Status,
   ): Promise<string> {

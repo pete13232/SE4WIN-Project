@@ -15,7 +15,7 @@ export const storage = {
       cb(null, './uploads');
     },
     filename: (_, file, cn) => {
-      console.log(file);
+      // console.log(file);
       const types = file.mimetype.split('/')[1];
       cn(null, uuidv4() + `.${types}`);
     },
@@ -27,6 +27,7 @@ export class AppController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', storage))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
-    return of({ imagePath: file.filename });
+    console.log(file);
+    return of({ imagePath: file.path });
   }
 }
