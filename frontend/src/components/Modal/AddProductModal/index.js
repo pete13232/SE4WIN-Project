@@ -88,8 +88,9 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
     })
       .then((res) => {
         const stock = submit.stock;
+        const url = "http://20.212.81.174/";
         delete submit.stock;
-        submit.picURL = res.data.imagePath;
+        submit.picURL = url + res.data.imagePath;
         console.log(submit.picURL);
         addProduct({
           variables: { input: submit },
