@@ -13,11 +13,11 @@ import Swal from "sweetalert2";
 
 const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
   /*------------------------Modal--------------------------*/
-  
+
   const handleClose = () => {
     document.getElementById("addProductForm").reset();
     setShowProduct(false);
-  }
+  };
 
   /*------------------------Modal--------------------------*/
 
@@ -90,6 +90,7 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
         const stock = submit.stock;
         delete submit.stock;
         submit.picURL = res.data.imagePath;
+        console.log(submit.picURL);
         addProduct({
           variables: { input: submit },
         })
@@ -143,7 +144,6 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
   };
 
   /*------------------------Submit--------------------------*/
-
 
   return (
     <>
@@ -200,7 +200,9 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
                 <Form.Select name="categoryId" {...register("categoryId")}>
                   <option>Select Category</option>
                   {categories?.map((category) => (
-                    <option key={category.id} value={category.id}>{category.name}</option>
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
                   ))}
                 </Form.Select>
                 <p className="errorMessage">{errors["categoryId"]?.message}</p>
@@ -253,7 +255,6 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
           </Modal.Footer>
         </Form>
       </Modal>
-
     </>
   );
 };

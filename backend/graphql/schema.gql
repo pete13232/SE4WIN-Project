@@ -102,7 +102,7 @@ type Mutation {
   removeProduct(id: Int!): String!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
-  removeCategory(id: Int!): Category!
+  removeCategory(id: Int!): String!
   login(loginUserInput: LoginUserInput!): String!
 }
 
