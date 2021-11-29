@@ -27,6 +27,6 @@ export class AppController {
   @UseInterceptors(FileInterceptor('file', storage))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
-    return of({ imagePath: join(__dirname, '..', 'uploads') + file.filename });
+    return of({ imagePath: join(__dirname, '..', 'uploads/') + file.filename });
   }
 }
