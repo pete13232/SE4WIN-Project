@@ -44,7 +44,7 @@ export class CategoryResolver {
     );
   }
 
-  @Mutation(() => Category)
+  @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   removeCategory(@Args('id', { type: () => Int }) id: number): Promise<string> {
