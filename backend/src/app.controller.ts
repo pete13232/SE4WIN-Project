@@ -8,6 +8,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { of } from 'rxjs';
+import { join } from 'path';
 
 export const storage = {
   storage: diskStorage({
@@ -26,6 +27,6 @@ export class AppController {
   @UseInterceptors(FileInterceptor('file', storage))
   uploadFile(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
-    return of({ imagePath: file.filename });
+    return of({ imagePath: join(__dirname, '..', 'uploads') + file.filename });
   }
 }
