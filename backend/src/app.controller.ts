@@ -11,9 +11,7 @@ import { of } from 'rxjs';
 
 export const storage = {
   storage: diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, './uploads');
-    },
+    destination: './uploads',
     filename: (_, file, cn) => {
       // console.log(file);
       const types = file.mimetype.split('/')[1];
