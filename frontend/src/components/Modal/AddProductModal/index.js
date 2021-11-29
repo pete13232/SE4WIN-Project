@@ -7,13 +7,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ADD_PRODUCT } from "../../../Graphql/Mutations";
 import { ADMIN_GET_CATEGORIES } from "../../../Graphql/Queries";
+import { UPDATE_STOCK } from "../../../Graphql/Mutations";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const AddProductModal = ({ showProduct, setShowProduct }) => {
+const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
   /*------------------------Modal--------------------------*/
-
-  const handleClose = () => setShowProduct(false);
+  
+  const handleClose = () => {
+    document.getElementById("addProductForm").reset();
+    setShowProduct(false);
+  }
 
   /*------------------------Modal--------------------------*/
 
@@ -32,6 +36,7 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
 
   /*------------------------Submit--------------------------*/
   const [addProduct] = useMutation(ADD_PRODUCT);
+  const [updateStock] = useMutation(UPDATE_STOCK);
 
   const schema = yup.object().shape({
     name: yup.string().required("Please enter product name"),
@@ -72,8 +77,6 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
     // const token = localStorage.getItem("jwtToken") || "";
     let formdata = new FormData();
     formdata.append("file", pictureFile, pictureFile.name);
-    // console.log(pictureFile.name);
-    // console.log(formdata);
     axios({
       url: "http://20.212.81.174/upload",
       method: "POST",
@@ -84,48 +87,64 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
       data: formdata,
     })
       .then((res) => {
-        console.log(res);
+        const stock = submit.stock;
+        delete submit.stock;
+        submit.picURL = res.data.imagePath;
+        addProduct({
+          variables: { input: submit },
+        })
+          .then((res) => {
+            if (stock && stock > 0) {
+              const id = res.data.createProduct.id;
+              updateStock({
+                variables: { quantity: stock, productId: id },
+              }).catch((error) => {
+                const err = error.message;
+                Swal.fire({
+                  title: "Oops! !",
+                  html: err,
+                  icon: "error",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                });
+              });
+            }
+            Swal.fire({
+              title: "Add new product success!",
+              html: "Press Ok to continue",
+              icon: "success",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+            });
+            handleClose();
+            refetch();
+          })
+          .catch((error) => {
+            const err = error.message;
+            Swal.fire({
+              title: "Oops! !",
+              html: err,
+              icon: "error",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+            });
+          });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        const err = error.message;
+        Swal.fire({
+          title: "Oops! !",
+          html: err,
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
       });
-    // axios
-    //   .post("http://20.212.81.174/upload", formdata, {})
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
-    // addProduct({
-    //   variables: { input: submit },
-    // })
-    //   .then(() => {
-    //     Swal.fire({
-    //       title: "Add new product success!",
-    //       html: "Press Ok to continue",
-    //       icon: "success",
-    //       allowOutsideClick: false,
-    //       allowEscapeKey: false,
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     const err = error.message;
-    //     Swal.fire({
-    //       title: "Oops! !",
-    //       html: err,
-    //       icon: "error",
-    //       allowOutsideClick: false,
-    //       allowEscapeKey: false,
-    //     });
-    //   });
   };
 
   /*------------------------Submit--------------------------*/
 
-  // console.log(errors);
-  // console.log(pictureFile);
+
   return (
     <>
       <Modal
@@ -134,8 +153,9 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        id="addProductModal"
       >
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} id="addProductForm">
           <Modal.Header closeButton>
             <h2>New Product</h2>
           </Modal.Header>
@@ -155,7 +175,7 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
                   id="files"
                   type="file"
                   // style={{ visibility: "hidden" }}
-                  // {...register("picURL")}
+                  {...register("picURL")}
                   onChange={(event) => {
                     setPictureFile(event.target.files[0]);
                   }}
@@ -180,7 +200,7 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
                 <Form.Select name="categoryId" {...register("categoryId")}>
                   <option>Select Category</option>
                   {categories?.map((category) => (
-                    <option value={category.id}>{category.name}</option>
+                    <option key={category.id} value={category.id}>{category.name}</option>
                   ))}
                 </Form.Select>
                 <p className="errorMessage">{errors["categoryId"]?.message}</p>
@@ -233,6 +253,7 @@ const AddProductModal = ({ showProduct, setShowProduct }) => {
           </Modal.Footer>
         </Form>
       </Modal>
+
     </>
   );
 };

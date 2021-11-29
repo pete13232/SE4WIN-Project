@@ -8,13 +8,14 @@ import AdminStockChild from "./AdminStockChild";
 import Swal from "sweetalert2";
 
 const AdminStock = ({ id }) => {
-  const { data, error } = useQuery(ADMIN_GET_PRODUCTS);
+  const { data, error, refetch } = useQuery(ADMIN_GET_PRODUCTS);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     if (data) {
       setProducts(data.products);
     }
   }, [data]);
+  
 
   const [showProduct, setShowProduct] = useState(false);
   return (
@@ -45,23 +46,26 @@ const AdminStock = ({ id }) => {
             <tbody>
               {products.map((product) => (
                 <AdminStockChild
+                  key={product.id}
                   id={product.id}
                   name={product.name}
                   category={product.category.name}
                   price={product.price}
-                  desc={product.price}
+                  desc={product.desc}
                   img={product.picURL}
                   stock={product.stock}
+                  refetch={refetch}
                 />
               ))}
             </tbody>
           </Table>
         </Col>
       )}
-      F{/* Modal */}
+      {/* Modal */}
       <AddProductModal
         showProduct={showProduct}
         setShowProduct={setShowProduct}
+        refetch={refetch}
       />
     </>
   );

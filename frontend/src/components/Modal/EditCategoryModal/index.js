@@ -1,62 +1,30 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Button, Form, Image } from "react-bootstrap";
-import {
-  ADMIN_GET_CATEGORIES,
-  GET_PRODUCT_INFO,
-} from "../../../Graphql/Queries";
-import { UPDATE_PRODUCT } from "../../../Graphql/Mutations";
-import { useQuery, useMutation } from "@apollo/client";
+import "./style.css";
+import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { UPDATE_CATEGORY } from "../../../Graphql/Mutations";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const EditStockModal = ({
-  showEdit,
-  setShowEdit,
-  id,
-  name,
-  category,
-  price,
-  desc,
-  img,
-  stock,
-  refetch,
-}) => {
+const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, categoryName, refetch }) => {
   /*------------------------Modal--------------------------*/
 
-  const handleClose = () => setShowEdit(false);
+  const handleClose = () => {
+      setShowEditCategory(false)
+      // document.getElementById("categoryForm").reset();
+  };
 
   /*------------------------Modal--------------------------*/
-
-  /*------------------------Query--------------------------*/
-
-  const { data, error } = useQuery(ADMIN_GET_CATEGORIES);
-  const [categories, setCategories] = useState();
-
-  useEffect(() => {
-    if (data) {
-      setCategories(data.categories);
-    }
-  }, [data]);
-
-  /*------------------------Query--------------------------*/
 
   /*------------------------Submit--------------------------*/
-  const [updateProduct] = useMutation(UPDATE_PRODUCT);
+  const [updateCategory] = useMutation(UPDATE_CATEGORY);
 
   const schema = yup.object().shape({
     name: yup.string().notRequired(),
-    categoryId: yup.number().min(0).notRequired(),
-    desc: yup.string().notRequired(),
-    price: yup
-      .number()
-      .min(0, "Product price must equal or more than zero")
-      .notRequired()
-      .transform((value) => (isNaN(value) ? undefined : value))
-      .nullable(),
-    picURL: yup.mixed().notRequired(),
+    picURL: yup.mixed().notRequired()
   });
 
   const {
@@ -100,22 +68,19 @@ const EditStockModal = ({
     else{
       submit.picURL = undefined
     }
-    const productId = { id: id };
-    if(categories.find(category => category.id === submit.categoryId).name === category )
-    {
-      submit.categoryId = undefined
-    }
+    const categorytId = { id: categoryId }
     Object.keys(submit).forEach((key) =>
       submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
     );
     if (Object.keys(submit).length !== 0) {
-      submit = Object.assign(productId, submit);
-      updateProduct({
+      submit = Object.assign(categorytId, submit);
+      console.log(submit)
+      updateCategory({
         variables: { input: submit },
       })
         .then(() => {
           Swal.fire({
-            title: "Update product success!",
+            title: "Update category success!",
             html: "Press Ok to continue",
             icon: "success",
             allowOutsideClick: false,
@@ -140,19 +105,21 @@ const EditStockModal = ({
       handleClose()
     }
   };
+
   /*------------------------Submit--------------------------*/
+
   return (
     <>
       <Modal
         size="lg"
-        show={showEdit}
+        show={showEditCategory}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} id="categoryForm">
           <Modal.Header closeButton>
-            <h2>New Product</h2>
+            <h2>New Category</h2>
           </Modal.Header>
           <Modal.Body className="d-flex gap-4 p-5">
             <div>
@@ -185,70 +152,14 @@ const EditStockModal = ({
                   <h5>Name:</h5>
                 </Form.Label>
                 <Form.Control
+                  placeholder={categoryName}
                   name="name"
                   type="text"
-                  placeholder={name}
                   {...register("name")}
                 />
-                <p className="errorMessage">{errors["name"]?.message}</p>
-              </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
-                <Form.Label className="title-block">
-                  <h5>Category:</h5>
-                </Form.Label>
-                {/* <Form.Control type="text" /> */}
-                <Form.Select name="categoryId" {...register("categoryId")}>
-                  {categories?.map((cat) =>
-                    cat.name === category ? (
-                      <option key={cat.id} value={cat.id} selected>
-                        {cat.name}
-                      </option>
-                    ) : (
-                      <option key={cat.id} value={cat.id}>{cat.name}</option>
-                    )
-                  )}
-                </Form.Select>
-                <p className="errorMessage">{errors["categoryId"]?.message}</p>
-              </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
-                <Form.Label className="title-block">
-                  <h5>Price:</h5>
-                </Form.Label>
-                <Form.Control
-                  name="price"
-                  type="number"
-                  min="0"
-                  placeholder={price}
-                  {...register("price")}
-                />
-                <p className="errorMessage">{errors["price"]?.message}</p>
-              </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
-                <Form.Label className="title-block">
-                  <h5>Quantity:</h5>
-                </Form.Label>
-                <Form.Control
-                  name="stock"
-                  type="number"
-                  min="0"
-                  placeholder={stock}
-                  disabled
-                  {...register("stock")}
-                />
-                <p className="errorMessage">{errors["stock"]?.message}</p>
-              </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
-                <Form.Label className="title-block">
-                  <h5>Description:</h5>
-                </Form.Label>
-                <Form.Control
-                  name="desc"
-                  type="text"
-                  as="textarea"
-                  placeholder={desc}
-                  {...register("desc")}
-                />
-                <p className="errorMessage">{errors["desc"]?.message}</p>
+                <p className="errorMessage">
+                  {errors["name"]?.message}
+                </p>
               </Form.Group>
             </div>
           </Modal.Body>
@@ -265,4 +176,4 @@ const EditStockModal = ({
     </>
   );
 };
-export default EditStockModal;
+export default EditCategoryModal;

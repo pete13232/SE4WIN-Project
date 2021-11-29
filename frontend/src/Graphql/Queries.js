@@ -11,25 +11,25 @@ export const GET_PRODUCTS = gql`
   }
 `;
 export const GET_USER_ORDERS = gql`
-  query{
-    orderByUser{
+  query {
+    orderByUser {
       id
-      product{
+      product {
         name
         picURL
       }
       quantity
       netPrice
-      order_address
+      orderAddress
       status
     }
   }
 `;
 
 export const GET_PRODUCT_INFO = gql`
-  query($input:Int!) {
-    product(id:$input){
-      category{
+  query ($input: Int!) {
+    product(id: $input) {
+      category {
         name
       }
       name
@@ -41,8 +41,8 @@ export const GET_PRODUCT_INFO = gql`
   }
 `;
 export const GET_USER_ADDRESS = gql`
-  query{
-    me{
+  query {
+    me {
       address
     }
   }
@@ -50,37 +50,72 @@ export const GET_USER_ADDRESS = gql`
 
 export const GET_USER_INFO = gql`
   query {
-    me{
+    me {
       email
       firstname
       lastname
       address
       phoneNumber
+    }
   }
-}
 `;
 
 export const ADMIN_GET_PRODUCTS = gql`
   query {
-    products{
+    products {
       id
       name
-      category{
+      category {
         name
       }
       desc
       price
       picURL
       stock
+    }
   }
-}
 `;
 
 export const ADMIN_GET_CATEGORIES = gql`
   query {
-    categories{
+    categories {
       id
       name
+      picURL
+    }
   }
-}
 `;
+
+
+export const ADMIN_GET_ORDERS = gql`
+  query {
+    orders {
+      id
+      user {
+        id
+      }
+      product {
+        id
+        name
+      }
+      quantity
+      orderAddress
+      netPrice
+      receiptURL
+      status
+    }
+  }
+`;
+export const ADMIN_GET_USER_INFO = gql`
+  query ($input: Int!) {
+    user(id: $input) {
+      id
+      email
+      firstname
+      lastname
+      address
+      phoneNumber
+    }
+  }
+`;
+

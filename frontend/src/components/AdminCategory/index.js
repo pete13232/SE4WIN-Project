@@ -1,12 +1,25 @@
 import { Row, Col, Table, Button, Form, FormControl } from "react-bootstrap";
 import { FaRegEdit, FaEdit } from "react-icons/fa";
 import { AiOutlineCheckSquare } from "react-icons/ai";
-import { ImBin } from "react-icons/im";
-import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2";
-import "./style.css";
 
+import React, { useState, useEffect } from "react";
+import "./style.css";
+import { ADMIN_GET_CATEGORIES } from "../../Graphql/Queries";
+import { useQuery } from "@apollo/client";
+import AdminCategoryChild from "./AdminCategoryChild";
+import AddCategoryModal from "../Modal/AddCategoryModal";
 const AdminCategory = ({ id }) => {
+  /*--------------------------Query-------------------------------*/
+  const { data, error, refetch } = useQuery(ADMIN_GET_CATEGORIES);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setCategories(data.categories);
+    }
+  }, [data]);
+  /*--------------------------Query-------------------------------*/
+  const [showAddCategoryModal,setShowAddCategoryModal] = useState(false)
   const [showName, setShowName] = useState([true, true]);
   const [text, setText] = useState("");
   const [test, setTest] = useState([
@@ -14,7 +27,8 @@ const AdminCategory = ({ id }) => {
     {
       id: 2,
       name: "switch",
-    }]);
+    },
+  ]);
   // useEffect(() => {
   //   // console.log('useEFECT');
   //   setTest([
@@ -27,10 +41,13 @@ const AdminCategory = ({ id }) => {
   //   setShowName(c);
   //   setShowDelete([true, true]);
   // }, []);
-  
+
   const handleEdit = (index) => {
     setText(test[index].name);
-    const newShowName = Array.from({length: showName.length}, i => i = true);
+    const newShowName = Array.from(
+      { length: showName.length },
+      (i) => (i = true)
+    );
     newShowName[index] = false;
     setShowName(newShowName);
   };
@@ -40,7 +57,10 @@ const AdminCategory = ({ id }) => {
     const newTest = [...test];
     newTest[index].name = text;
     setTest(newTest);
-    const newShowName = Array.from({length: showName.length}, i => i = true);
+    const newShowName = Array.from(
+      { length: showName.length },
+      (i) => (i = true)
+    );
     setShowName(newShowName);
   };
 
@@ -48,69 +68,49 @@ const AdminCategory = ({ id }) => {
     setText(event.target.value);
   };
 
-  const textFieldShow = (index) => {
-    if (showName[index] === true) {
-      return <td>{test[index].name}</td>;
-    } else {
-      return (
-        <td>
-          <Form>
-            <FormControl
-              value={text}
-              type="text"
-              placeholder="put text here"
-              onChange={handleText}
-            />
-          </Form>
-        </td>
-      );
-    }
-  };
+  // const textFieldShow = (index) => {
+  //   if (showName[index] === true) {
+  //     return <td>{test[index].name}</td>;
+  //   } else {
+  //     return (
+  //       <td>
+  //         <Form>
+  //           <FormControl
+  //             value={text}
+  //             type="text"
+  //             placeholder="put text here"
+  //             onChange={handleText}
+  //           />
+  //         </Form>
+  //       </td>
+  //     );
+  //   }
+  // };
 
-  const editConfirmButton = (index) => {
-    // return <a>{ showName}</a>;
-    if (showName[index] === true) {
-      return (
-        <div className="edit">
-          <FaRegEdit onClick={() => handleEdit(index)} />
-        </div>
-      );
-    } else {
-      return (
-        <div className="check">
-          <AiOutlineCheckSquare onClick={() => handleConfirm(index)} />
-        </div>
-      );
-    }
-  };
+  // const editConfirmButton = (index) => {
+  //   // return <a>{ showName}</a>;
+  //   if (showName[index] === true) {
+  //     return (
+  //       <div className="edit">
+  //         <FaRegEdit onClick={() => handleEdit(index)} />
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div className="check">
+  //         <AiOutlineCheckSquare onClick={() => handleConfirm(index)} />
+  //       </div>
+  //     );
+  //   }
+  // };
 
-  const deleteAlert = () => {
-    Swal.fire({
-      position: "top",
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          position: "top",
-          title: "Deleted!",
-          text: "This category has been deleted.",
-          icon: "success",
-        });
-      }
-    });
-  };
+  
 
   return (
     <>
       {id === "category" && (
         <Col md={10} className="bg-white admin-category">
-          <div className="d-flex gap-5">
+          <div className="d-flex align-items-center gap-5">
             <Form className="search-order my-3">
               <FormControl
                 type="search"
@@ -119,16 +119,9 @@ const AdminCategory = ({ id }) => {
                 aria-label="Search"
               />
             </Form>
-            <Form className="search-order my-3 d-flex">
-              <FormControl
-                type="text"
-                placeholder="Add new category"
-                className="me-2"
-              />
-              <Button type="submit" className="btn-medium blue">
+              <Button type="submit" className="btn-medium blue" onClick={()=>{setShowAddCategoryModal(true)}}>
                 +New
               </Button>
-            </Form>
           </div>
           <Table striped bordered hover className="px-1">
             <thead className="table-head">
@@ -138,27 +131,21 @@ const AdminCategory = ({ id }) => {
                 <th></th>
               </tr>
             </thead>
-            <tbody>
-              {test.map((e, index) => {
-                return (
-                  <tr className="modify" key={index}>
-                    <td>{e.id}</td>
-                    {textFieldShow(index)}
-                    <td>
-                      <div className="d-flex gap-3">
-                        <div className="edit">{editConfirmButton(index)}</div>
-                        <div className="bin">
-                          <ImBin onClick={deleteAlert} />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+            <tbody>{categories.map((category) => (
+              <AdminCategoryChild
+                key={category.id}
+                id={category.id}
+                categoryName={category.name}
+                picURL={category.picURL}
+                refetch={refetch}
+              />
+            )
+
+            )}</tbody>
           </Table>
         </Col>
       )}
+      <AddCategoryModal showCategory={showAddCategoryModal} setShowCategory={setShowAddCategoryModal} refetch={refetch}/>
     </>
   );
 };

@@ -1,14 +1,41 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Button, Form, Col, Row } from "react-bootstrap";
+import { ADMIN_GET_USER_INFO } from "../../../Graphql/Queries";
+import { useQuery } from "@apollo/client";
+const UserDetail = ({ showUser, setShowUser, userId }) => {
+  const handleClose = () => setShowUser(false);
+  /*-------------------------Phone number modify----------------------------- */
 
-const OrderDetail = ({ showOrder, setShowOrder }) => {
-  const handleClose = () => setShowOrder(false);
+  const phoneModify = (number) => {
+    const showNumber =
+      number.substring(0, 3) +
+      "-" +
+      number.substring(3, 6) +
+      "-" +
+      number.substring(6, 10);
+    return showNumber;
+  };
+  /*-------------------------Phone number modify----------------------------- */
+
+  /*-------------------------Query----------------------------- */
+  const { data, error } = useQuery(ADMIN_GET_USER_INFO, {
+    variables: { input: userId },
+  });
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    if (data) {
+      setUser(data.user);
+    }
+  }, [data]);
+
+  /*-------------------------Query----------------------------- */
 
   return (
     <>
-      <Modal
+      {user && (<Modal
         size="lg"
-        show={showOrder}
+        show={showUser}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -24,7 +51,7 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
                   <h5 className="title-block">User_ID:</h5>
                 </div>
                 <div>
-                  <h3>U_001</h3>
+                  <h3>{user.id}</h3>
                 </div>
               </div>
               <div className="d-flex">
@@ -32,7 +59,7 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
                   <h5 className="title-block">First Name:</h5>
                 </div>
                 <div>
-                  <h3>Peetawit</h3>
+                  <h3>{user.firstname}</h3>
                 </div>
               </div>
 
@@ -41,7 +68,7 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
                   <h5 className="title-block">Telephone:</h5>
                 </div>
                 <div>
-                  <h3>081-615-4177</h3>
+                  <h3>{phoneModify(user.phoneNumber)}</h3>
                 </div>
               </div>
 
@@ -50,7 +77,7 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
                   <h5 className="title-block">Address:</h5>
                 </div>
                 <div>
-                  <h3>3380 Don Jackson Lane st. Keaau City Hawaii 96749</h3>
+                  <h3>{user.address}</h3>
                 </div>
               </div>
             </Col>
@@ -61,7 +88,7 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
                   <h5 className="title-block">Last Name:</h5>
                 </div>
                 <div>
-                  <h3>Vongchanapibul</h3>
+                  <h3>{user.lastname}</h3>
                 </div>
               </div>
 
@@ -70,14 +97,14 @@ const OrderDetail = ({ showOrder, setShowOrder }) => {
                   <h5 className="title-block">Email:</h5>
                 </div>
                 <div>
-                  <h3>peetawit.vong@mail.kmutt.ac.th</h3>
+                  <h3>{user.email}</h3>
                 </div>
               </div>
             </Col>
           </Row>
         </Modal.Body>
-      </Modal>
+      </Modal>)}
     </>
   );
 };
-export default OrderDetail;
+export default UserDetail;

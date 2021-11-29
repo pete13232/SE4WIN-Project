@@ -81,6 +81,11 @@ const Profile = () => {
           then: (rule) =>
             rule.min(7, "Please enter at least 7 characters password"),
         }),
+      ConfirmPassword: yup.string().when("password", {
+        is: (value) => value?.length,
+        then: (rule) =>
+          rule.required("Please enter confirm password").oneOf([yup.ref('password'), null], 'Passwords must match'),
+      }),
       firstname: yup.string().notRequired(),
       lastname: yup.string().notRequired(),
       phoneNumber: yup
@@ -100,6 +105,7 @@ const Profile = () => {
       // Add Cyclic deps here because when require itself
       ["password", "password"],
       ["phoneNumber", "phoneNumber"],
+      ["password","ConfirmPassword"]
     ]
   );
 
@@ -114,9 +120,9 @@ const Profile = () => {
 
   const onSubmit = (submit) => {
     const userId = { id: context.user.sub };
-    console.log(submit);
-    if(submit.phoneNumber){
-      submit.phoneNumber = submit.phoneNumber.replaceAll("-", "")
+    delete submit.ConfirmPassword
+    if (submit.phoneNumber) {
+      submit.phoneNumber = submit.phoneNumber.replaceAll("-", "");
     }
     Object.keys(submit).forEach((key) =>
       submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
@@ -149,8 +155,6 @@ const Profile = () => {
     } else {
       handleEdit();
     }
-
-    console.log(submit);
   };
   /*--------------------------Submit Form---------------------------- */
 
@@ -214,6 +218,20 @@ const Profile = () => {
                     />
                     <p className="errorMessage">
                       {errors["password"]?.message}
+                    </p>
+                  </Form.Group>
+                  <Form.Group className="d-flex mb-3 align-items-baseline">
+                    <Form.Label className="title-block">
+                      <h5>Confirm password:</h5>
+                    </Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="*******"
+                      disabled={editProfile}
+                      {...register("ConfirmPassword")}
+                    />
+                    <p className="errorMessage">
+                      {errors["ConfirmPassword"]?.message}
                     </p>
                   </Form.Group>
 

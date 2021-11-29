@@ -27,7 +27,7 @@ const SignupContainer = () => {
           allowOutsideClick: false,
           allowEscapeKey: false,
           didClose: () => {
-            window.location.replace("/login")
+            window.location.replace("/login");
           },
         });
       })
@@ -56,6 +56,12 @@ const SignupContainer = () => {
         name: "password",
         type: "password",
         placeholder: "Enter password",
+      },
+      {
+        label: "Confirm password",
+        name: "ConfirmPassword",
+        type: "password",
+        placeholder: "Enter confirm password",
       },
       {
         label: "First name",
@@ -95,6 +101,9 @@ const SignupContainer = () => {
       .string()
       .required("Please enter your password")
       .min(7, "Please enter at least 7 characters password"),
+    ConfirmPassword: yup
+      .string()
+      .required("Please enter your password"),
     firstname: yup.string().required("Please enter your first name"),
     lastname: yup.string().required("Please enter your last name"),
     phoneNumber: yup
@@ -115,7 +124,9 @@ const SignupContainer = () => {
   });
 
   const onSubmit = (data) => {
-    const param = {
+    if(data.ConfirmPassword === data.password)
+    {
+      const param = {
       email: data.email,
       password: data.password,
       firstname: data.firstname,
@@ -124,8 +135,17 @@ const SignupContainer = () => {
       phoneNumber: data.phoneNumber.replaceAll("-", ""),
       role: "CUSTOMER",
     };
-
-    addUser(param);
+      addUser(param);
+    }else{
+      Swal.fire({
+        title: "Password and Confirm password is not the same",
+        html: "Press Ok to continue",
+        icon: "error",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+    }
+    
   };
 
   const [valuePhone, setvaluePhone] = useState("");
@@ -153,7 +173,7 @@ const SignupContainer = () => {
   return (
     <>
       <div>
-        <NavbarBootstrap secondTheme={true} page={"Sign-up"}/>
+        <NavbarBootstrap secondTheme={true} page={"Sign-up"} />
         <Row className="bg-signup mx-0 justify-content-center">
           <Col md={4} className="form bg-light my-5">
             <div className="border-bottom border-dark py-3 mb-3">

@@ -51,7 +51,7 @@ const ProductModal = ({
       userId: Number(context.user.sub),
       productId: Number(productId),
       quantity: Number(-selectQuantity),
-      order_address: data.address,
+      orderAddress: data.address,
     };
     console.log(param);
     createOrder({
