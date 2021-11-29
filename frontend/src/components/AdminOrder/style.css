@@ -1,0 +1,23 @@
+.search-order{
+    width: 300px;
+}
+
+.admin-order svg{
+    width: 24px;
+    height: 24px;
+}
+
+.check svg{
+    background-color: #43B05C;
+    color: black;
+}
+
+.check svg:hover{
+    background-color: #358b49;
+    color: black;
+}
+
+.order-detail{
+    cursor: pointer;
+    color: blue !important;
+}

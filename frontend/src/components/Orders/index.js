@@ -1,14 +1,11 @@
-import ButtonCustom from "../ButtonCustom";
 import "./style.css";
-import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_USER_ORDERS } from "../../Graphql/Queries";
-import { AuthContext } from "../../context/auth";
 import Order from "./Order";
 
 const Orders = () => {
-  const context = useContext(AuthContext);
+  /*--------------------------Query-------------------------------*/
   const { data, error } = useQuery(GET_USER_ORDERS);
   const [orders, setOrders] = useState([]);
 
@@ -17,16 +14,19 @@ const Orders = () => {
       setOrders(data.orderByUser);
     }
   }, [data]);
+  console.log(data)
+  /*--------------------------Query-------------------------------*/
   return (
     <div>
       {orders.map((order) => (
         <Order
           key={order.id}
+          id={order.id}
           pic={order.product.picURL}
           name={order.product.name}
           quantity={-order.quantity}
           netPrice={-order.netPrice}
-          address={order.order_address}
+          address={order.OrderAddress}
           status={order.status}
         />
       ))}

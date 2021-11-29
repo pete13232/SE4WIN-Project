@@ -15,7 +15,7 @@ const SuccessModal = ({ showSuccess, setShowSuccess, text}) => {
 //     fail: setIcon(<BsFillXCircleFill />),
 //   };
   return (
-    <div>
+<>
       <Modal size="md" show={showSuccess} onHide={handleClose} keyboard={false}>
         <Modal.Body>
           <Row className="gap-3">
@@ -29,7 +29,7 @@ const SuccessModal = ({ showSuccess, setShowSuccess, text}) => {
           </Row>
         </Modal.Body>
       </Modal>
-    </div>
+    </>
   );
 };
 export default SuccessModal;
