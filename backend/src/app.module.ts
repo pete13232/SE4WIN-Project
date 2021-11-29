@@ -9,7 +9,7 @@ import { TypeOrmConfigModule } from './config/typeorm.module';
 import { AppController } from './app.controller';
 import { GqlConfigModule } from './config/gql-config/gql.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path/posix';
+import { join } from 'path';
 
 @Module({
   imports: [
