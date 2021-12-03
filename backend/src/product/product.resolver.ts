@@ -29,11 +29,11 @@ export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
 
   /**
-   * Create product
+   * Create a product
    *
-   * @requires signed in and role admin
-   * @param createProductInput
-   * @returns Created product
+   * requires: Signed In with Admin Role
+   * parameter: createProductInput
+   * return: a Created Product
    */
   @Mutation(() => Product)
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -45,10 +45,9 @@ export class ProductResolver {
   }
 
   /**
-   * Show all product
+   * Show all Products
    *
-   * @requires signed in and role admin
-   * @returns list of product
+   * return: List of Products
    */
   @Query(() => [Product], { name: 'products' })
   findAll(): Promise<Product[]> {
@@ -56,24 +55,39 @@ export class ProductResolver {
   }
 
   /**
-   * Find user by id
+   * Find Product by Id
    *
-   * @param id
-   * @returns Product
+   * parameters: id
+   * return: Product
    */
   @Query(() => Product, { name: 'product' })
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Product> {
     return this.productService.findOne(id);
   }
+
+  /**
+   * Find Quantity of a Product in Stock
+   *
+   * parameters: product
+   * return: Quantity of a Product in Stock
+   */
   @ResolveField(() => Int)
   stock(@Parent() product: Product): Promise<number> {
     return this.productService.countStock(product.id);
   }
 
   /**
-   * TODO findByName
+   * *TODO* findByName
    * @param productName
-   * @returns lsit of product
+   * @returns list of products
+   */
+
+  /**
+   * Update Quantity of a Product in Stock
+   *
+   * requires: Signed In with Admin Role
+   * parameters: user ,productId ,quantity
+   * return: The Updated Quantity in Stock
    */
 
   @Mutation(() => Int)
@@ -88,14 +102,15 @@ export class ProductResolver {
   }
 
   /**
-   * Update product information
+   * Update a Product Information
    *
-   * @param id
-   * @param updateProductInput
-   * @returns updated product
+   * requires: Signed In with Admin Role
+   * parameters: id, updateProductInput
+   * return: The Updated Product
    */
   @Mutation(() => Product)
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   updateProduct(
     @Args('updateProductInput') updateProductInput: UpdateProductInput,
   ): Promise<Product> {
@@ -106,10 +121,10 @@ export class ProductResolver {
   }
 
   /**
-   * Remove product
+   * Remove a Product
    *
-   * @param id
-   * @returns success message
+   * parameters: id
+   * return: a Success Message
    */
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)

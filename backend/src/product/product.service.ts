@@ -29,13 +29,13 @@ export class ProductService {
   ) {}
 
   /**
-   * Create product
+   * Create a product
    *
-   * @param createProductInput
-   * @returns Created product
+   * parameter: createProductInput
+   * return: a Created product
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
-    //Check exist product name
+    //Check if product is already exists 
     const product = await this.productRepository.findOne({
       name: createProductInput.name,
     });
@@ -43,7 +43,7 @@ export class ProductService {
       throw new ForbiddenError('Product already existed.');
     }
 
-    //Create new product instance
+    //Create a new product instance
     const newProduct = this.productRepository.create(createProductInput);
 
     //Add category relation
@@ -51,12 +51,13 @@ export class ProductService {
       where: { id: createProductInput.categoryId },
       relations: ['product'],
     });
+    //Throw error if not found a category
     if (!category) {
       throw new ForbiddenError('Category not found');
     }
     category.product.push(newProduct);
 
-    //Save to db
+    //Save to database
     await this.productRepository.save(newProduct);
     await this.categoryRepository.save(category);
 
@@ -64,16 +65,16 @@ export class ProductService {
   }
 
   /**
-   * Show all product
+   * Show all products
    *
-   * @returns List of product
+   * returnL: List of products
    */
   async findAll(): Promise<Product[]> {
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
     });
-    //Throw error if not found any
+    //Throw error if not found products
     if (!products) {
       throw new ForbiddenError('Product not found');
     }
@@ -81,10 +82,10 @@ export class ProductService {
   }
 
   /**
-   * Find user by id
+   * Find Product by Id
    *
-   * @param id
-   * @returns Product
+   * parameters: id
+   * return: Product
    */
   async findOne(id: number): Promise<Product> {
     //count latest stock of product
@@ -104,47 +105,46 @@ export class ProductService {
   }
 
   /**
-   * Update product information
+   * Update a Product Information
    *
-   * @param id
-   * @param updateProductInput
-   * @returns updated product
+   * parameters: id, updateProductInput
+   * return: The Updated Product
    */
   async update(
     id: number,
     updateProductInput: UpdateProductInput,
   ): Promise<Product> {
-    //Find product
+    //Find a product
     const product = this.findOne(id);
 
-    //Copy update info to current info
+    //Copy update infomation to current infomation
     const updated = Object.assign(product, updateProductInput);
 
-    //Save to db
+    //Save to database
     return await this.productRepository.save(updated);
   }
 
   /**
-   * Remove product
+   * Remove a product
    *
-   * @param id
-   * @returns success message
+   * parameters: id
+   * return: a Success Message
    */
   async remove(id: number): Promise<string> {
-    //Find product
+    //Find a product
     this.findOne(id);
 
-    //Delete product in db
+    //Delete product in database
     await this.productRepository.delete(id);
 
     return 'Delete success!';
   }
 
   /**
-   * Count quantity of product left in stock
+   * Count Quantity of a Product in Stock
    *
-   * @param id
-   * @returns number of stock
+   * parameters: id
+   * return: Quantity of a Product in Stock
    */
   async countStock(id: number): Promise<number> {
     let stock = 0;
@@ -158,7 +158,7 @@ export class ProductService {
       throw new ForbiddenError('Product not found');
     }
 
-    //map to all order found and count their quantity
+    //Map to all order found and count their quantity
     orders.map((product) => {
       stock += product.quantity;
     });
@@ -166,17 +166,25 @@ export class ProductService {
     return stock;
   }
 
+  /**
+   * Update Quantity of a Product in Stock
+   *
+   * parameters: user ,productId ,quantity
+   * return: The Updated Quantity in Stock
+   */
   async updateStock(
     userId: number,
     productId: number,
     quantity: number,
   ): Promise<number> {
+    //Create a new order to add a product quantity to stock
     const createOrderInput = new CreateOrderInput();
     createOrderInput.userId = userId;
     createOrderInput.productId = productId;
     createOrderInput.quantity = quantity;
     await this.orderService.create(createOrderInput);
 
+    //Check if the stock updated correctly
     return this.countStock(productId);
   }
 }
