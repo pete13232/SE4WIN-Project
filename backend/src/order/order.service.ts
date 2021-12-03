@@ -132,4 +132,18 @@ export class OrderService {
 
     return `Order status id ${id} change from ${oldStatus} to ${order.status}`;
   }
+
+  async uploadReceipt(orderId: number, imageURL: string): Promise<string> {
+    const order = await this.findOne(orderId);
+
+    if (!order) {
+      throw new ForbiddenError('Order not found');
+    }
+
+    order.receiptURL = imageURL;
+
+    await this.orderRepository.save(order);
+
+    return order.receiptURL;
+  }
 }

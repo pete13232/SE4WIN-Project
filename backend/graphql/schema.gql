@@ -78,6 +78,7 @@ type Query {
   orderByUser: [Order!]!
   products: [Product!]!
   product(id: Int!): Product!
+  findProductName(name: String!): Product!
   categories: [Category!]!
   category(id: Int!): Category!
   verify(token: String!): User!
@@ -96,6 +97,7 @@ type Mutation {
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): String!
   changeStatus(status: Order_Status!, id: Int!): String!
+  uploadReceipt(receiptURL: String!, orderId: Int!): String!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateStock(quantity: Int!, productId: Int!): Int!
   updateProduct(updateProductInput: UpdateProductInput!): Product!

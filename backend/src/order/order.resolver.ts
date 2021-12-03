@@ -77,8 +77,16 @@ export class OrderResolver {
   }
 
   /**
-   * TODO findByName
-   * @param productName
-   * @returns lsit of product
+   * TODO uploadReceipt
+   * param currentUser, Order
+   * returns imageURL from DB
    */
+  @Mutation(() => String)
+  @UseGuards(GqlAuthGuard)
+  uploadReceipt(
+    @Args('orderId', { type: () => Int }) orderId: number,
+    @Args('receiptURL', { type: () => String }) receiptURL: string,
+  ): Promise<string> {
+    return this.orderService.uploadReceipt(orderId, receiptURL);
+  }
 }

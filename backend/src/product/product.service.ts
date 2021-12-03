@@ -35,7 +35,7 @@ export class ProductService {
    * return: a Created product
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
-    //Check if product is already exists 
+    //Check if product is already exists
     const product = await this.productRepository.findOne({
       name: createProductInput.name,
     });
@@ -101,6 +101,30 @@ export class ProductService {
     if (!product) {
       throw new ForbiddenError('Product not found');
     }
+    return product;
+  }
+
+  /**
+   * Find Product by Name
+   *
+   * parameter: name
+   * return: Product
+   */
+  async findByName(name: string): Promise<Product> {
+    //Find proudct by name
+    const product = await this.productRepository.findOne({
+      where: { name: name },
+      relations: ['category', 'order'],
+    });
+
+    //Throw error if not found
+    if (!product) {
+      throw new ForbiddenError('Product not found');
+    }
+
+    //count latest stock of product
+    this.countStock(product.id);
+
     return product;
   }
 

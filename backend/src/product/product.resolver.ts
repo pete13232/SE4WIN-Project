@@ -77,10 +77,18 @@ export class ProductResolver {
   }
 
   /**
-   * *TODO* findByName
-   * @param productName
-   * @returns list of products
+   *
+   * Find Product by name
+   *
+   * parameters: productName
+   * return: product
    */
+  @Query(() => Product, { name: 'findProductName' })
+  findByName(
+    @Args('name', { type: () => String }) name: string,
+  ): Promise<Product> {
+    return this.productService.findByName(name);
+  }
 
   /**
    * Update Quantity of a Product in Stock
