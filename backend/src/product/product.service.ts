@@ -29,7 +29,7 @@ export class ProductService {
   ) {}
 
   /**
-   * Create a product
+   * Create a Product
    *
    * parameter: createProductInput
    * return: a Created product
@@ -65,9 +65,9 @@ export class ProductService {
   }
 
   /**
-   * Show all products
+   * Show All Products
    *
-   * returnL: List of products
+   * return: List of products
    */
   async findAll(): Promise<Product[]> {
     //Find proudct
@@ -84,7 +84,7 @@ export class ProductService {
   /**
    * Find Product by Id
    *
-   * parameters: id
+   * parameter: id
    * return: Product
    */
   async findOne(id: number): Promise<Product> {
@@ -107,7 +107,7 @@ export class ProductService {
   /**
    * Update a Product Information
    *
-   * parameters: id, updateProductInput
+   * parameter: id, updateProductInput
    * return: The Updated Product
    */
   async update(
@@ -125,9 +125,9 @@ export class ProductService {
   }
 
   /**
-   * Remove a product
+   * Remove a Product
    *
-   * parameters: id
+   * parameter: id
    * return: a Success Message
    */
   async remove(id: number): Promise<string> {
@@ -143,7 +143,7 @@ export class ProductService {
   /**
    * Count Quantity of a Product in Stock
    *
-   * parameters: id
+   * parameter: id
    * return: Quantity of a Product in Stock
    */
   async countStock(id: number): Promise<number> {

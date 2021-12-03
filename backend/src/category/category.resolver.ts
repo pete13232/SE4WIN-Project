@@ -11,8 +11,20 @@ import { Role } from 'src/user/enums/role.enum';
 
 @Resolver(() => Category)
 export class CategoryResolver {
+  /**
+   * Inject a Category Service
+   *
+   * parameter: categoryService
+   */
   constructor(private readonly categoryService: CategoryService) {}
 
+  /**
+   * Create a Category
+   *
+   * requires: Signed In with Admin Role
+   * parameter: createCategoryInput
+   * return: a Created Category
+   */
   @Mutation(() => Category)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -22,16 +34,34 @@ export class CategoryResolver {
     return this.categoryService.create(createCategoryInput);
   }
 
+  /**
+   * Show all Category
+   *
+   * return: List of Category
+   */
   @Query(() => [Category], { name: 'categories' })
   findAll(): Promise<Category[]> {
     return this.categoryService.findAll();
   }
 
+  /**
+   * Find Category by Id
+   *
+   * parameter: id
+   * return: Category
+   */
   @Query(() => Category, { name: 'category' })
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Category> {
     return this.categoryService.findOne(id);
   }
 
+  /**
+   * Update a Category Information
+   *
+   * requires: Signed In with Admin Role
+   * parameter: updateCategoryInput
+   * return: The Updated Category
+   */
   @Mutation(() => Category)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -44,6 +74,13 @@ export class CategoryResolver {
     );
   }
 
+  /**
+   * Remove a Product
+   *
+   * requires: Signed In with Admin Role
+   * parameter: id
+   * return: a Success Message
+   */
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)

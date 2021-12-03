@@ -22,14 +22,14 @@ import { User } from 'src/user/entities/user.entity';
 @Resolver(() => Product)
 export class ProductResolver {
   /**
-   * Inject product service
+   * Inject a Product Service
    *
-   * @param productService
+   * parameter: productService
    */
   constructor(private readonly productService: ProductService) {}
 
   /**
-   * Create a product
+   * Create a Product
    *
    * requires: Signed In with Admin Role
    * parameter: createProductInput
@@ -57,7 +57,7 @@ export class ProductResolver {
   /**
    * Find Product by Id
    *
-   * parameters: id
+   * parameter: id
    * return: Product
    */
   @Query(() => Product, { name: 'product' })
@@ -105,7 +105,7 @@ export class ProductResolver {
    * Update a Product Information
    *
    * requires: Signed In with Admin Role
-   * parameters: id, updateProductInput
+   * parameters: updateProductInput
    * return: The Updated Product
    */
   @Mutation(() => Product)
@@ -123,7 +123,8 @@ export class ProductResolver {
   /**
    * Remove a Product
    *
-   * parameters: id
+   * requires: Signed In with Admin Role
+   * parameter: id
    * return: a Success Message
    */
   @Mutation(() => String)
