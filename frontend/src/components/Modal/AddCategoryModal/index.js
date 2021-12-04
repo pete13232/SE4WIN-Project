@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import { Modal, Button, Form, Image } from "react-bootstrap";
-import "./style.css";
-import { useMutation, useQuery } from "@apollo/client";
+import { useState} from "react";
+import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { CREATE_CATEGORY } from "../../../Graphql/Mutations";
+import { Modal, Button, Form } from "react-bootstrap";
+import * as yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
+import "./style.css";
 
 const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
   /*------------------------Modal--------------------------*/
@@ -117,16 +117,10 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
               <Image src="https://www.gannett-cdn.com/-mm-/05398f80e3bde0326c872a093f3784aeee1c8a90/c=880-323-1833-861/local/-/media/2018/05/14/USATODAY/usatsports/wp-USAT-allthemoms-front1-19975-winnie-the-pooh-day.jpg?auto=webp&format=pjpg&width=1200" />
             </div> */}
               <div className="text-center upload-btn">
-                {/* <Button className="btn-medium blue">Upload</Button> */}
-                {/*------------------------Pic upload--------------------------*/}
-                <label htmlFor="files" className="btn btn-medium blue">
-                  Upload receipt
-                </label>
                 <Form.Control
                   name="picURL"
                   id="files"
                   type="file"
-                  // style={{ visibility: "hidden" }}
                   {...register("picURL")}
                   onChange={(event) => {
                     setPictureFile(event.target.files[0]);

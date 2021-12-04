@@ -1,11 +1,11 @@
 import { Button, Dropdown } from "react-bootstrap";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import UserDetail from "../../Modal/UserDetail";
 import { AiFillPicture, AiOutlineCheckSquare } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import { CHANGE_STATUS } from "../../../Graphql/Mutations";
 import Swal from "sweetalert2";
+import UserDetail from "../../Modal/UserDetail";
 
 const AdminOrderChild = ({
   orderId,

@@ -2,10 +2,6 @@
   background: rgba(0, 153, 255, 0.3);
 }
 
-/* .cursor{
-    cursor: pointer;
-} */
-
 .admin-stock svg{
   width: 24px;
   height: 24px;
@@ -14,6 +10,8 @@
 .modify svg {
   cursor: pointer;
 }
+
+/* -----icon----- */
 
 .add svg {
   color: #0099ff;

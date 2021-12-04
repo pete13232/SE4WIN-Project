@@ -3,22 +3,6 @@
   height: auto;
   padding-block: 40px;
 }
-/* 
-.order-background img {
-  object-fit: scale-down;
-  height: 100%;
-  top: 50%;
-  left: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-} */
-
-/* .order-background {
-  max-width: 312px;
-  min-height: 209px;
-  position: relative;
-  background-color: red;
-} */
 
 .order-image img{
   width: 100%;

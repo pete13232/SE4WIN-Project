@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Image } from "react-bootstrap";
-import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
-import Swal from "sweetalert2";
-import "./style.css";
 import { useMutation } from "@apollo/client";
 import { UPDATE_STOCK } from "../../../Graphql/Mutations";
+import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
+import { Modal, Button } from "react-bootstrap";
+import Swal from "sweetalert2";
+import "./style.css";
 
 const AddStockModal = ({
   showAdd,

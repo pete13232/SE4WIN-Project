@@ -1,14 +1,11 @@
-import { Button, Col, Row, Table } from "react-bootstrap";
-import React, { useState } from "react";
+import { Col } from "react-bootstrap";
 import { FaBoxes } from "react-icons/fa";
 import { AiOutlineUnorderedList } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import { Link } from "react-router-dom";
-
-
 import "./style.css";
 
-const Sidebar = ({id}) => {
+const Sidebar = ({ id }) => {
   return (
     <>
       <Col

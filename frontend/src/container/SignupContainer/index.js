@@ -1,13 +1,12 @@
-import React from "react";
 import { useMutation } from "@apollo/client";
-import { Col, Row, Form, FloatingLabel, Button } from "react-bootstrap";
+import { Col, Row, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import NavbarBootstrap from "../../components/NavbarBoostrap";
 import { CREATE_USER } from "../../Graphql/Mutations";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import NavbarBootstrap from "../../components/NavbarBoostrap";
 import InputMask from "react-input-mask";
 import Swal from "sweetalert2";
 import "./style.css";

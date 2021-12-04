@@ -1,9 +1,16 @@
 import { useContext } from "react";
-import { useRouteMatch, Link } from "react-router-dom";
-import { Navbar, Col, Form, Button, FormControl } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import {
+  Navbar,
+  Col,
+  Form,
+  Button,
+  FormControl,
+  InputGroup,
+} from "react-bootstrap";
 import { AuthContext } from "../../context/auth";
+import { FaSearch } from "react-icons/fa";
 import "./style.css";
-import { boolean } from "yup/lib/locale";
 
 const NavbarBootstrap = ({ secondTheme, page }) => {
   const context = useContext(AuthContext);
@@ -15,12 +22,15 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
           <Col className="d-flex justify-content-center " md={3}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
               <Link to="/">
-                <h1>FAPP</h1>
+                <div className="logo">
+                  <h1>FAPP</h1>
+                </div>
               </Link>
             </Navbar.Brand>
-            <div className="vl"></div>
             <Navbar.Brand>
-              <h1 style={{ color: "black" }}>{page}</h1>
+              <div className="text">
+                <h1>{page}</h1>
+              </div>
             </Navbar.Brand>
           </Col>
         </Navbar>
@@ -34,14 +44,17 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
             </Navbar.Brand>
           </Col>
           <Col md={7}>
-            <Form>
-              <FormControl
-                type="search"
-                placeholder="Search for product"
-                className="me-2"
-                aria-label="Search"
-              />
-              {/* <Button variant="outline-success">Search</Button> */}
+            <Form className="search-bar">
+              <InputGroup>
+                <FormControl
+                  type="search"
+                  placeholder="Search for product"
+                  aria-label="Search"
+                />
+                <Button variant="light">
+                  <FaSearch style={{ color: "black" }} />
+                </Button>
+              </InputGroup>
             </Form>
           </Col>
           <Col md={1} className="d-flex justify-content-center">

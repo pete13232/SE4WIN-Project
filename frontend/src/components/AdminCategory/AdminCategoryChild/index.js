@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { ImBin } from "react-icons/im";
-import Swal from "sweetalert2";
-import { FaRegEdit, FaEdit } from "react-icons/fa";
+import { FaRegEdit } from "react-icons/fa";
 import { useMutation } from "@apollo/client";
-import EditCategoryModal from "../../Modal/EditCategoryModal";
 import { REMOVE_CATEGORY } from "../../../Graphql/Mutations";
+import Swal from "sweetalert2";
+import EditCategoryModal from "../../Modal/EditCategoryModal";
+
 const AdminCategoryChild = ({ id, categoryName, picURL, refetch }) => {
-
-
   const [showEditCategory, setShowEditCategory] = useState(false);
 
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
@@ -22,30 +21,30 @@ const AdminCategoryChild = ({ id, categoryName, picURL, refetch }) => {
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
-        if (result.isConfirmed) {
-            removeCategory({
-              variables: { input: id },
-            })
-              .then(() => {
-                Swal.fire({
-                  position: "top",
-                  title: "Deleted!",
-                  text: "This category has been deleted.",
-                  icon: "success",
-                });
-                refetch();
-              })
-              .catch((error) => {
-                const err = error.message;
-                Swal.fire({
-                  title: "Oops! !",
-                  html: err,
-                  icon: "error",
-                  allowOutsideClick: false,
-                  allowEscapeKey: false,
-                });
-              });
-          }
+      if (result.isConfirmed) {
+        removeCategory({
+          variables: { input: id },
+        })
+          .then(() => {
+            Swal.fire({
+              position: "top",
+              title: "Deleted!",
+              text: "This category has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          })
+          .catch((error) => {
+            const err = error.message;
+            Swal.fire({
+              title: "Oops! !",
+              html: err,
+              icon: "error",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+            });
+          });
+      }
     });
   };
 

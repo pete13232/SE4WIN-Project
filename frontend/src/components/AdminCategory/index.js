@@ -1,13 +1,11 @@
-import { Row, Col, Table, Button, Form, FormControl } from "react-bootstrap";
-import { FaRegEdit, FaEdit } from "react-icons/fa";
-import { AiOutlineCheckSquare } from "react-icons/ai";
-
 import React, { useState, useEffect } from "react";
-import "./style.css";
+import { Col, Table, Button, Form, FormControl } from "react-bootstrap";
 import { ADMIN_GET_CATEGORIES } from "../../Graphql/Queries";
 import { useQuery } from "@apollo/client";
 import AdminCategoryChild from "./AdminCategoryChild";
 import AddCategoryModal from "../Modal/AddCategoryModal";
+import "./style.css";
+
 const AdminCategory = ({ id }) => {
   /*--------------------------Query-------------------------------*/
   const { data, error, refetch } = useQuery(ADMIN_GET_CATEGORIES);
@@ -19,7 +17,7 @@ const AdminCategory = ({ id }) => {
     }
   }, [data]);
   /*--------------------------Query-------------------------------*/
-  const [showAddCategoryModal,setShowAddCategoryModal] = useState(false)
+  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
   const [showName, setShowName] = useState([true, true]);
   const [text, setText] = useState("");
   const [test, setTest] = useState([
@@ -104,8 +102,6 @@ const AdminCategory = ({ id }) => {
   //   }
   // };
 
-  
-
   return (
     <>
       {id === "category" && (
@@ -119,9 +115,15 @@ const AdminCategory = ({ id }) => {
                 aria-label="Search"
               />
             </Form>
-              <Button type="submit" className="btn-medium blue" onClick={()=>{setShowAddCategoryModal(true)}}>
-                +New
-              </Button>
+            <Button
+              type="submit"
+              className="btn-medium blue"
+              onClick={() => {
+                setShowAddCategoryModal(true);
+              }}
+            >
+              +New
+            </Button>
           </div>
           <Table striped bordered hover className="px-1">
             <thead className="table-head">
@@ -131,21 +133,25 @@ const AdminCategory = ({ id }) => {
                 <th></th>
               </tr>
             </thead>
-            <tbody>{categories.map((category) => (
-              <AdminCategoryChild
-                key={category.id}
-                id={category.id}
-                categoryName={category.name}
-                picURL={category.picURL}
-                refetch={refetch}
-              />
-            )
-
-            )}</tbody>
+            <tbody>
+              {categories.map((category) => (
+                <AdminCategoryChild
+                  key={category.id}
+                  id={category.id}
+                  categoryName={category.name}
+                  picURL={category.picURL}
+                  refetch={refetch}
+                />
+              ))}
+            </tbody>
           </Table>
         </Col>
       )}
-      <AddCategoryModal showCategory={showAddCategoryModal} setShowCategory={setShowAddCategoryModal} refetch={refetch}/>
+      <AddCategoryModal
+        showCategory={showAddCategoryModal}
+        setShowCategory={setShowAddCategoryModal}
+        refetch={refetch}
+      />
     </>
   );
 };

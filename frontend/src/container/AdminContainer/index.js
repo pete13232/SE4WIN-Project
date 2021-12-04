@@ -1,5 +1,5 @@
-import { Row, Col } from "react-bootstrap";
-import { Route, Link, Switch, useParams } from "react-router-dom";
+import { Row } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import NavbarBootstrap from "../../components/NavbarBoostrap";
 import Sidebar from "../../components/Sidebar";
 import AdminStock from "../../components/AdminStock";

@@ -1,8 +1,9 @@
-import "./style.css";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_USER_ORDERS } from "../../Graphql/Queries";
 import Order from "./Order";
+import Header from "../Header";
+import "./style.css";
 
 const Orders = () => {
   /*--------------------------Query-------------------------------*/
@@ -14,10 +15,11 @@ const Orders = () => {
       setOrders(data.orderByUser);
     }
   }, [data]);
-  console.log(data)
+  console.log(data);
   /*--------------------------Query-------------------------------*/
   return (
-    <div>
+    <>
+      <Header text="Order" />
       {orders.map((order) => (
         <Order
           key={order.id}
@@ -31,7 +33,7 @@ const Orders = () => {
           refetch={refetch}
         />
       ))}
-    </div>
+    </>
   );
 };
 export default Orders;

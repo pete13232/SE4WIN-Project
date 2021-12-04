@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
+import { GET_PRODUCT_INFO } from "../../Graphql/Queries";
+import ProductDescription from "../../components/ProductDescription";
 import NavbarBootstrap from "../../components/NavbarBoostrap";
 import Header from "../../components/Header";
 import ProductDetail from "../../components/ProductDetail";
-import ProductDescription from "../../components/ProductDescription";
-import { GET_PRODUCT_INFO } from "../../Graphql/Queries";
 
 const ProductSelectContainer = () => {
   const { id } = useParams();

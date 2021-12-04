@@ -1,25 +1,27 @@
-.modal-header {
-  background-color: #ff6600 !important;
-}
-
-.confirm-image img {
-  width: 300px;
-  height: 300px;
-}
+/* ------ Block ------ */
 
 .detail-block {
   width: 88px;
   height: 36px;
 }
 
-.total-background {
-  background-color: #f8f8f8;
-  padding-inline: 12px;
-  padding-block: 4px;
-  width: auto;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
+.title-block {
+  width: 140px;
+  height: 36px;
+  text-align: end;
+  margin-right: 20px;
+}
+
+
+/* ----- Background ------ */
+
+.total-background h3 {
   color: #ff6600;
+  opacity: 100%;
+}
+
+.quantity-background h3 {
+  color: black;
   opacity: 100%;
 }
 
@@ -40,6 +42,30 @@
   box-shadow: inset 0 4px 4px rgb(0 0 0 / 25%);
 }
 
+.total-background {
+  background-color: #f8f8f8;
+  padding-inline: 12px;
+  padding-block: 4px;
+  width: auto;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
+  color: #ff6600;
+  opacity: 100%;
+}
+
+
+/* ----- Alternative ------ */
+
+.modal-header {
+  background-color: #ff6600 !important;
+}
+
+.confirm-image img {
+  width: 300px;
+  height: 300px;
+}
+
+
 .confirm-detail .form-control {
   background-color: #f8f8f8 !important;
   padding: 12px !important;
@@ -48,22 +74,6 @@
   box-shadow: inset 0 4px 4px rgb(0 0 0 / 25%) !important;
 }
 
-.total-background h3 {
-  color: #ff6600;
-  opacity: 100%;
-}
-
-.quantity-background h3 {
-  color: black;
-  opacity: 100%;
-}
-
-.title-block {
-  width: 140px;
-  height: 36px;
-  text-align: end;
-  margin-right: 20px;
-}
 
 span svg {
   width: 20px;

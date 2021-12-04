@@ -1,11 +1,11 @@
-import { Col, Row, Card } from "react-bootstrap";
+import { Col, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import "./style.css";
 const Product = ({ name, price, img, id }) => {
   return (
     <>
-      <Col md={3} className="mb-3">
+      <Col md={3} className="mb-3 product">
         <Link to={`products/${id}`}>
           <Card>
             <Card.Body style={{ padding: 0 }}>

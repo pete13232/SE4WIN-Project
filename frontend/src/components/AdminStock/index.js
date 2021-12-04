@@ -1,11 +1,10 @@
-import { Row, Col, Table, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { ADMIN_GET_PRODUCTS } from "../../Graphql/Queries";
+import { Col, Table, Button } from "react-bootstrap";
+import AdminStockChild from "./AdminStockChild";
 import AddProductModal from "../Modal/AddProductModal";
 import "./style.css";
-import { useQuery, useMutation } from "@apollo/client";
-import { ADMIN_GET_PRODUCTS } from "../../Graphql/Queries";
-import AdminStockChild from "./AdminStockChild";
-import Swal from "sweetalert2";
 
 const AdminStock = ({ id }) => {
   const { data, error, refetch } = useQuery(ADMIN_GET_PRODUCTS);
@@ -15,7 +14,6 @@ const AdminStock = ({ id }) => {
       setProducts(data.products);
     }
   }, [data]);
-  
 
   const [showProduct, setShowProduct] = useState(false);
   return (
@@ -61,7 +59,10 @@ const AdminStock = ({ id }) => {
           </Table>
         </Col>
       )}
-      {/* Modal */}
+
+
+      {/*---------Modal----------- */}
+
       <AddProductModal
         showProduct={showProduct}
         setShowProduct={setShowProduct}

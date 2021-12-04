@@ -1,17 +1,16 @@
-import NavbarBootstrap from "../../components/NavbarBoostrap";
-import Header from "../../components/Header";
 import { Row, Col, Button, Image, Form } from "react-bootstrap";
 import { useState, useContext, useEffect } from "react";
-import "./style.css";
 import { AuthContext } from "../../context/auth";
 import { GET_USER_INFO } from "../../Graphql/Queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import InputMask from "react-input-mask";
-import * as yup from "yup";
-import Swal from "sweetalert2";
 import { UPDATE_USER_INFO } from "../../Graphql/Mutations";
+import * as yup from "yup";
+import Header from "../../components/Header";
+import InputMask from "react-input-mask";
+import Swal from "sweetalert2";
+import "./style.css";
 
 const Profile = () => {
   const context = useContext(AuthContext);
@@ -84,7 +83,9 @@ const Profile = () => {
       ConfirmPassword: yup.string().when("password", {
         is: (value) => value?.length,
         then: (rule) =>
-          rule.required("Please enter confirm password").oneOf([yup.ref('password'), null], 'Passwords must match'),
+          rule
+            .required("Please enter confirm password")
+            .oneOf([yup.ref("password"), null], "Passwords must match"),
       }),
       firstname: yup.string().notRequired(),
       lastname: yup.string().notRequired(),
@@ -105,7 +106,7 @@ const Profile = () => {
       // Add Cyclic deps here because when require itself
       ["password", "password"],
       ["phoneNumber", "phoneNumber"],
-      ["password","ConfirmPassword"]
+      ["password", "ConfirmPassword"],
     ]
   );
 
@@ -120,7 +121,7 @@ const Profile = () => {
 
   const onSubmit = (submit) => {
     const userId = { id: context.user.sub };
-    delete submit.ConfirmPassword
+    delete submit.ConfirmPassword;
     if (submit.phoneNumber) {
       submit.phoneNumber = submit.phoneNumber.replaceAll("-", "");
     }
@@ -170,7 +171,8 @@ const Profile = () => {
   return (
     <>
       {user && (
-        <div>
+        <>
+          <Header text="Profile" />
           <Form onSubmit={handleSubmit(onSubmit)} id="userForm">
             <Row className="d-flex mt-3 bg-white profile-container gx-0">
               <Col
@@ -316,7 +318,7 @@ const Profile = () => {
               </Col>
             </Row>
           </Form>
-        </div>
+        </>
       )}
     </>
   );

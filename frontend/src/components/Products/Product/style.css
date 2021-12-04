@@ -1,3 +1,6 @@
+.header h4 {
+  opacity: 50%;
+}
 
 .product-background {
   max-width: 100%;
@@ -6,7 +9,16 @@
   background-color: #c4c4c4;
 }
 
+.sort-button {
+  box-shadow: inset 0 1px 4px rgb(0 0 0 / 25%);
+  color: #000000 !important;
+  background-color: white !important;
+  border-color: white !important;
+}
+
+
 /* text format in card */
+
 .card .card-title {
   color: #000000;
   font-size: 14px;
@@ -24,13 +36,6 @@
   box-shadow: 0 2px 4px rgb(0 0 0 / 25%);
 }
 
-.sort-button {
-  box-shadow: inset 0 1px 4px rgb(0 0 0 / 25%);
-  color: #000000 !important;
-  background-color: white !important;
-  border-color: white !important;
-}
-
-.header h4 {
-  opacity: 50%;
+.product a {
+  text-decoration: none;
 }

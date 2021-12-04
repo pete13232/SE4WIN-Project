@@ -1,17 +1,14 @@
+import { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
 import {
   Col,
-  Row,
-  Button,
   Table,
   Form,
-  FormControl,
-  Dropdown,
+  FormControl
 } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import "./style.css";
-import { useQuery } from "@apollo/client";
 import { ADMIN_GET_ORDERS } from "../../Graphql/Queries";
 import AdminOrderChild from "./AdminOrderChild";
+import "./style.css";
 
 const AdminOrder = ({ id }) => {
   /*-------------------------Query----------------------------- */

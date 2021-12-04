@@ -1,16 +1,14 @@
-import { Modal, Button, Image, Row, Col, Form } from "react-bootstrap";
-import ButtonCustom from "../../ButtonCustom";
+import { Modal, Button, Image, Row, Form } from "react-bootstrap";
 import { useContext, useEffect, useState, } from "react";
 import { useQuery, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
 import { GET_USER_ADDRESS } from "../../../Graphql/Queries";
 import { AuthContext } from "../../../context/auth";
-
-import "./style.css";
 import { CREATE_ORDER } from "../../../Graphql/Mutations";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Swal from "sweetalert2";
+import "./style.css";
 
 const ProductModal = ({
   picURL,
@@ -100,7 +98,7 @@ const ProductModal = ({
                   </div>
                 </div>
                 <Row className="gap-3 ms-5 confirm-detail">
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-baseline">
                     <div className="title-block d-flex align-items-center justify-content-end">
                       <h5>Product:</h5>
                     </div>
@@ -108,7 +106,7 @@ const ProductModal = ({
                       <h3>{name}</h3>
                     </div>
                   </div>
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-baseline">
                     <div className="title-block d-flex align-items-center justify-content-end">
                       <h5>Quantity:</h5>
                     </div>
@@ -116,7 +114,7 @@ const ProductModal = ({
                       <h3>{selectQuantity}</h3>
                     </div>
                   </div>
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-baseline">
                     <div className="title-block d-flex align-items-center justify-content-end">
                       <h5>TotalPrice:</h5>
                     </div>
@@ -124,7 +122,7 @@ const ProductModal = ({
                       <h3>{totalPrice} ฿</h3>
                     </div>
                   </div>
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-baseline">
                     <div className="title-block d-flex align-items-center justify-content-end">
                       <h5>Delivery address:</h5>
                     </div>

@@ -1,13 +1,13 @@
 import { Row, Col, Form, Image } from "react-bootstrap";
 import { useState } from "react";
-import axios from "axios";
-import Button from "@restart/ui/esm/Button";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { UPLOAD_RECEIPT } from "../../../Graphql/Mutations";
+import axios from "axios";
+import * as yup from "yup";
 import Swal from "sweetalert2";
+import Button from "@restart/ui/esm/Button";
 
 const Order = ({
   id,
@@ -106,7 +106,7 @@ const Order = ({
             });
         }
       });
-    }else{
+    } else {
       let formdata = new FormData();
       formdata.append("file", pictureFile, pictureFile.name);
       axios({
@@ -157,7 +157,7 @@ const Order = ({
         </Col>
         <Col md={5}>
           <Row className="gap-3">
-            <div className="d-flex">
+            <div className="d-flex align-items-baseline">
               <div>
                 <h5 className="title-block">Product:</h5>
               </div>
@@ -165,7 +165,7 @@ const Order = ({
                 <h3>{name}</h3>
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex align-items-baseline">
               <div>
                 <h5 className="title-block">Quantity:</h5>
               </div>
@@ -173,7 +173,7 @@ const Order = ({
                 <h5 className="quantity-background">{quantity}</h5>
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex align-items-baseline">
               <div>
                 <h5 className="title-block">TotalPrice:</h5>
               </div>
@@ -181,7 +181,7 @@ const Order = ({
                 <h5 className="total-background">{netPrice}฿</h5>
               </div>
             </div>
-            <div className="d-flex">
+            <div className="d-flex align-items-baseline">
               <div>
                 <h5 className="title-block">Delivery address:</h5>
               </div>
@@ -202,7 +202,6 @@ const Order = ({
                 name="receiptURL"
                 id="files"
                 type="file"
-                // style={{ visibility: "hidden" }}
                 {...register("receiptURL")}
                 onChange={(event) => {
                   setPictureFile(event.target.files[0]);

@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, Image } from "react-bootstrap";
-import {
-  ADMIN_GET_CATEGORIES,
-  GET_PRODUCT_INFO,
-} from "../../../Graphql/Queries";
-import { UPDATE_PRODUCT } from "../../../Graphql/Mutations";
 import { useQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
+import { ADMIN_GET_CATEGORIES } from "../../../Graphql/Queries";
+import { UPDATE_PRODUCT } from "../../../Graphql/Mutations";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { Modal, Button, Form } from "react-bootstrap";
 import * as yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -96,14 +93,15 @@ const EditStockModal = ({
             allowEscapeKey: false,
           });
         });
-    }
-    else{
-      submit.picURL = undefined
+    } else {
+      submit.picURL = undefined;
     }
     const productId = { id: id };
-    if(categories.find(category => category.id === submit.categoryId).name === category )
-    {
-      submit.categoryId = undefined
+    if (
+      categories.find((category) => category.id === submit.categoryId).name ===
+      category
+    ) {
+      submit.categoryId = undefined;
     }
     Object.keys(submit).forEach((key) =>
       submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
@@ -133,11 +131,9 @@ const EditStockModal = ({
             allowOutsideClick: false,
             allowEscapeKey: false,
           });
-          
         });
-    }
-    else{
-      handleClose()
+    } else {
+      handleClose();
     }
   };
   /*------------------------Submit--------------------------*/
@@ -160,7 +156,6 @@ const EditStockModal = ({
               <Image src="https://www.gannett-cdn.com/-mm-/05398f80e3bde0326c872a093f3784aeee1c8a90/c=880-323-1833-861/local/-/media/2018/05/14/USATODAY/usatsports/wp-USAT-allthemoms-front1-19975-winnie-the-pooh-day.jpg?auto=webp&format=pjpg&width=1200" />
             </div> */}
               <div className="text-center upload-btn">
-                {/* <Button className="btn-medium blue">Upload</Button> */}
                 {/*------------------------Pic upload--------------------------*/}
                 <label htmlFor="files" className="btn btn-medium blue">
                   Upload receipt
@@ -196,7 +191,6 @@ const EditStockModal = ({
                 <Form.Label className="title-block">
                   <h5>Category:</h5>
                 </Form.Label>
-                {/* <Form.Control type="text" /> */}
                 <Form.Select name="categoryId" {...register("categoryId")}>
                   {categories?.map((cat) =>
                     cat.name === category ? (
@@ -204,7 +198,9 @@ const EditStockModal = ({
                         {cat.name}
                       </option>
                     ) : (
-                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
                     )
                   )}
                 </Form.Select>

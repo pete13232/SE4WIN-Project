@@ -1,12 +1,12 @@
 import { useState } from "react";
+import { useMutation } from "@apollo/client";
 import { FaRegEdit } from "react-icons/fa";
 import { AiFillPlusCircle, AiFillPicture } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
-import AddStockModal from "../../Modal/AddStockModal";
-import EditStockModal from "../../Modal/EditStockModal";
-import { useMutation } from "@apollo/client";
 import { REMOVE_PRODUCT } from "../../../Graphql/Mutations";
 import Swal from "sweetalert2";
+import AddStockModal from "../../Modal/AddStockModal";
+import EditStockModal from "../../Modal/EditStockModal";
 const AdminStockChild = ({
   id,
   name,

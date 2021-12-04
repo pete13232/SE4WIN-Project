@@ -1,16 +1,14 @@
 import { Col, Row, Image, Carousel } from "react-bootstrap";
+import Header from "../Header";
 import "./style.css";
 
 const Category = () => {
   return (
-    <div className="space-md">
-      <div className="header px-2">
-        <h3>Category</h3>
-      </div>
+    <>
+      <Header text="Category"></Header>
       <Carousel>
         <Carousel.Item interval={100000000}>
           <Row className="g-0 category">
-            {/*ใส่สไตล์เพื่อเช็ค padding เดี๋ยวมาลบ*/}
             <Col className="card">
               <a href="#">
                 <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"></Image>
@@ -49,7 +47,6 @@ const Category = () => {
         </Carousel.Item>
         <Carousel.Item interval={100000000}>
           <Row className="g-0 category">
-            {/*ใส่สไตล์เพื่อเช็ค padding เดี๋ยวมาลบ*/}
             <Col className="card">
               <Image src="https://ae01.alicdn.com/kf/Hfc71b9e78e54414f9e1f87a928fedbb1F/Beats-Powerbeats-Pro.jpg_q50.jpg"></Image>
               <div className="card-img-overlay text-white d-flex align-items-end align-content-center">
@@ -74,7 +71,7 @@ const Category = () => {
           </Row>
         </Carousel.Item>
       </Carousel>
-    </div>
+    </>
   );
 };
 

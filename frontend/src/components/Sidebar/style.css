@@ -1,19 +1,23 @@
-.sidebar{
-    background-color: #5b5b5b;
-    height: auto;
-}
-
-.sidebar svg{
-    width: 24px;
-    height: 24px;
-}
-
-.sidebar h5{
-    color: white;
-}
-
 .menu {
-    margin-top: 80px;
-    width: 120px;
-    height: 300px;
+  margin-top: 80px;
+  width: 120px;
+  height: 300px;
+}
+
+.sidebar {
+  background-color: #5b5b5b;
+  height: auto;
+}
+
+.sidebar svg {
+  width: 24px;
+  height: 24px;
+}
+
+.sidebar h5 {
+  color: white;
+}
+
+.sidebar a {
+  text-decoration: none;
 }

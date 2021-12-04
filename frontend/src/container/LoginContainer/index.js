@@ -1,4 +1,3 @@
-import NavbarBootstrap from "../../components/NavbarBoostrap";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useContext } from "react";
@@ -6,8 +5,9 @@ import { LOGIN_USER } from "../../Graphql/Mutations";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { AuthContext } from "../../context/auth";
+import * as yup from "yup";
+import NavbarBootstrap from "../../components/NavbarBoostrap";
 import Swal from "sweetalert2";
 
 const LoginContainer = () => {
@@ -70,7 +70,7 @@ const LoginContainer = () => {
   };
 
   return (
-    <div>
+    <>
       <NavbarBootstrap secondTheme={true} page={"Log-in"} />
       <Row className="bg-signup mx-0 justify-content-center">
         <Col md={4} className="form bg-light my-5">
@@ -114,7 +114,7 @@ const LoginContainer = () => {
           </Form>
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 

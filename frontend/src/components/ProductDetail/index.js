@@ -1,14 +1,14 @@
 import { Row, Col, Button, Image } from "react-bootstrap";
-import "./style.css";
-import ProductModal from "../Modal/ProductModal";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/auth";
+import ProductModal from "../Modal/ProductModal";
+import "./style.css";
 const ProductDetail = ({ picURL, name, price, stock, productId }) => {
   const [selectQuantity, setSelectQuantity] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
   const context = useContext(AuthContext);
   return (
-    <div>
+    <>
       <Row className="detail mt-3">
         <Col md={5} className="pe-0 border-end border-2">
           <div className="background-head">
@@ -49,7 +49,7 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
             </div>
             <Button
               className="btn-large blue"
-              disabled={stock<=0}
+              disabled={stock <= 0}
               onClick={() => {
                 if (context.user) {
                   setShowProduct(true);
@@ -63,6 +63,9 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
           </Row>
         </Col>
       </Row>
+
+      {/* ------- Modal ------- */}
+
       <ProductModal
         picURL={picURL}
         name={name}
@@ -72,7 +75,7 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
         showProduct={showProduct}
         setShowProduct={setShowProduct}
       />
-    </div>
+    </>
   );
 };
 export default ProductDetail;
