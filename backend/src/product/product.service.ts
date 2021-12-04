@@ -36,12 +36,7 @@ export class ProductService {
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
     //Check if product is already exists
-    const product = await this.productRepository.findOne({
-      name: createProductInput.name,
-    });
-    if (product) {
-      throw new ForbiddenError('Product already existed.');
-    }
+    const product = this.findByName(createProductInput.name);
 
     //Create a new product instance
     const newProduct = this.productRepository.create(createProductInput);
