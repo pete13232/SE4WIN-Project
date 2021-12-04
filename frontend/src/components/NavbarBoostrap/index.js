@@ -14,10 +14,9 @@ import "./style.css";
 
 const NavbarBootstrap = ({ secondTheme, page }) => {
   const context = useContext(AuthContext);
-
-  return (
-    <>
-      {secondTheme ? (
+  const navbarSwitch = () => {
+    if (secondTheme) {
+      return (
         <Navbar collapseOnSelect expand="lg" className="NavbarB">
           <Col className="d-flex justify-content-center " md={3}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
@@ -34,7 +33,51 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
             </Navbar.Brand>
           </Col>
         </Navbar>
-      ) : (
+      );
+    } else if (context.user === null) {
+      return (
+        <Navbar collapseOnSelect expand="lg" className="NavbarA">
+          <Col md={2}>
+            <Navbar.Brand className="px-3 d-flex justify-content-center">
+              <Link to="/">
+                <h1>FAPP</h1>
+              </Link>
+            </Navbar.Brand>
+          </Col>
+          <Col md={7}>
+            <Form className="search-bar">
+              <InputGroup>
+                <FormControl
+                  type="search"
+                  placeholder="Search for product"
+                  aria-label="Search"
+                />
+                <Button variant="light">
+                  <FaSearch style={{ color: "black" }} />
+                </Button>
+              </InputGroup>
+            </Form>
+          </Col>
+
+          <Col md={1} className="d-flex justify-content-center">
+            <Link to="/">
+              <h2>Home</h2>
+            </Link>
+          </Col>
+          <Col md={1} className="d-flex justify-content-center">
+            <Link to="/signup">
+              <h2>Sign-up</h2>
+            </Link>
+          </Col>
+          <Col md={1} className="d-flex justify-content-center">
+            <Link to="/login">
+              <h2>Log-in</h2>
+            </Link>
+          </Col>
+        </Navbar>
+      );
+    } else if (context.user.role === "customer") {
+      return (
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
@@ -63,31 +106,38 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
             </Link>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            {context.user === null ? (
-              <Link to="/signup">
-                <h2>Sign-up</h2>
-              </Link>
-            ) : (
-              <Link to="/order">
-                <h2>Order</h2>
-              </Link>
-            )}
+            <Link to="/order">
+              <h2>Order</h2>
+            </Link>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            {context.user === null ? (
-              <Link to="/login">
-                <h2>Log-in</h2>
-              </Link>
-            ) : (
-              <Link to="/" onClick={context.logout}>
-                <h2>Logout</h2>
-              </Link>
-            )}
+            <Link to="/" onClick={context.logout}>
+              <h2>Logout</h2>
+            </Link>
           </Col>
         </Navbar>
-      )}
-    </>
-  );
+      );
+    } else if (context.user?.role === "admin") {
+      return (
+        <Navbar collapseOnSelect expand="lg" className="NavbarA">
+          <Col md={2}>
+            <Navbar.Brand className="px-3 d-flex justify-content-center">
+              <Link to="/">
+                <h1>FAPP</h1>
+              </Link>
+            </Navbar.Brand>
+          </Col>
+          <Col md={8}></Col>
+          <Col md={1} className="d-flex justify-content-center">
+            <Link to="/" onClick={context.logout}>
+              <h2>Logout</h2>
+            </Link>
+          </Col>
+        </Navbar>
+      );
+    }
+  };
+  return <>{navbarSwitch()}</>;
 };
 
 export default NavbarBootstrap;

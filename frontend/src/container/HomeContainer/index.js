@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/auth";
 import { Redirect } from "react-router-dom";
 import Category from "../../components/Category/index";
@@ -7,6 +7,8 @@ import Products from "../../components/Products/index";
 
 const HomeContainer = () => {
   const context = useContext(AuthContext);
+  const [headerText, setHeaderText] = useState("")
+  const [showHeaderText, setShowHeaderText] = useState(false)
   return (
     <>
       {context.user?.role === "admin" ? (

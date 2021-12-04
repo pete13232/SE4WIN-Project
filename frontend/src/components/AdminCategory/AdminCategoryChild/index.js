@@ -51,10 +51,10 @@ const AdminCategoryChild = ({ id, categoryName, picURL, refetch }) => {
   return (
     <>
       <tr className="modify" key={id}>
-        <td>{id}</td>
+        <td className="text-center">{id}</td>
         <td className="text-center">{categoryName}</td>
         <td>
-          <div className="d-flex gap-1">
+          <div className="d-flex justify-content-center gap-4">
             <div className="edit">
               <FaRegEdit
                 onClick={() => {

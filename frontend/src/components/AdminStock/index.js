@@ -11,7 +11,7 @@ const AdminStock = ({ id }) => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     if (data) {
-      setProducts(data.products);
+      setProducts(data.AdminProducts);
     }
   }, [data]);
 

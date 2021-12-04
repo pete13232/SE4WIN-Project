@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../context/auth";
 import ProductModal from "../Modal/ProductModal";
 import "./style.css";
+import Swal from "sweetalert2";
 const ProductDetail = ({ picURL, name, price, stock, productId }) => {
   const [selectQuantity, setSelectQuantity] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
@@ -41,6 +42,7 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
                   type="number"
                   placeholder="1"
                   min="1"
+                  max={stock}
                   onChange={(e) => {
                     setSelectQuantity(e.target.value);
                   }}
@@ -52,7 +54,17 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
               disabled={stock <= 0}
               onClick={() => {
                 if (context.user) {
-                  setShowProduct(true);
+                  if(selectQuantity <= stock)
+                    setShowProduct(true);
+                  else{
+                    Swal.fire({
+                      title: "Oops! !",
+                      html: "Not enough stock",
+                      icon: "error",
+                      allowOutsideClick: false,
+                      allowEscapeKey: false,
+                    });
+                  }
                 } else {
                   window.location.replace("/login");
                 }

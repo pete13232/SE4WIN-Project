@@ -8,12 +8,15 @@ import "./style.css";
 
 const Products = () => {
   const [sort, setSort] = useState("Price, low to High");
-  const inputSort = (event) => {
+  const [sortVal, setSortVal] = useState(1)
+  const inputSort = (event, val ) => {
     setSort(event.target.innerText);
-    console.log(event.target.innerHTML);
+    setSortVal(val)
   };
 
-  const { data, error } = useQuery(GET_PRODUCTS);
+  const { data, error } = useQuery(GET_PRODUCTS,{
+    variables: { sort: sortVal },
+  } );
   const [products, setProducts] = useState([]);
   useEffect(() => {
     if (data) {
@@ -30,10 +33,14 @@ const Products = () => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1" onClick={inputSort}>
+          <Dropdown.Item href="#/action-1" onClick={(event)=>{
+            inputSort(event,1)
+            }}>
             <h4>Price, low to High</h4>
           </Dropdown.Item>
-          <Dropdown.Item href="#/action-2" onClick={inputSort}>
+          <Dropdown.Item href="#/action-2" onClick={(event)=>{
+            inputSort(event,0)
+            }}>
             <h4>Price, High to Low</h4>
           </Dropdown.Item>
         </Dropdown.Menu>
@@ -41,6 +48,7 @@ const Products = () => {
     );
   };
 
+  const [page, setPage] = useState(1)
   return (
     <>
       <Header text="All Product" dropdown={dropdown()}></Header>
@@ -54,23 +62,19 @@ const Products = () => {
           />
         ))}
       </Row>
-      <Pagination className="justify-content-end me-4">
+      {/* <Pagination className="justify-content-end me-4">
         <Pagination.First />
-        <Pagination.Prev />
         <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Ellipsis />
-
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{11}</Pagination.Item>
-        <Pagination.Item active>{12}</Pagination.Item>
+        {page-2 > 0 (<Pagination.Ellipsis disabled/>)}
+        {page-2 > 0 &&(<Pagination.Item>{page-2}</Pagination.Item>)}
+        {page-1 > 0 &&(<Pagination.Item>{page-1}</Pagination.Item>)}
+        <Pagination.Item active>{page}</Pagination.Item>
         <Pagination.Item>{13}</Pagination.Item>
         <Pagination.Item disabled>{14}</Pagination.Item>
-
-        <Pagination.Ellipsis />
         <Pagination.Item>{20}</Pagination.Item>
-        <Pagination.Next />
+        <Pagination.Ellipsis disabled/>
         <Pagination.Last />
-      </Pagination>
+      </Pagination> */}
     </>
   );
 };

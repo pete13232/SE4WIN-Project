@@ -21,7 +21,10 @@ const AddStockModal = ({
     setCount((prevCount) => prevCount + 1);
   };
   const handleDecrement = () => {
-    setCount((prevCount) => prevCount - 1);
+    if(count-1 >= -ProductQuantity){
+      setCount((prevCount) => prevCount - 1);
+    }
+      
   };
 
   const confirmAlert = () => {

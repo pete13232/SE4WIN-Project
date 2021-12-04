@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_PRODUCTS = gql`
-  query {
-    products {
+  query ($sort: Int!) {
+    products(sort: $sort) {
       id
       name
       price
@@ -62,7 +62,7 @@ export const GET_USER_INFO = gql`
 
 export const ADMIN_GET_PRODUCTS = gql`
   query {
-    products {
+    AdminProducts {
       id
       name
       category {
@@ -78,14 +78,13 @@ export const ADMIN_GET_PRODUCTS = gql`
 
 export const ADMIN_GET_CATEGORIES = gql`
   query {
-    categories {
+    AdminCategories {
       id
       name
       picURL
     }
   }
 `;
-
 
 export const ADMIN_GET_ORDERS = gql`
   query {
@@ -118,4 +117,42 @@ export const ADMIN_GET_USER_INFO = gql`
     }
   }
 `;
+export const GET_PRODUCTS_BY_CATEGORY = gql`
+  query ($categoryId: Int!) {
+    ProductByCategory(categoryId: $categoryId) {
+      category {
+        name
+      }
+      name
+      desc
+      price
+      picURL
+      stock
+    }
+  }
+`;
 
+export const GET_PRODUCTS_BY_NAME = gql`
+  query ($name: String!) {
+    ProductByName(name: $name) {
+      category {
+        name
+      }
+      name
+      desc
+      price
+      picURL
+      stock
+    }
+  }
+`;
+
+export const GET_CATEGORIES = gql`
+  query ($page: Int!) {
+    categories(page: $page) {
+      id
+      name
+      picURL
+    }
+  }
+`;

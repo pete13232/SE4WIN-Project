@@ -34,7 +34,7 @@ const EditStockModal = ({
 
   useEffect(() => {
     if (data) {
-      setCategories(data.categories);
+      setCategories(data.AdminCategories);
     }
   }, [data]);
 

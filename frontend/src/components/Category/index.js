@@ -1,8 +1,18 @@
+import { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
 import { Col, Row, Image, Carousel } from "react-bootstrap";
 import Header from "../Header";
 import "./style.css";
+import { GET_PRODUCTS_BY_CATEGORY } from "../../Graphql/Queries";
 
 const Category = () => {
+  const { data, error, refetch } = useQuery(GET_PRODUCTS_BY_CATEGORY);
+  const [products, setProducts] = useState([]);
+  useEffect(() => {
+    if (data) {
+      setProducts(data.AdminProducts);
+    }
+  }, [data]);
   return (
     <>
       <Header text="Category"></Header>
