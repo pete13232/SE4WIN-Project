@@ -92,7 +92,7 @@ export class ProductService {
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
       order: {
-        name: 'ASC',
+        id: 'ASC',
         updatedAt: 'DESC',
         createdAt: 'DESC',
       },

@@ -64,7 +64,7 @@ export class CategoryService {
    */
   async AdminFindAll(): Promise<Category[]> {
     const result = await this.categoryRepository.find({
-      order: { name: 'ASC' },
+      order: { id: 'ASC', updatedAt: 'DESC', createdAt: 'DESC' },
     });
     console.log(result);
 
