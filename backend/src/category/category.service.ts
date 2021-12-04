@@ -19,23 +19,23 @@ export class CategoryService {
   ) {}
 
   /**
-   * Create a Category
+   * Create Category
    *
    * parameter: createCategoryInput
-   * return: a Created Category
+   * return: Created Category
    */
   async create(createCategoryInput: CreateCategoryInput): Promise<Category> {
-    //Check if category is already exists 
+    //Check if category is already exists
     const category = await this.categoryRepository.findOne({
       name: createCategoryInput.name,
     });
     if (category) {
       throw new ForbiddenError('Category already existed.');
     }
-    
+
     //Create a new category instance
     const newCategory = this.categoryRepository.create(createCategoryInput);
-    
+
     //Save to database
     return this.categoryRepository.save(newCategory);
   }
@@ -57,37 +57,38 @@ export class CategoryService {
    * return: Category
    */
   async findOne(id: number): Promise<Category> {
-    return await this.categoryRepository.findOneOrFail(id);
+    const category = await this.categoryRepository.findOneOrFail(id);
+    if (category) {
+      throw new ForbiddenError('Category already existed.');
+    }
+    return category;
   }
 
   /**
-   * Update a Category Information
+   * Update Category Information
    *
    * parameter: id, updateCategoryInput
-   * return: The Updated Category
+   * return: Updated Category
    */
   async update(
     id: number,
     updateCategoryInput: UpdateCategoryInput,
   ): Promise<Category> {
-    //Check if category is not exists 
-    const category = await this.categoryRepository.findOne(id);
-    if (!category) {
-      throw new ForbiddenError('Category does not existed.');
-    }
+    //Check if category is not exists
+    const category = await this.findOne(id);
 
     //Copy update infomation to current infomation
     const updatedCategory = Object.assign(category, updateCategoryInput);
-    
+
     //Save to database
     return await this.categoryRepository.save(updatedCategory);
   }
 
   /**
-   * Remove a Category
+   * Remove Category
    *
    * parameter: id
-   * return: a Success Message
+   * return: Success Message
    */
   async remove(id: number): Promise<string> {
     await this.categoryRepository.delete(id);
