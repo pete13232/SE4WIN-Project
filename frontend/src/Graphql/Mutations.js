@@ -70,7 +70,7 @@ export const REMOVE_PRODUCT = gql`
 `;
 
 export const CHANGE_STATUS = gql`
-  mutation ($id: Int!,$status:Order_Status!) {
+  mutation ($id: Int!,$status:OrderStatus!) {
     changeStatus(id: $id,status:$status) 
   }
 `;
@@ -102,6 +102,12 @@ export const UPDATE_ORDER = gql`
     updateOrder(updateOrderInput: $input) {
       id
     }
+  }
+`;
+
+export const UPLOAD_RECEIPT = gql`
+  mutation ($orderId: Int!,$receiptURL:String!) {
+    uploadReceipt(orderId: $orderId,receiptURL:$receiptURL) 
   }
 `;
 

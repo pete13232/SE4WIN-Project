@@ -1,12 +1,12 @@
 import { Row, Col, Button, Image } from "react-bootstrap";
 import "./style.css";
 import ProductModal from "../Modal/ProductModal";
-import { useState } from "react";
-
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/auth";
 const ProductDetail = ({ picURL, name, price, stock, productId }) => {
   const [selectQuantity, setSelectQuantity] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
-
+  const context = useContext(AuthContext);
   return (
     <div>
       <Row className="detail mt-3">
@@ -32,7 +32,7 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
               <div className="detail-block d-flex align-items-center justify-content-end">
                 <div className="text-end">
                   <h5>Quantity:</h5>
-                  <h4>Stock: {stock}</h4>
+                  <h4>Stock: {stock >= 0 ? stock : 0}</h4>
                 </div>
               </div>
               <div className="ms-4 mb-4 d-flex align-items-center justify-content-center background-detail">
@@ -49,8 +49,13 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
             </div>
             <Button
               className="btn-large blue"
+              disabled={stock<=0}
               onClick={() => {
-                setShowProduct(true);
+                if (context.user) {
+                  setShowProduct(true);
+                } else {
+                  window.location.replace("/login");
+                }
               }}
             >
               Buy

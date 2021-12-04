@@ -29,16 +29,16 @@ export class ProductService {
   ) {}
 
   /**
-   * Create a Product
+   * Create Product
    *
    * parameter: createProductInput
-   * return: a Created product
+   * return: Created product
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
     //Check if product is already exists
     const product = this.findByName(createProductInput.name);
 
-    //Create a new product instance
+    //Create new product instance
     const newProduct = this.productRepository.create(createProductInput);
 
     //Add category relation
@@ -46,7 +46,7 @@ export class ProductService {
       where: { id: createProductInput.categoryId },
       relations: ['product'],
     });
-    //Throw error if not found a category
+    //Throw error if not found category
     if (!category) {
       throw new ForbiddenError('Category not found');
     }
@@ -62,7 +62,7 @@ export class ProductService {
   /**
    * Show All Products
    *
-   * return: List of products
+   * return: List of Products
    */
   async findAll(): Promise<Product[]> {
     //Find proudct
@@ -73,6 +73,7 @@ export class ProductService {
     if (!products) {
       throw new ForbiddenError('Product not found');
     }
+
     return products;
   }
 
@@ -96,6 +97,7 @@ export class ProductService {
     if (!product) {
       throw new ForbiddenError('Product not found');
     }
+
     return product;
   }
 
@@ -124,16 +126,16 @@ export class ProductService {
   }
 
   /**
-   * Update a Product Information
+   * Update Product Information
    *
-   * parameter: id, updateProductInput
-   * return: The Updated Product
+   * parameters: id, updateProductInput
+   * return: Updated Product
    */
   async update(
     id: number,
     updateProductInput: UpdateProductInput,
   ): Promise<Product> {
-    //Find a product
+    //Find product
     const product = this.findOne(id);
 
     //Copy update infomation to current infomation
@@ -144,10 +146,10 @@ export class ProductService {
   }
 
   /**
-   * Remove a Product
+   * Remove Product
    *
    * parameter: id
-   * return: a Success Message
+   * return: Success Message
    */
   async remove(id: number): Promise<string> {
     //Find a product
@@ -155,15 +157,14 @@ export class ProductService {
 
     //Delete product in database
     await this.productRepository.delete(id);
-
     return 'Delete success!';
   }
 
   /**
-   * Count Quantity of a Product in Stock
+   * Count Quantity of Product in Stock
    *
    * parameter: id
-   * return: Quantity of a Product in Stock
+   * return: Quantity of Product in Stock
    */
   async countStock(id: number): Promise<number> {
     let stock = 0;
@@ -186,17 +187,17 @@ export class ProductService {
   }
 
   /**
-   * Update Quantity of a Product in Stock
+   * Update Quantity of Product in Stock
    *
-   * parameters: user ,productId ,quantity
-   * return: The Updated Quantity in Stock
+   * parameterss: userId ,productId ,quantity
+   * return: Updated Quantity in Stock
    */
   async updateStock(
     userId: number,
     productId: number,
     quantity: number,
   ): Promise<number> {
-    //Create a new order to add a product quantity to stock
+    //Create new a order to add the quantity to stock
     const createOrderInput = new CreateOrderInput();
     createOrderInput.userId = userId;
     createOrderInput.productId = productId;

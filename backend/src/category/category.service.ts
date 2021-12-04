@@ -19,10 +19,10 @@ export class CategoryService {
   ) {}
 
   /**
-   * Create a Category
+   * Create Category
    *
    * parameter: createCategoryInput
-   * return: a Created Category
+   * return: Created Category
    */
   async create(createCategoryInput: CreateCategoryInput): Promise<Category> {
     //Check if category is already exists
@@ -65,10 +65,10 @@ export class CategoryService {
   }
 
   /**
-   * Update a Category Information
+   * Update Category Information
    *
    * parameter: id, updateCategoryInput
-   * return: The Updated Category
+   * return: Updated Category
    */
   async update(
     id: number,
@@ -85,10 +85,10 @@ export class CategoryService {
   }
 
   /**
-   * Remove a Category
+   * Remove Category
    *
    * parameter: id
-   * return: a Success Message
+   * return: Success Message
    */
   async remove(id: number): Promise<string> {
     await this.categoryRepository.delete(id);

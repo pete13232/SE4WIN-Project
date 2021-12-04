@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import "./style.css";
 import { useMutation } from "@apollo/client";
 import { UPDATE_STOCK } from "../../../Graphql/Mutations";
-import { useHistory } from "react-router-dom";
 
 const AddStockModal = ({
   showAdd,
@@ -35,7 +34,6 @@ const AddStockModal = ({
   };
 
   const [updateStock] = useMutation(UPDATE_STOCK);
-  const history = useHistory();
 
   const onSubmit = (quantity) => {
     if (quantity !== 0) {

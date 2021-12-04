@@ -6,7 +6,7 @@ import Order from "./Order";
 
 const Orders = () => {
   /*--------------------------Query-------------------------------*/
-  const { data, error } = useQuery(GET_USER_ORDERS);
+  const { data, error, refetch } = useQuery(GET_USER_ORDERS);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -26,8 +26,9 @@ const Orders = () => {
           name={order.product.name}
           quantity={-order.quantity}
           netPrice={-order.netPrice}
-          address={order.OrderAddress}
+          address={order.orderAddress}
           status={order.status}
+          refetch={refetch}
         />
       ))}
     </div>
