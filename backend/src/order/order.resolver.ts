@@ -38,7 +38,7 @@ export class OrderResolver {
   /**
    * Show all Orders
    * 
-   * requires: Signed In with Admin Role   
+   * require: Signed In with Admin Role   
    * return: List of Orders
    */
   @Query(() => [Order], { name: 'orders' })
@@ -51,7 +51,7 @@ export class OrderResolver {
   /**
    * Find Order by Id
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameter: id
    * return: Order
    */
@@ -65,7 +65,7 @@ export class OrderResolver {
   /**
    * Find Order by User
    *
-   * requires: Signed In
+   * require: Signed In
    * parameter: user
    * return: Order
    */
@@ -78,7 +78,7 @@ export class OrderResolver {
   /**
    * Update Order Information
    *
-   * requires: Signed In 
+   * require: Signed In 
    * parameter: updateOrderInput
    * return: Updated Order
    */
@@ -96,7 +96,7 @@ export class OrderResolver {
   /**
    * Remove Order
    *
-   * requires: Signed In 
+   * require: Signed In 
    * parameter: id
    * return: Success Message
    */
@@ -109,7 +109,7 @@ export class OrderResolver {
   /**
    * Change Order Status
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameters: id, status
    * return: Success Message
    */
@@ -126,7 +126,7 @@ export class OrderResolver {
   /**
    * Upload Receipt to Database
    *
-   * requires: Signed In 
+   * require: Signed In 
    * parameters: orderId, receiptURL
    * return: Image URL from Database
    */  

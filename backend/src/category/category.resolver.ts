@@ -21,7 +21,7 @@ export class CategoryResolver {
   /**
    * Create Category
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameter: createCategoryInput
    * return: Created Category
    */
@@ -58,7 +58,7 @@ export class CategoryResolver {
   /**
    * Update Category Information
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameter: updateCategoryInput
    * return: Updated Category
    */
@@ -77,7 +77,7 @@ export class CategoryResolver {
   /**
    * Remove Product
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameter: id
    * return: Success Message
    */

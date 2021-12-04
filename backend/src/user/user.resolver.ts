@@ -14,8 +14,19 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @Resolver(() => User)
 export class UserResolver {
+  /**
+   * Inject User Service
+   *
+   * parameter: userService
+   */
   constructor(private readonly userService: UserService) {}
 
+  /**
+   * Create User
+   *
+   * parameter: createUserInput
+   * return: Created User
+   */
   @Mutation(() => User)
   async createUser(
     @Args('createUserInput') createUserInput: CreateUserInput,
@@ -23,6 +34,12 @@ export class UserResolver {
     return await this.userService.create(createUserInput);
   }
 
+  /**
+   * Show all Users
+   *
+   * require: Signed In with Admin Role
+   * return: List of Users
+   */
   @Query(() => [User], { name: 'users' })
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -30,6 +47,13 @@ export class UserResolver {
     return await this.userService.findAll();
   }
 
+  /**
+   * Find User by Id
+   *
+   * require: Signed In with Admin Role
+   * parameter: id
+   * return: User
+   */
   @Query(() => User, { name: 'user' })
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -37,6 +61,13 @@ export class UserResolver {
     return await this.userService.findOne(id);
   }
 
+  /**
+   * Find User by Email
+   *
+   * require: Signed In with Admin Role
+   * parameter: loginUserInput
+   * return: User
+   */
   @Query(() => User, { name: 'email' })
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -46,6 +77,13 @@ export class UserResolver {
     return await this.userService.findByEmail(loginUserInput);
   }
 
+  /**
+   * Update User Information
+   *
+   * require: Signed In 
+   * parameter: updateUserInput
+   * return: Updated User
+   */
   @Mutation(() => User)
   @UseGuards(GqlAuthGuard)
   async updateUser(
@@ -54,6 +92,13 @@ export class UserResolver {
     return await this.userService.update(updateUserInput.id, updateUserInput);
   }
 
+  /**
+   * Remove User
+   *
+   * require: Signed In with Admin Role
+   * parameter: id
+   * return: Success Message
+   */
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -63,6 +108,13 @@ export class UserResolver {
     return await this.userService.remove(id);
   }
 
+  /**
+   * Get Current User
+   *
+   * require: Signed In 
+   * parameter: id
+   * return: Current User
+   */
   @Query(() => User, { name: 'me' })
   @UseGuards(GqlAuthGuard)
   async me(@CurrentUser() user: User): Promise<User> {

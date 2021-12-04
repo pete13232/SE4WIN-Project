@@ -29,7 +29,7 @@ export class ProductService {
   ) {}
 
   /**
-   * Create a Product
+   * Create Product
    *
    * parameter: createProductInput
    * return: Created product
@@ -43,7 +43,7 @@ export class ProductService {
       throw new ForbiddenError('Product already existed.');
     }
 
-    //Create a new product instance
+    //Create new product instance
     const newProduct = this.productRepository.create(createProductInput);
 
     //Add category relation
@@ -51,7 +51,7 @@ export class ProductService {
       where: { id: createProductInput.categoryId },
       relations: ['product'],
     });
-    //Throw error if not found a category
+    //Throw error if not found category
     if (!category) {
       throw new ForbiddenError('Category not found');
     }
@@ -67,7 +67,7 @@ export class ProductService {
   /**
    * Show All Products
    *
-   * return: List of products
+   * return: List of Products
    */
   async findAll(): Promise<Product[]> {
     //Find proudct
@@ -78,6 +78,7 @@ export class ProductService {
     if (!products) {
       throw new ForbiddenError('Product not found');
     }
+
     return products;
   }
 
@@ -101,6 +102,7 @@ export class ProductService {
     if (!product) {
       throw new ForbiddenError('Product not found');
     }
+
     return product;
   }
 
@@ -138,7 +140,7 @@ export class ProductService {
     id: number,
     updateProductInput: UpdateProductInput,
   ): Promise<Product> {
-    //Find a product
+    //Find product
     const product = this.findOne(id);
 
     //Copy update infomation to current infomation
@@ -160,7 +162,6 @@ export class ProductService {
 
     //Delete product in database
     await this.productRepository.delete(id);
-
     return 'Delete success!';
   }
 
@@ -193,7 +194,7 @@ export class ProductService {
   /**
    * Update Quantity of Product in Stock
    *
-   * parameterss: user ,productId ,quantity
+   * parameterss: userId ,productId ,quantity
    * return: Updated Quantity in Stock
    */
   async updateStock(

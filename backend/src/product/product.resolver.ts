@@ -31,7 +31,7 @@ export class ProductResolver {
   /**
    * Create Product
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameter: createProductInput
    * return: Created Product
    */
@@ -80,7 +80,7 @@ export class ProductResolver {
    *
    * Find Product by name
    *
-   * parameter: productName
+   * parameter: name
    * return: Product
    */
   @Query(() => Product, { name: 'findProductName' })
@@ -93,7 +93,7 @@ export class ProductResolver {
   /**
    * Update Quantity of Product in Stock
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameters: user ,productId ,quantity
    * return: Updated Quantity in Stock
    */
@@ -112,7 +112,7 @@ export class ProductResolver {
   /**
    * Update Product Information
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameter: updateProductInput
    * return: Updated Product
    */
@@ -131,7 +131,7 @@ export class ProductResolver {
   /**
    * Remove Product
    *
-   * requires: Signed In with Admin Role
+   * require: Signed In with Admin Role
    * parameter: id
    * return: Success Message
    */
