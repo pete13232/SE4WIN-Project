@@ -40,7 +40,7 @@ export class CategoryResolver {
    * parameter: page
    * return: List of Category
    */
-  @Query(() => [Category], { name: 'categories' })
+  @Query(() => [Category], { name: 'AdminCategories' })
   AdminFindAll(): Promise<Category[]> {
     return this.categoryService.AdminFindAll();
   }

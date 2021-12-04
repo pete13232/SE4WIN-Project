@@ -53,6 +53,15 @@ export class ProductResolver {
   findAll(@Args('sort', { type: () => Int }) sort: number): Promise<Product[]> {
     return this.productService.findAll(sort);
   }
+  /**
+   * Show all Products
+   *
+   * return: List of Products
+   */
+  @Query(() => [Product], { name: 'AdminProducts' })
+  AdminFindAll(): Promise<Product[]> {
+    return this.productService.AdminFindAll();
+  }
 
   /**
    * Find Product by Id
