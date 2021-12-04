@@ -81,7 +81,7 @@ const ProductModal = ({
       });
     console.log(param);
   };
-  console.log(showProduct)
+  console.log(showProduct);
   return (
     <>
       <div>
@@ -98,47 +98,51 @@ const ProductModal = ({
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Modal.Body>
               <Row className="gap-3">
-                <div className="confirm-image d-flex justify-content-center">
-                  <Image src={picURL} />
-                </div>
-                <div className="d-flex align-items-center">
-                  <div className="title-block d-flex align-items-center justify-content-end">
-                    <h5>Product:</h5>
-                  </div>
-                  <div className="d-flex align-items-center justify-content-center">
-                    <h3>{name}</h3>
+                <div>
+                  <div className="confirm-image d-flex justify-content-center">
+                    <Image src={picURL} />
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
-                  <div className="title-block d-flex align-items-center justify-content-end">
-                    <h5>Quantity:</h5>
+                <Row className="gap-3 ms-5 confirm-detail">
+                  <div className="d-flex align-items-center">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>Product:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <h3>{name}</h3>
+                    </div>
                   </div>
-                  <div className="ms-4 d-flex align-items-center justify-content-center quantity-background">
-                    <h3>{selectQuantity}</h3>
+                  <div className="d-flex align-items-center">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>Quantity:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center quantity-background">
+                      <h3>{selectQuantity}</h3>
+                    </div>
                   </div>
-                </div>
-                <div className="d-flex align-items-center">
-                  <div className="title-block d-flex align-items-center justify-content-end">
-                    <h5>TotalPrice:</h5>
+                  <div className="d-flex align-items-center">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>TotalPrice:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center total-background">
+                      <h3>{totalPrice} ฿</h3>
+                    </div>
                   </div>
-                  <div className="ms-4 d-flex align-items-center justify-content-center total-background">
-                    <h3>{totalPrice} ฿</h3>
+                  <div className="d-flex align-items-center">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>Delivery address:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <Form.Control
+                        name="address"
+                        defaultValue={address}
+                        type="text"
+                        placeholder="Enter address"
+                        {...register("address")}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="d-flex align-items-center">
-                  <div className="title-block d-flex align-items-center justify-content-end">
-                    <h5>Delivery address:</h5>
-                  </div>
-                  <div className="d-flex align-items-center justify-content-center address-background">
-                    <Form.Control
-                      name="address"
-                      defaultValue={address}
-                      type="text"
-                      placeholder="Enter address"
-                      {...register("address")}
-                    />
-                  </div>
-                </div>
+                </Row>
                 <p className="errorMessage">{errors["address"]?.message}</p>
               </Row>
             </Modal.Body>

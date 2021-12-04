@@ -30,3 +30,15 @@
   margin: 0;
 }
 
+.carousel-control-next {
+  width: 4% !important;
+}
+
+.carousel-control-prev{
+  width: 4% !important;
+}
+
+.carousel-indicators {
+  visibility: hidden;
+}
+

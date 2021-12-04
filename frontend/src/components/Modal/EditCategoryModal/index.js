@@ -119,7 +119,7 @@ const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, 
       >
         <Form onSubmit={handleSubmit(onSubmit)} id="categoryForm">
           <Modal.Header closeButton>
-            <h2>New Category</h2>
+            <h2>Edit Category</h2>
           </Modal.Header>
           <Modal.Body className="d-flex gap-4 p-5">
             <div>

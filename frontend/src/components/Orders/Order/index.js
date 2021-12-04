@@ -166,20 +166,22 @@ const Order = ({
             <h6 className={statusFuction(status)}> {status}</h6>
           </div>
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Control
-              name="receiptURL"
-              id="files"
-              type="file"
-              // style={{ visibility: "hidden" }}
-              {...register("receiptURL")}
-              onChange={(event) => {
-                setPictureFile(event.target.files[0]);
-              }}
-            />
-            <p className="errorMessage">{errors["receiptURL"]?.message}</p>
-            <Button className="green btn-small" type="submit">
-              Submit
-            </Button>
+            <div>
+              <Form.Control
+                name="receiptURL"
+                id="files"
+                type="file"
+                // style={{ visibility: "hidden" }}
+                {...register("receiptURL")}
+                onChange={(event) => {
+                  setPictureFile(event.target.files[0]);
+                }}
+              />
+              <p className="errorMessage">{errors["receiptURL"]?.message}</p>
+              <Button className="green btn-small" type="submit">
+                Submit
+              </Button>
+            </div>
           </Form>
         </Col>
       </Row>
