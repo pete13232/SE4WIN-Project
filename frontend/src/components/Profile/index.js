@@ -14,7 +14,6 @@ import "./style.css";
 
 const Profile = () => {
   const context = useContext(AuthContext);
-
   /*-------------------------Query----------------------------- */
   const { data, error } = useQuery(GET_USER_INFO);
   const [user, setUser] = useState();
@@ -67,7 +66,7 @@ const Profile = () => {
 
   /*--------------------------Submit Form---------------------------- */
   const [updateUser] = useMutation(UPDATE_USER_INFO);
-
+  const [changePassword, setChangePassword] = useState(false)
   const schema = yup.object().shape(
     {
       email: yup.string().notRequired(),
@@ -217,12 +216,19 @@ const Profile = () => {
                       placeholder="*******"
                       disabled={editProfile}
                       {...register("password")}
+                      onChange={(event)=>{
+                        if(event.target.value != "")
+                          setChangePassword(true)
+                        else
+                          setChangePassword(false)
+                      }}
                     />
                     <p className="errorMessage">
                       {errors["password"]?.message}
                     </p>
                   </Form.Group>
-                  <Form.Group className="d-flex align-items-baseline">
+
+                  {changePassword && (<Form.Group className="d-flex mb-3 align-items-baseline">
                     <Form.Label className="title-block">
                       <h5>Confirm password:</h5>
                     </Form.Label>
@@ -235,7 +241,7 @@ const Profile = () => {
                     <p className="errorMessage">
                       {errors["ConfirmPassword"]?.message}
                     </p>
-                  </Form.Group>
+                  </Form.Group>)}
 
                   <Form.Group className="d-flex align-items-baseline">
                     <Form.Label className="title-block">
