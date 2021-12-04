@@ -32,6 +32,7 @@ export class OrderService {
    * return: Created Order
    */
   async create(createOrderInput: CreateOrderInput): Promise<Order> {
+    //Create new order instance
     const newOrder = this.orderRepository.create(createOrderInput);
 
     //Add user relation
@@ -39,7 +40,7 @@ export class OrderService {
       where: { id: createOrderInput.userId },
       relations: ['order'],
     });
-    //Throw error if not found a user
+    //Throw error if not found user
     if (!user) {
       throw new ForbiddenError('User not found');
     }
@@ -56,7 +57,7 @@ export class OrderService {
       where: { id: createOrderInput.productId },
       relations: ['order'],
     });
-    //Throw error if not found a product
+    //Throw error if not found product
     if (!product) {
       throw new ForbiddenError('Product not found');
     }
@@ -81,7 +82,7 @@ export class OrderService {
   async findAll(): Promise<Order[]> {
     return await this.orderRepository.find({
       relations: ['user', 'product'],
-      order: { updatedAt: 'DESC', createdAt: 'DESC' },
+      order: { status: 'ASC', updatedAt: 'DESC', createdAt: 'DESC' },
     });
   }
 
@@ -110,6 +111,7 @@ export class OrderService {
       where: { user: id },
       relations: ['user', 'product'],
       order: {
+        status: 'ASC',
         updatedAt: 'DESC',
         createdAt: 'DESC',
       },
@@ -212,6 +214,8 @@ export class OrderService {
     if (!order) {
       throw new ForbiddenError('Order not found');
     }
+
+    //Change receipt URL
     order.receiptURL = imageURL;
 
     //Change order status to Pending

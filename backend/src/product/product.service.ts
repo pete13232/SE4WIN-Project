@@ -36,8 +36,14 @@ export class ProductService {
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
     //Check if product is already exists
-    await this.findByName(createProductInput.name);
+    const product = await this.productRepository.findOne({
+      where: { name: createProductInput.name },
+    });
 
+    //Throw error if not found products
+    if (product) {
+      throw new ForbiddenError('Product already existed');
+    }
     //Create new product instance
     const newProduct = this.productRepository.create(createProductInput);
 
@@ -46,6 +52,7 @@ export class ProductService {
       where: { id: createProductInput.categoryId },
       relations: ['product'],
     });
+
     //Throw error if not found category
     if (!category) {
       throw new ForbiddenError('Category not found');
@@ -62,9 +69,10 @@ export class ProductService {
   /**
    * Show All Products
    *
+   * parameter: page, number
    * return: List of Products
    */
-  async findAll(sort: boolean): Promise<Product[]> {
+  async findAll(page: number, sort: number): Promise<Product[]> {
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
@@ -73,7 +81,34 @@ export class ProductService {
         updatedAt: 'DESC',
         createdAt: 'DESC',
       },
+      skip: page * 12,
+      take: 12,
     });
+
+    //Throw error if not found products
+    if (!products) {
+      throw new ForbiddenError('Product not found');
+    }
+
+    return products;
+  }
+
+  /**
+   * Show All Products
+   *
+   * return: List of Products
+   */
+  async AdminFindAll(): Promise<Product[]> {
+    //Find proudct
+    const products = await this.productRepository.find({
+      relations: ['category', 'order'],
+      order: {
+        id: 'ASC',
+        updatedAt: 'DESC',
+        createdAt: 'DESC',
+      },
+    });
+
     //Throw error if not found products
     if (!products) {
       throw new ForbiddenError('Product not found');
@@ -89,7 +124,7 @@ export class ProductService {
    * return: Product
    */
   async findOne(id: number): Promise<Product> {
-    //count latest stock of product
+    //Count latest stock of product
     this.countStock(id);
 
     //Find proudct by id
@@ -209,7 +244,7 @@ export class ProductService {
       throw new ForbiddenError('Product not found');
     }
 
-    //Map to all order found and count their quantity
+    //Map to all order found and count quantity
     orders.map((product) => {
       stock += product.quantity;
     });
@@ -237,5 +272,9 @@ export class ProductService {
 
     //Check if the stock updated correctly
     return this.countStock(productId);
+  }
+
+  async countProduct() {
+    return await this.productRepository.count();
   }
 }

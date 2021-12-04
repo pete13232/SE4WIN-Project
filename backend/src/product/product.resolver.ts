@@ -51,9 +51,27 @@ export class ProductResolver {
    */
   @Query(() => [Product], { name: 'products' })
   findAll(
-    @Args('sort', { type: () => Boolean }) sort: boolean,
+    @Args('page', { type: () => Int }) page: number,
+    @Args('sort', { type: () => Int }) sort: number,
   ): Promise<Product[]> {
-    return this.productService.findAll(sort);
+    return this.productService.findAll(page, sort);
+  }
+
+  @ResolveField(() => Int)
+  count(): Promise<number> {
+    return this.productService.countProduct();
+  }
+
+  /**
+   * Show all Products
+   *
+   * require: Signed In with Admin Role
+   *
+   * return: List of Products
+   */
+  @Query(() => [Product], { name: 'AdminProducts' })
+  AdminFindAll(): Promise<Product[]> {
+    return this.productService.AdminFindAll();
   }
 
   /**
