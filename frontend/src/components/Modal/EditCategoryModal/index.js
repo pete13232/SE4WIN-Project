@@ -3,18 +3,33 @@ import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { UPDATE_CATEGORY } from "../../../Graphql/Mutations";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Image } from "react-bootstrap";
 import * as yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "./style.css";
 
-const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, categoryName, refetch }) => {
+const EditCategoryModal = ({
+  showEditCategory,
+  setShowEditCategory,
+  categoryId,
+  categoryName,
+  refetch,
+}) => {
+  /*------------------------ Preview Image --------------------------*/
+  const [selectedImage, setSelectedImage] = useState();
+
+  const imageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
   /*------------------------Modal--------------------------*/
 
   const handleClose = () => {
-      setShowEditCategory(false)
-      // document.getElementById("categoryForm").reset();
+    setShowEditCategory(false);
+    // document.getElementById("categoryForm").reset();
   };
 
   /*------------------------Modal--------------------------*/
@@ -24,7 +39,7 @@ const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, 
 
   const schema = yup.object().shape({
     name: yup.string().notRequired(),
-    picURL: yup.mixed().notRequired()
+    picURL: yup.mixed().notRequired(),
   });
 
   const {
@@ -64,17 +79,16 @@ const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, 
             allowEscapeKey: false,
           });
         });
+    } else {
+      submit.picURL = undefined;
     }
-    else{
-      submit.picURL = undefined
-    }
-    const categorytId = { id: categoryId }
+    const categorytId = { id: categoryId };
     Object.keys(submit).forEach((key) =>
       submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
     );
     if (Object.keys(submit).length !== 0) {
       submit = Object.assign(categorytId, submit);
-      console.log(submit)
+      console.log(submit);
       updateCategory({
         variables: { input: submit },
       })
@@ -98,11 +112,9 @@ const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, 
             allowOutsideClick: false,
             allowEscapeKey: false,
           });
-          
         });
-    }
-    else{
-      handleClose()
+    } else {
+      handleClose();
     }
   };
 
@@ -123,9 +135,11 @@ const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, 
           </Modal.Header>
           <Modal.Body className="d-flex gap-4 p-5">
             <div>
-              {/* <div className="product-image d-flex justify-content-center mb-3">
-              <Image src="https://www.gannett-cdn.com/-mm-/05398f80e3bde0326c872a093f3784aeee1c8a90/c=880-323-1833-861/local/-/media/2018/05/14/USATODAY/usatsports/wp-USAT-allthemoms-front1-19975-winnie-the-pooh-day.jpg?auto=webp&format=pjpg&width=1200" />
-            </div> */}
+              {selectedImage && (
+                <div className="product-image d-flex justify-content-center mb-3">
+                  <Image src={URL.createObjectURL(selectedImage)} />
+                </div>
+              )}
               <div className="text-center upload-btn">
                 {/*------------------------Pic upload--------------------------*/}
                 <Form.Control
@@ -135,6 +149,7 @@ const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, 
                   {...register("picURL")}
                   onChange={(event) => {
                     setPictureFile(event.target.files[0]);
+                    imageChange(event);
                   }}
                 />
                 {/*------------------------Pic upload--------------------------*/}
@@ -152,14 +167,18 @@ const EditCategoryModal = ({ showEditCategory, setShowEditCategory, categoryId, 
                   type="text"
                   {...register("name")}
                 />
-                <p className="errorMessage">
-                  {errors["name"]?.message}
-                </p>
+                <p className="errorMessage">{errors["name"]?.message}</p>
               </Form.Group>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button className="grey btn-small" onClick={handleClose}>
+            <Button
+              className="grey btn-small"
+              onClick={() => {
+                handleClose();
+                setSelectedImage("");
+              }}
+            >
               Close
             </Button>
             <Button className="green btn-small" type="submit">

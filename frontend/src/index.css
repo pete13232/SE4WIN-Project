@@ -41,12 +41,12 @@ body h4 {
   font-size: 14px;
 }
 
-body h5{
+body h5 {
   color: #000000;
   font-size: 18px;
 }
 
-body h6{
+body h6 {
   color: #000000;
   font-weight: bold;
   font-size: 18px;
@@ -67,11 +67,11 @@ body h6{
   height: 40px;
   background-color: white;
   /* box-shadow: 0 1px 4px rgb(0 0 0 / 25%); */
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
-.bg-container{
-  background-color: #EAEAEA;
+.bg-container {
+  background-color: #eaeaea;
 }
 
 /* -----Button size----- */
@@ -113,7 +113,7 @@ body h6{
   background-color: #d75a4a !important;
 }
 
-.red:hover{
+.red:hover {
   background-color: #a7473b !important;
 }
 
@@ -121,7 +121,7 @@ body h6{
   background-color: #ff6600 !important;
 }
 
-.orange:hover{
+.orange:hover {
   background-color: #ca5100 !important ;
 }
 
@@ -137,7 +137,7 @@ body h6{
   background-color: #feb905 !important;
 }
 
-.yellow:hover{
+.yellow:hover {
   background-color: #cc9201 !important;
 }
 
@@ -147,4 +147,8 @@ body h6{
 
 .grey:hover {
   background-color: #949191 !important;
+}
+
+.modal-header button {
+  display: none;
 }

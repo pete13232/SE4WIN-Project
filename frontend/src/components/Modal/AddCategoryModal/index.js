@@ -1,20 +1,29 @@
-import { useState} from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CREATE_CATEGORY } from "../../../Graphql/Mutations";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Image } from "react-bootstrap";
 import * as yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "./style.css";
 
 const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
+  /*------------------------ Preview Image --------------------------*/
+  const [selectedImage, setSelectedImage] = useState();
+
+  const imageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
   /*------------------------Modal--------------------------*/
 
   const handleClose = () => {
-      setShowCategory(false)
-      document.getElementById("categoryForm").reset();
+    setShowCategory(false);
+    document.getElementById("categoryForm").reset();
   };
 
   /*------------------------Modal--------------------------*/
@@ -65,7 +74,7 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
             var name = res.data.createCategory.name;
             Swal.fire({
               title: "Add new category success!",
-              text: "Add "+name+" to new category",
+              text: "Add " + name + " to new category",
               icon: "success",
               allowOutsideClick: false,
               allowEscapeKey: false,
@@ -113,9 +122,11 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
           </Modal.Header>
           <Modal.Body className="d-flex gap-4 p-5">
             <div>
-              {/* <div className="product-image d-flex justify-content-center mb-3">
-              <Image src="https://www.gannett-cdn.com/-mm-/05398f80e3bde0326c872a093f3784aeee1c8a90/c=880-323-1833-861/local/-/media/2018/05/14/USATODAY/usatsports/wp-USAT-allthemoms-front1-19975-winnie-the-pooh-day.jpg?auto=webp&format=pjpg&width=1200" />
-            </div> */}
+              {selectedImage && (
+                <div className="product-image d-flex justify-content-center mb-3">
+                  <Image src={URL.createObjectURL(selectedImage)} />
+                </div>
+              )}
               <div className="text-center upload-btn">
                 <Form.Control
                   name="picURL"
@@ -124,6 +135,7 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
                   {...register("picURL")}
                   onChange={(event) => {
                     setPictureFile(event.target.files[0]);
+                    imageChange(event);
                   }}
                 />
                 {/*------------------------Pic upload--------------------------*/}
@@ -135,19 +147,19 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
                 <Form.Label className="title-block">
                   <h5>Name:</h5>
                 </Form.Label>
-                <Form.Control
-                  name="name"
-                  type="text"
-                  {...register("name")}
-                />
-                <p className="errorMessage">
-                  {errors["name"]?.message}
-                </p>
+                <Form.Control name="name" type="text" {...register("name")} />
+                <p className="errorMessage">{errors["name"]?.message}</p>
               </Form.Group>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button className="grey btn-small" onClick={handleClose}>
+            <Button
+              className="grey btn-small"
+              onClick={() => {
+                handleClose();
+                setSelectedImage("");
+              }}
+            >
               Close
             </Button>
             <Button className="green btn-small" type="submit">
