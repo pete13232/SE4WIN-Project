@@ -43,11 +43,14 @@ export class CategoryService {
   /**
    * Show All Products
    *
+   * parameter: page
    * return: List of products
    */
-  async findAll(): Promise<Category[]> {
+  async findAll(page: number): Promise<Category[]> {
     const result = await this.categoryRepository.find({
       order: { name: 'ASC' },
+      skip: page * 6,
+      take: 6,
     });
     return result;
   }

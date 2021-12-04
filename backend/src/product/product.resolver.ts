@@ -50,9 +50,7 @@ export class ProductResolver {
    * return: List of Products
    */
   @Query(() => [Product], { name: 'products' })
-  findAll(
-    @Args('sort', { type: () => Boolean }) sort: boolean,
-  ): Promise<Product[]> {
+  findAll(@Args('sort', { type: () => Int }) sort: number): Promise<Product[]> {
     return this.productService.findAll(sort);
   }
 

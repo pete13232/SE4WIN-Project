@@ -37,11 +37,14 @@ export class CategoryResolver {
   /**
    * Show all Category
    *
+   * parameter: page
    * return: List of Category
    */
   @Query(() => [Category], { name: 'categories' })
-  findAll(): Promise<Category[]> {
-    return this.categoryService.findAll();
+  findAll(
+    @Args('page', { type: () => Int }) page: number,
+  ): Promise<Category[]> {
+    return this.categoryService.findAll(page);
   }
 
   /**

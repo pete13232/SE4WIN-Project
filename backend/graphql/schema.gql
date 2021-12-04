@@ -76,11 +76,11 @@ type Query {
   orders: [Order!]!
   order(id: Int!): Order!
   orderByUser: [Order!]!
-  products(sort: Boolean!): [Product!]!
+  products(sort: Int!): [Product!]!
   product(id: Int!): Product!
   ProductByName(name: String!): [Product!]!
   ProductByCategory(categoryId: Int!): [Product!]!
-  categories: [Category!]!
+  categories(page: Int!): [Category!]!
   category(id: Int!): Category!
   verify(token: String!): User!
 }

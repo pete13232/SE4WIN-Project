@@ -64,7 +64,7 @@ export class ProductService {
    *
    * return: List of Products
    */
-  async findAll(sort: boolean): Promise<Product[]> {
+  async findAll(sort: number): Promise<Product[]> {
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
