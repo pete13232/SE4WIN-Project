@@ -9,6 +9,7 @@ type Category {
   createdAt: DateTime!
   updatedAt: DateTime!
   product: [Product!]!
+  count: Int!
 }
 
 """
@@ -65,6 +66,7 @@ type Product {
   createdAt: DateTime!
   updatedAt: DateTime!
   order: [Order!]!
+  count: Int!
   stock: Int!
 }
 
@@ -82,7 +84,7 @@ type Query {
   ProductByName(name: String!): [Product!]!
   ProductByCategory(categoryId: Int!): [Product!]!
   AdminCategories: [Category!]!
-  categories(page: Int!): [[Category!]!]!
+  categories(page: Int!): [Category!]!
   category(id: Int!): Category!
   verify(token: String!): User!
 }

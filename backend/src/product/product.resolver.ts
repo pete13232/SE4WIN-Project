@@ -56,7 +56,12 @@ export class ProductResolver {
   ): Promise<Product[]> {
     return this.productService.findAll(page, sort);
   }
-  
+
+  @ResolveField(() => Int)
+  count(): Promise<number> {
+    return this.productService.countProduct();
+  }
+
   /**
    * Show all Products
    *

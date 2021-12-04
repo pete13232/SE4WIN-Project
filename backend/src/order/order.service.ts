@@ -32,7 +32,6 @@ export class OrderService {
    * return: Created Order
    */
   async create(createOrderInput: CreateOrderInput): Promise<Order> {
-
     //Create new order instance
     const newOrder = this.orderRepository.create(createOrderInput);
 
@@ -107,7 +106,6 @@ export class OrderService {
    * return: Order
    */
   async findOrderByUser(id: number): Promise<Order[]> {
-
     //Find order by user
     const orders = await this.orderRepository.find({
       where: { user: id },
@@ -139,7 +137,6 @@ export class OrderService {
     id: number;
     updateOrderInput: UpdateOrderInput;
   }): Promise<Order> {
-
     //Find order
     const order = await this.orderRepository.findOne(id);
 
@@ -161,7 +158,6 @@ export class OrderService {
    * return: Success Message
    */
   async remove(id: number): Promise<string> {
-
     //Find order
     const order = await this.orderRepository.findOneOrFail(id);
 
@@ -188,7 +184,6 @@ export class OrderService {
     id: number;
     status: OrderStatus;
   }): Promise<string> {
-
     //Find order
     const order = await this.orderRepository.findOneOrFail(id);
 
@@ -212,7 +207,6 @@ export class OrderService {
    * return: Image URL from Database
    */
   async uploadReceipt(orderId: number, imageURL: string): Promise<string> {
-
     //Find order
     const order = await this.findOne(orderId);
 

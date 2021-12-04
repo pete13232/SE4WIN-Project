@@ -25,16 +25,15 @@ export class CategoryService {
    * return: Created Category
    */
   async create(createCategoryInput: CreateCategoryInput): Promise<Category> {
-
     //Check if category is already exists
     const category = await this.categoryRepository.findOne({
       name: createCategoryInput.name,
-    });    
+    });
     if (category) {
       throw new ForbiddenError('Category already existed.');
-    }    
+    }
     //Create new category instance
-    
+
     const newCategory = this.categoryRepository.create(createCategoryInput);
 
     //Save to database
@@ -47,13 +46,12 @@ export class CategoryService {
    * parameter: page
    * return: List of products
    */
-  async findAll(page: number): Promise<[Category[], number]> {
-    const result = await this.categoryRepository.findAndCount({
+  async findAll(page: number): Promise<Category[]> {
+    const result = await this.categoryRepository.find({
       order: { name: 'ASC' },
       skip: page * 6,
       take: 6,
     });
-    console.log(result);
 
     return result;
   }
@@ -97,7 +95,6 @@ export class CategoryService {
     id: number,
     updateCategoryInput: UpdateCategoryInput,
   ): Promise<Category> {
-    
     //Check if category is not exists
     const category = await this.findOne(id);
 
@@ -117,5 +114,9 @@ export class CategoryService {
   async remove(id: number): Promise<string> {
     await this.categoryRepository.delete(id);
     return 'Delete success';
+  }
+
+  async countCategory() {
+    return await this.categoryRepository.count();
   }
 }

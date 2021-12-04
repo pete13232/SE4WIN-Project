@@ -35,7 +35,6 @@ export class ProductService {
    * return: Created product
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
-
     //Check if product is already exists
     const product = await this.productRepository.findOne({
       where: { name: createProductInput.name },
@@ -100,7 +99,6 @@ export class ProductService {
    * return: List of Products
    */
   async AdminFindAll(): Promise<Product[]> {
-
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
@@ -126,7 +124,6 @@ export class ProductService {
    * return: Product
    */
   async findOne(id: number): Promise<Product> {
-
     //Count latest stock of product
     this.countStock(id);
 
@@ -151,7 +148,6 @@ export class ProductService {
    * return: Product
    */
   async findByName(name: string): Promise<Product[]> {
-
     //Find proudct by name
     const product = await this.productRepository.find({
       where: { name: Like('%' + name + '%') },
@@ -205,7 +201,6 @@ export class ProductService {
     id: number,
     updateProductInput: UpdateProductInput,
   ): Promise<Product> {
-
     //Find product
     const product = this.findOne(id);
 
@@ -223,7 +218,6 @@ export class ProductService {
    * return: Success Message
    */
   async remove(id: number): Promise<string> {
-
     //Find a product
     this.findOne(id);
 
@@ -269,7 +263,6 @@ export class ProductService {
     productId: number,
     quantity: number,
   ): Promise<number> {
-
     //Create new a order to add the quantity to stock
     const createOrderInput = new CreateOrderInput();
     createOrderInput.userId = userId;
@@ -279,5 +272,9 @@ export class ProductService {
 
     //Check if the stock updated correctly
     return this.countStock(productId);
+  }
+
+  async countProduct() {
+    return await this.productRepository.count();
   }
 }
