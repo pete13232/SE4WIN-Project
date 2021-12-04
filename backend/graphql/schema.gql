@@ -43,12 +43,12 @@ type Order {
   orderAddress: String
   netPrice: Float!
   receiptURL: String
-  status: Order_Status!
+  status: OrderStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-enum Order_Status {
+enum OrderStatus {
   AWAITING
   PENDING
   SUCCESS
@@ -96,7 +96,7 @@ type Mutation {
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): String!
-  changeStatus(status: Order_Status!, id: Int!): String!
+  changeStatus(status: OrderStatus!, id: Int!): String!
   uploadReceipt(receiptURL: String!, orderId: Int!): String!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateStock(quantity: Int!, productId: Int!): Int!

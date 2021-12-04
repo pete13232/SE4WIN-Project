@@ -9,7 +9,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Order_Status } from '../enums/order-status.enum';
+import { OrderStatus } from '../enums/order-status.enum';
 
 @Entity()
 @ObjectType()
@@ -42,9 +42,9 @@ export class Order {
   @Field({ nullable: true })
   receiptURL?: string;
 
-  @Column({ type: 'enum', enum: Order_Status, default: Order_Status.AWAITING })
-  @Field(() => Order_Status)
-  status: Order_Status;
+  @Column({ type: 'enum', enum: OrderStatus, default: OrderStatus.AWAITING })
+  @Field(() => OrderStatus)
+  status: OrderStatus;
 
   @CreateDateColumn()
   @Field()

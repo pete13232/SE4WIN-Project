@@ -3,7 +3,6 @@ import { OrderService } from './order.service';
 import { Order } from './entities/order.entity';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
-import { Order_Status } from './enums/order-status.enum';
 import { UseGuards } from '@nestjs/common';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
@@ -11,6 +10,7 @@ import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { User } from 'src/user/entities/user.entity';
 import { Role } from 'src/user/enums/role.enum';
+import { OrderStatus } from './enums/order-status.enum';
 
 @Resolver(() => Order)
 export class OrderResolver {
@@ -71,7 +71,7 @@ export class OrderResolver {
   @Roles(Role.ADMIN)
   changeStatus(
     @Args('id', { type: () => Int }) id: number,
-    @Args('status', { type: () => Order_Status }) status: Order_Status,
+    @Args('status', { type: () => OrderStatus }) status: OrderStatus,
   ): Promise<string> {
     return this.orderService.changeStatus({ id, status });
   }
