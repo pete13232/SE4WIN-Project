@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { CreateOrderInput } from './dto/create-order.input';
 import { UpdateOrderInput } from './dto/update-order.input';
 import { Order } from './entities/order.entity';
-import { Order_Status } from './enums/order-status.enum';
+import { OrderStatus } from './enums/order-status.enum';
 
 @Injectable()
 export class OrderService {
@@ -117,7 +117,7 @@ export class OrderService {
     status,
   }: {
     id: number;
-    status: Order_Status;
+    status: OrderStatus;
   }): Promise<string> {
     const order = await this.orderRepository.findOneOrFail(id);
 
@@ -141,6 +141,8 @@ export class OrderService {
     }
 
     order.receiptURL = imageURL;
+
+    order.status = OrderStatus.PENDING;
 
     await this.orderRepository.save(order);
 

@@ -1,12 +1,12 @@
 import { registerEnumType } from '@nestjs/graphql';
 
-export enum Order_Status {
+export enum OrderStatus {
   AWAITING = 'awaiting',
   PENDING = 'pending',
   SUCCESS = 'success',
   FAIL = 'fail',
 }
 
-registerEnumType(Order_Status, {
-  name: 'Order_Status',
+registerEnumType(OrderStatus, {
+  name: 'OrderStatus',
 });
