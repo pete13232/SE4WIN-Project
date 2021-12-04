@@ -46,12 +46,28 @@ export class CategoryService {
    * parameter: page
    * return: List of products
    */
-  async findAll(page: number): Promise<Category[]> {
-    const result = await this.categoryRepository.find({
+  async findAll(page: number): Promise<[Category[], number]> {
+    const result = await this.categoryRepository.findAndCount({
       order: { name: 'ASC' },
       skip: page * 6,
       take: 6,
     });
+    console.log(result);
+
+    return result;
+  }
+  /**
+   * Show All Products
+   *
+   * parameter: page
+   * return: List of products
+   */
+  async AdminFindAll(): Promise<Category[]> {
+    const result = await this.categoryRepository.find({
+      order: { name: 'ASC' },
+    });
+    console.log(result);
+
     return result;
   }
 

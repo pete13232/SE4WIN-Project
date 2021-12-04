@@ -41,9 +41,19 @@ export class CategoryResolver {
    * return: List of Category
    */
   @Query(() => [Category], { name: 'categories' })
+  AdminFindAll(): Promise<Category[]> {
+    return this.categoryService.AdminFindAll();
+  }
+  /**
+   * Show all Category
+   *
+   * parameter: page
+   * return: List of Category
+   */
+  @Query(() => [[Category], Int], { name: 'categories' })
   findAll(
     @Args('page', { type: () => Int }) page: number,
-  ): Promise<Category[]> {
+  ): Promise<[Category[], number]> {
     return this.categoryService.findAll(page);
   }
 

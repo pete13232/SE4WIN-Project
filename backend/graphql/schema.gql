@@ -80,7 +80,7 @@ type Query {
   product(id: Int!): Product!
   ProductByName(name: String!): [Product!]!
   ProductByCategory(categoryId: Int!): [Product!]!
-  categories(page: Int!): [Category!]!
+  categories(page: Int!): [[Category!]!]!
   category(id: Int!): Category!
   verify(token: String!): User!
 }

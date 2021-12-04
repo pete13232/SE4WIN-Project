@@ -83,6 +83,29 @@ export class ProductService {
   }
 
   /**
+   * Show All Products
+   *
+   * return: List of Products
+   */
+  async AdminFindAll(): Promise<Product[]> {
+    //Find proudct
+    const products = await this.productRepository.find({
+      relations: ['category', 'order'],
+      order: {
+        name: 'ASC',
+        updatedAt: 'DESC',
+        createdAt: 'DESC',
+      },
+    });
+    //Throw error if not found products
+    if (!products) {
+      throw new ForbiddenError('Product not found');
+    }
+
+    return products;
+  }
+
+  /**
    * Find Product by Id
    *
    * parameter: id
