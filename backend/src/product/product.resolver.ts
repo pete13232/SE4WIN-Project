@@ -22,18 +22,18 @@ import { User } from 'src/user/entities/user.entity';
 @Resolver(() => Product)
 export class ProductResolver {
   /**
-   * Inject a Product Service
+   * Inject Product Service
    *
    * parameter: productService
    */
   constructor(private readonly productService: ProductService) {}
 
   /**
-   * Create a Product
+   * Create Product
    *
    * requires: Signed In with Admin Role
    * parameter: createProductInput
-   * return: a Created Product
+   * return: Created Product
    */
   @Mutation(() => Product)
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -66,10 +66,10 @@ export class ProductResolver {
   }
 
   /**
-   * Find Quantity of a Product in Stock
+   * Find Quantity of Product in Stock
    *
-   * parameters: product
-   * return: Quantity of a Product in Stock
+   * parameter: product
+   * return: Quantity of Product in Stock
    */
   @ResolveField(() => Int)
   stock(@Parent() product: Product): Promise<number> {
@@ -80,8 +80,8 @@ export class ProductResolver {
    *
    * Find Product by name
    *
-   * parameters: productName
-   * return: product
+   * parameter: productName
+   * return: Product
    */
   @Query(() => Product, { name: 'findProductName' })
   findByName(
@@ -91,11 +91,11 @@ export class ProductResolver {
   }
 
   /**
-   * Update Quantity of a Product in Stock
+   * Update Quantity of Product in Stock
    *
    * requires: Signed In with Admin Role
    * parameters: user ,productId ,quantity
-   * return: The Updated Quantity in Stock
+   * return: Updated Quantity in Stock
    */
 
   @Mutation(() => Int)
@@ -110,11 +110,11 @@ export class ProductResolver {
   }
 
   /**
-   * Update a Product Information
+   * Update Product Information
    *
    * requires: Signed In with Admin Role
-   * parameters: updateProductInput
-   * return: The Updated Product
+   * parameter: updateProductInput
+   * return: Updated Product
    */
   @Mutation(() => Product)
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -129,11 +129,11 @@ export class ProductResolver {
   }
 
   /**
-   * Remove a Product
+   * Remove Product
    *
    * requires: Signed In with Admin Role
    * parameter: id
-   * return: a Success Message
+   * return: Success Message
    */
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)

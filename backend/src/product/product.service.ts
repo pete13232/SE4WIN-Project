@@ -32,7 +32,7 @@ export class ProductService {
    * Create a Product
    *
    * parameter: createProductInput
-   * return: a Created product
+   * return: Created product
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
     //Check if product is already exists
@@ -129,10 +129,10 @@ export class ProductService {
   }
 
   /**
-   * Update a Product Information
+   * Update Product Information
    *
-   * parameter: id, updateProductInput
-   * return: The Updated Product
+   * parameters: id, updateProductInput
+   * return: Updated Product
    */
   async update(
     id: number,
@@ -149,10 +149,10 @@ export class ProductService {
   }
 
   /**
-   * Remove a Product
+   * Remove Product
    *
    * parameter: id
-   * return: a Success Message
+   * return: Success Message
    */
   async remove(id: number): Promise<string> {
     //Find a product
@@ -165,10 +165,10 @@ export class ProductService {
   }
 
   /**
-   * Count Quantity of a Product in Stock
+   * Count Quantity of Product in Stock
    *
    * parameter: id
-   * return: Quantity of a Product in Stock
+   * return: Quantity of Product in Stock
    */
   async countStock(id: number): Promise<number> {
     let stock = 0;
@@ -191,17 +191,17 @@ export class ProductService {
   }
 
   /**
-   * Update Quantity of a Product in Stock
+   * Update Quantity of Product in Stock
    *
-   * parameters: user ,productId ,quantity
-   * return: The Updated Quantity in Stock
+   * parameterss: user ,productId ,quantity
+   * return: Updated Quantity in Stock
    */
   async updateStock(
     userId: number,
     productId: number,
     quantity: number,
   ): Promise<number> {
-    //Create a new order to add a product quantity to stock
+    //Create new a order to add the quantity to stock
     const createOrderInput = new CreateOrderInput();
     createOrderInput.userId = userId;
     createOrderInput.productId = productId;
