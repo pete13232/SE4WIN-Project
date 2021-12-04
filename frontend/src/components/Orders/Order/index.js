@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { UPDATE_ORDER, CHANGE_STATUS } from "../../../Graphql/Mutations";
+import { UPLOAD_RECEIPT } from "../../../Graphql/Mutations";
 import Swal from "sweetalert2";
 
 const Order = ({
@@ -36,8 +36,7 @@ const Order = ({
   const [img, setImg] = useState(null);
 
   /*------------------------Submit--------------------------*/
-  const [updateOrder] = useMutation(UPDATE_ORDER);
-  const [changeStatus] = useMutation(CHANGE_STATUS);
+  const [uploadReceipt] = useMutation(UPLOAD_RECEIPT);
   const schema = yup.object().shape({
     receiptURL: yup
       .mixed()
@@ -57,39 +56,43 @@ const Order = ({
   const [pictureFile, setPictureFile] = useState("");
 
   const onSubmit = (submit) => {
-    // const token = localStorage.getItem("jwtToken") || "";
-    let formdata = new FormData();
-    formdata.append("file", pictureFile, pictureFile.name);
-    axios({
-      url: "http://20.212.81.174/upload",
-      method: "POST",
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-      data: formdata,
-    })
-      .then((res) => {
-        const temp = { id: id };
-        submit.receiptURL = res.data.imagePath;
-        submit = Object.assign(temp, submit);
-        console.log(submit);
-        updateOrder({
-          variables: { input: submit },
-        }).then(() => {
-          console.log("pass updateOrder");
-          changeStatus({
-            variables: { id: id, status: "PENDING" },
+    if (status == "PENDING") {
+      Swal.fire({
+        position: "top",
+        title: "Are you sure you want to \n re-upload receipt?",
+        text: "Your current receipt will be replace",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#d33",
+        cancelButtonColor: "#3085d6",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let formdata = new FormData();
+          formdata.append("file", pictureFile, pictureFile.name);
+          axios({
+            url: "http://20.212.81.174/upload",
+            method: "POST",
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+            data: formdata,
           })
             .then((res) => {
-              Swal.fire({
-                title: "Add new product success!",
-                html: "Press Ok to continue",
-                icon: "success",
-                allowOutsideClick: false,
-                allowEscapeKey: false,
+              submit.receiptURL = res.data.imagePath;
+              console.log(id, submit.receiptURL);
+              uploadReceipt({
+                variables: { orderId: id, receiptURL: submit.receiptURL },
+              }).then(() => {
+                Swal.fire({
+                  title: "Add new product success!",
+                  html: "Press Ok to continue",
+                  icon: "success",
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                });
+                refetch();
               });
-              refetch();
             })
             .catch((error) => {
               const err = error.message;
@@ -101,18 +104,46 @@ const Order = ({
                 allowEscapeKey: false,
               });
             });
-        });
-      })
-      .catch((error) => {
-        const err = error.message;
-        Swal.fire({
-          title: "Oops! !",
-          html: err,
-          icon: "error",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        });
+        }
       });
+    }else{
+      let formdata = new FormData();
+      formdata.append("file", pictureFile, pictureFile.name);
+      axios({
+        url: "http://20.212.81.174/upload",
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        data: formdata,
+      })
+        .then((res) => {
+          submit.receiptURL = res.data.imagePath;
+          console.log(id, submit.receiptURL);
+          uploadReceipt({
+            variables: { orderId: id, receiptURL: submit.receiptURL },
+          }).then(() => {
+            Swal.fire({
+              title: "Add new product success!",
+              html: "Press Ok to continue",
+              icon: "success",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+            });
+            refetch();
+          });
+        })
+        .catch((error) => {
+          const err = error.message;
+          Swal.fire({
+            title: "Oops! !",
+            html: err,
+            icon: "error",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          });
+        });
+    }
   };
 
   /*------------------------Submit--------------------------*/
@@ -165,22 +196,24 @@ const Order = ({
             <h3>Status:</h3>
             <h6 className={statusFuction(status)}> {status}</h6>
           </div>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Form.Control
-              name="receiptURL"
-              id="files"
-              type="file"
-              // style={{ visibility: "hidden" }}
-              {...register("receiptURL")}
-              onChange={(event) => {
-                setPictureFile(event.target.files[0]);
-              }}
-            />
-            <p className="errorMessage">{errors["receiptURL"]?.message}</p>
-            <Button className="green btn-small" type="submit">
-              Submit
-            </Button>
-          </Form>
+          {status != "SUCCESS" && status != "FAIL" && (
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <Form.Control
+                name="receiptURL"
+                id="files"
+                type="file"
+                // style={{ visibility: "hidden" }}
+                {...register("receiptURL")}
+                onChange={(event) => {
+                  setPictureFile(event.target.files[0]);
+                }}
+              />
+              <p className="errorMessage">{errors["receiptURL"]?.message}</p>
+              <Button className="green btn-small" type="submit">
+                Submit
+              </Button>
+            </Form>
+          )}
         </Col>
       </Row>
     </>
