@@ -22,7 +22,6 @@ const ProductModal = ({
   setShowProduct,
 }) => {
   const handleClose = () => setShowProduct(false);
-
   const context = useContext(AuthContext);
   const { data, error } = useQuery(GET_USER_ADDRESS);
   const [address, setAddress] = useState("");
