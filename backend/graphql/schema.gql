@@ -76,9 +76,10 @@ type Query {
   orders: [Order!]!
   order(id: Int!): Order!
   orderByUser: [Order!]!
-  products: [Product!]!
+  products(sort: Boolean!): [Product!]!
   product(id: Int!): Product!
-  findProductName(name: String!): Product!
+  ProductByName(name: String!): [Product!]!
+  ProductByCategory(categoryId: Int!): [Product!]!
   categories: [Category!]!
   category(id: Int!): Category!
   verify(token: String!): User!

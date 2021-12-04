@@ -50,8 +50,10 @@ export class ProductResolver {
    * return: List of Products
    */
   @Query(() => [Product], { name: 'products' })
-  findAll(): Promise<Product[]> {
-    return this.productService.findAll();
+  findAll(
+    @Args('sort', { type: () => Boolean }) sort: boolean,
+  ): Promise<Product[]> {
+    return this.productService.findAll(sort);
   }
 
   /**
@@ -83,11 +85,24 @@ export class ProductResolver {
    * parameter: name
    * return: Product
    */
-  @Query(() => Product, { name: 'findProductName' })
+  @Query(() => [Product], { name: 'ProductByName' })
   findByName(
     @Args('name', { type: () => String }) name: string,
-  ): Promise<Product> {
+  ): Promise<Product[]> {
     return this.productService.findByName(name);
+  }
+
+  /**
+   * Find Product by category
+   *
+   * parameter: id
+   * return: list of Product
+   */
+  @Query(() => [Product], { name: 'ProductByCategory' })
+  findProductByCategory(
+    @Args('categoryId', { type: () => Int }) categoryId: number,
+  ): Promise<Product[]> {
+    return this.productService.findProductByCategory(categoryId);
   }
 
   /**

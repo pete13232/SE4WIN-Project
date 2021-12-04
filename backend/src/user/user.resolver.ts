@@ -80,7 +80,7 @@ export class UserResolver {
   /**
    * Update User Information
    *
-   * require: Signed In 
+   * require: Signed In
    * parameter: updateUserInput
    * return: Updated User
    */
@@ -111,7 +111,7 @@ export class UserResolver {
   /**
    * Get Current User
    *
-   * require: Signed In 
+   * require: Signed In
    * parameter: id
    * return: Current User
    */

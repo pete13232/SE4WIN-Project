@@ -5,7 +5,7 @@ import { Category } from 'src/category/entities/category.entity';
 import { CreateOrderInput } from 'src/order/dto/create-order.input';
 import { Order } from 'src/order/entities/order.entity';
 import { OrderService } from 'src/order/order.service';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
@@ -36,7 +36,7 @@ export class ProductService {
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
     //Check if product is already exists
-    const product = this.findByName(createProductInput.name);
+    await this.findByName(createProductInput.name);
 
     //Create new product instance
     const newProduct = this.productRepository.create(createProductInput);
@@ -64,10 +64,15 @@ export class ProductService {
    *
    * return: List of Products
    */
-  async findAll(): Promise<Product[]> {
+  async findAll(sort: boolean): Promise<Product[]> {
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
+      order: {
+        price: sort ? 'ASC' : 'DESC',
+        updatedAt: 'DESC',
+        createdAt: 'DESC',
+      },
     });
     //Throw error if not found products
     if (!products) {
@@ -107,11 +112,12 @@ export class ProductService {
    * parameter: name
    * return: Product
    */
-  async findByName(name: string): Promise<Product> {
+  async findByName(name: string): Promise<Product[]> {
     //Find proudct by name
-    const product = await this.productRepository.findOne({
-      where: { name: name },
+    const product = await this.productRepository.find({
+      where: { name: Like('%' + name + '%') },
       relations: ['category', 'order'],
+      order: { name: 'ASC' },
     });
 
     //Throw error if not found
@@ -120,7 +126,32 @@ export class ProductService {
     }
 
     //count latest stock of product
-    this.countStock(product.id);
+    // this.countStock(product.id);
+
+    return product;
+  }
+
+  /**
+   * Find Product by category
+   *
+   * parameter: categoryId
+   * return:List of Product
+   */
+  async findProductByCategory(categoryId: number): Promise<Product[]> {
+    //Find proudct by category
+    const product = await this.productRepository.find({
+      where: { category: categoryId },
+      relations: ['category', 'order'],
+      order: { name: 'ASC' },
+    });
+
+    //Throw error if not found
+    if (!product) {
+      throw new ForbiddenError('Product not found');
+    }
+
+    //count latest stock of product
+    // this.countStock(product.id);
 
     return product;
   }

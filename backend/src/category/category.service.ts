@@ -46,7 +46,9 @@ export class CategoryService {
    * return: List of products
    */
   async findAll(): Promise<Category[]> {
-    const result = await this.categoryRepository.find();
+    const result = await this.categoryRepository.find({
+      order: { name: 'ASC' },
+    });
     return result;
   }
 
@@ -58,8 +60,8 @@ export class CategoryService {
    */
   async findOne(id: number): Promise<Category> {
     const category = await this.categoryRepository.findOneOrFail(id);
-    if (category) {
-      throw new ForbiddenError('Category already existed.');
+    if (!category) {
+      throw new ForbiddenError('Category not found.');
     }
     return category;
   }

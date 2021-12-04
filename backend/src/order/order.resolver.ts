@@ -37,8 +37,8 @@ export class OrderResolver {
 
   /**
    * Show all Orders
-   * 
-   * require: Signed In with Admin Role   
+   *
+   * require: Signed In with Admin Role
    * return: List of Orders
    */
   @Query(() => [Order], { name: 'orders' })
@@ -71,14 +71,14 @@ export class OrderResolver {
    */
   @Query(() => [Order], { name: 'orderByUser' })
   @UseGuards(GqlAuthGuard)
-  findByUser(@CurrentUser() user: User): Promise<Order[]> {
-    return this.orderService.findByUser(user.id);
+  findOrderByUser(@CurrentUser() user: User): Promise<Order[]> {
+    return this.orderService.findOrderByUser(user.id);
   }
 
   /**
    * Update Order Information
    *
-   * require: Signed In 
+   * require: Signed In
    * parameter: updateOrderInput
    * return: Updated Order
    */
@@ -96,7 +96,7 @@ export class OrderResolver {
   /**
    * Remove Order
    *
-   * require: Signed In 
+   * require: Signed In
    * parameter: id
    * return: Success Message
    */
@@ -126,10 +126,10 @@ export class OrderResolver {
   /**
    * Upload Receipt to Database
    *
-   * require: Signed In 
+   * require: Signed In
    * parameters: orderId, receiptURL
    * return: Image URL from Database
-   */  
+   */
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard)
   uploadReceipt(

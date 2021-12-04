@@ -94,7 +94,7 @@ export class UserService {
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
     //Find user
     const user = await this.userRepository.findOne(id);
-    
+
     //Throw error if not found
     if (!user) {
       throw new ForbiddenError('User not found.');

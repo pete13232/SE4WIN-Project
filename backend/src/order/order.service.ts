@@ -81,6 +81,7 @@ export class OrderService {
   async findAll(): Promise<Order[]> {
     return await this.orderRepository.find({
       relations: ['user', 'product'],
+      order: { updatedAt: 'DESC', createdAt: 'DESC' },
     });
   }
 
@@ -103,11 +104,15 @@ export class OrderService {
    * parameter: user
    * return: Order
    */
-  async findByUser(id: number): Promise<Order[]> {
+  async findOrderByUser(id: number): Promise<Order[]> {
     //Find order by user
     const orders = await this.orderRepository.find({
       where: { user: id },
       relations: ['user', 'product'],
+      order: {
+        updatedAt: 'DESC',
+        createdAt: 'DESC',
+      },
     });
 
     //Throw error if not found
@@ -186,7 +191,7 @@ export class OrderService {
     }
 
     //Change order status
-    const oldStatus = order.status;    
+    const oldStatus = order.status;
     order.status = status;
     await this.orderRepository.save(order);
 
@@ -195,18 +200,18 @@ export class OrderService {
 
   /**
    * Upload Receipt to Database
-   * 
+   *
    * parameters: orderId, receiptURL
    * return: Image URL from Database
    */
   async uploadReceipt(orderId: number, imageURL: string): Promise<string> {
     //Find order
     const order = await this.findOne(orderId);
-    
+
     //Throw error if not found
     if (!order) {
       throw new ForbiddenError('Order not found');
-    }    
+    }
     order.receiptURL = imageURL;
 
     //Change order status to Pending
