@@ -83,7 +83,7 @@ export class OrderService {
   async findAll(): Promise<Order[]> {
     return await this.orderRepository.find({
       relations: ['user', 'product'],
-      order: { updatedAt: 'DESC', createdAt: 'DESC' },
+      order: { status: 'ASC', updatedAt: 'DESC', createdAt: 'DESC' },
     });
   }
 
@@ -113,6 +113,7 @@ export class OrderService {
       where: { user: id },
       relations: ['user', 'product'],
       order: {
+        status: 'ASC',
         updatedAt: 'DESC',
         createdAt: 'DESC',
       },
