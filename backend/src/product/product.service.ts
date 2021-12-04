@@ -37,8 +37,14 @@ export class ProductService {
   async create(createProductInput: CreateProductInput): Promise<Product> {
 
     //Check if product is already exists
-    await this.findByName(createProductInput.name);
+    const product = await this.productRepository.findOne({
+      where: { name: createProductInput.name },
+    });
 
+    //Throw error if not found products
+    if (product) {
+      throw new ForbiddenError('Product already existed');
+    }
     //Create new product instance
     const newProduct = this.productRepository.create(createProductInput);
 
@@ -64,10 +70,10 @@ export class ProductService {
   /**
    * Show All Products
    *
+   * parameter: page, number
    * return: List of Products
    */
-  async findAll(sort: number): Promise<Product[]> {
-
+  async findAll(page: number, sort: number): Promise<Product[]> {
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
@@ -76,6 +82,8 @@ export class ProductService {
         updatedAt: 'DESC',
         createdAt: 'DESC',
       },
+      skip: page * 12,
+      take: 12,
     });
 
     //Throw error if not found products

@@ -50,12 +50,17 @@ export class ProductResolver {
    * return: List of Products
    */
   @Query(() => [Product], { name: 'products' })
-  findAll(@Args('sort', { type: () => Int }) sort: number): Promise<Product[]> {
-    return this.productService.findAll(sort);
+  findAll(
+    @Args('page', { type: () => Int }) page: number,
+    @Args('sort', { type: () => Int }) sort: number,
+  ): Promise<Product[]> {
+    return this.productService.findAll(page, sort);
   }
   
   /**
    * Show all Products
+   *
+   * require: Signed In with Admin Role
    *
    * return: List of Products
    */

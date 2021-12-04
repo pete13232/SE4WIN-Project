@@ -37,9 +37,12 @@ export class CategoryResolver {
   /**
    * Show all Category
    *
-   * parameter: page
+   * require: Signed In with Admin Role
+   *
    * return: List of Category
    */
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @Query(() => [Category], { name: 'AdminCategories' })
   AdminFindAll(): Promise<Category[]> {
     return this.categoryService.AdminFindAll();
