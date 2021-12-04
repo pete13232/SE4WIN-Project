@@ -1,9 +1,10 @@
-import { Row, Col, Button, Image, Form } from "react-bootstrap";
+import { Row, Col, Button, Form } from "react-bootstrap";
 import { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../../context/auth";
-import { GET_USER_INFO } from "../../Graphql/Queries";
 import { useQuery, useMutation } from "@apollo/client";
 import { useForm, Controller } from "react-hook-form";
+import { BsPersonCircle } from "react-icons/bs";
+import { AuthContext } from "../../context/auth";
+import { GET_USER_INFO } from "../../Graphql/Queries";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { UPDATE_USER_INFO } from "../../Graphql/Mutations";
 import * as yup from "yup";
@@ -66,7 +67,7 @@ const Profile = () => {
 
   /*--------------------------Submit Form---------------------------- */
   const [updateUser] = useMutation(UPDATE_USER_INFO);
-  const [changePassword, setChangePassword] = useState(false)
+  const [changePassword, setChangePassword] = useState(false);
   const schema = yup.object().shape(
     {
       email: yup.string().notRequired(),
@@ -179,7 +180,7 @@ const Profile = () => {
                 className="d-block justify-content-center profile-image"
               >
                 <div className="mb-3">
-                  <Image src="https://wallpaperaccess.com/full/2161330.jpg" />
+                  <BsPersonCircle />
                 </div>
                 <div className="text-center">
                   {editProfile && (
@@ -194,10 +195,10 @@ const Profile = () => {
                   )}
                 </div>
               </Col>
-              <Col md={3}>
+              <Col md={4}>
                 <Row className="gap-1">
                   <Form.Group className="d-flex align-items-baseline">
-                    <Form.Label className="title-block">
+                    <Form.Label className="alter-title-block">
                       <h5>Email:</h5>
                     </Form.Label>
                     <Form.Control
@@ -208,7 +209,7 @@ const Profile = () => {
                     />
                   </Form.Group>
                   <Form.Group className="d-flex align-items-baseline">
-                    <Form.Label className="title-block">
+                    <Form.Label className="alter-title-block">
                       <h5>Password:</h5>
                     </Form.Label>
                     <Form.Control
@@ -216,11 +217,9 @@ const Profile = () => {
                       placeholder="*******"
                       disabled={editProfile}
                       {...register("password")}
-                      onChange={(event)=>{
-                        if(event.target.value != "")
-                          setChangePassword(true)
-                        else
-                          setChangePassword(false)
+                      onChange={(event) => {
+                        if (event.target.value != "") setChangePassword(true);
+                        else setChangePassword(false);
                       }}
                     />
                     <p className="errorMessage">
@@ -228,23 +227,25 @@ const Profile = () => {
                     </p>
                   </Form.Group>
 
-                  {changePassword && (<Form.Group className="d-flex mb-3 align-items-baseline">
-                    <Form.Label className="title-block">
-                      <h5>Confirm password:</h5>
-                    </Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="*******"
-                      disabled={editProfile}
-                      {...register("ConfirmPassword")}
-                    />
-                    <p className="errorMessage">
-                      {errors["ConfirmPassword"]?.message}
-                    </p>
-                  </Form.Group>)}
+                  {changePassword && (
+                    <Form.Group className="d-flex align-items-baseline">
+                      <Form.Label className="alter-title-block">
+                        <h5>Confirm password:</h5>
+                      </Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="*******"
+                        disabled={editProfile}
+                        {...register("ConfirmPassword")}
+                      />
+                      <p className="errorMessage">
+                        {errors["ConfirmPassword"]?.message}
+                      </p>
+                    </Form.Group>
+                  )}
 
                   <Form.Group className="d-flex align-items-baseline">
-                    <Form.Label className="title-block">
+                    <Form.Label className="alter-title-block">
                       <h5>First name:</h5>
                     </Form.Label>
                     <Form.Control
@@ -255,7 +256,7 @@ const Profile = () => {
                     />
                   </Form.Group>
                   <Form.Group className="d-flex align-items-baseline">
-                    <Form.Label className="title-block">
+                    <Form.Label className="alter-title-block">
                       <h5>Last name:</h5>
                     </Form.Label>
                     <Form.Control
@@ -267,7 +268,7 @@ const Profile = () => {
                   </Form.Group>
                 </Row>
               </Col>
-              <Col md={5}>
+              <Col md={4}>
                 <Form.Group className="d-flex align-items-baseline">
                   <Form.Label className="title-block">
                     <h5>Phone:</h5>
