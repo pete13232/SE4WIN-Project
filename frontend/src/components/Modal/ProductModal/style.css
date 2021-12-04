@@ -33,11 +33,19 @@
 }
 
 .address-background {
-    background-color: #f8f8f8;
-    padding: 12px;
-    width: auto;
-    border-radius: 4px;
-    box-shadow:inset 0 4px 4px rgb(0 0 0 / 25%);
+  background-color: #f8f8f8;
+  padding: 12px;
+  width: auto;
+  border-radius: 4px;
+  box-shadow: inset 0 4px 4px rgb(0 0 0 / 25%);
+}
+
+.confirm-detail .form-control {
+  background-color: #f8f8f8 !important;
+  padding: 12px !important;
+  width: 500px !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 4px 4px rgb(0 0 0 / 25%) !important;
 }
 
 .total-background h3 {
@@ -57,9 +65,8 @@
   margin-right: 20px;
 }
 
-span svg{
-    width: 20px;
-    height: 20px;
-    filter: drop-shadow(0 2px 2px rgb(0 0 0 / 50%));
+span svg {
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(0 2px 2px rgb(0 0 0 / 50%));
 }
-

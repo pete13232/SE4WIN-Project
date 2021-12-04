@@ -194,8 +194,8 @@ const Profile = () => {
                 </div>
               </Col>
               <Col md={3}>
-                <Row className="gap-3">
-                  <Form.Group className="d-flex mb-3 align-items-baseline">
+                <Row className="gap-1">
+                  <Form.Group className="d-flex align-items-baseline">
                     <Form.Label className="title-block">
                       <h5>Email:</h5>
                     </Form.Label>
@@ -206,7 +206,7 @@ const Profile = () => {
                       {...register("email")}
                     />
                   </Form.Group>
-                  <Form.Group className="d-flex mb-3 align-items-baseline">
+                  <Form.Group className="d-flex align-items-baseline">
                     <Form.Label className="title-block">
                       <h5>Password:</h5>
                     </Form.Label>
@@ -220,7 +220,7 @@ const Profile = () => {
                       {errors["password"]?.message}
                     </p>
                   </Form.Group>
-                  <Form.Group className="d-flex mb-3 align-items-baseline">
+                  <Form.Group className="d-flex align-items-baseline">
                     <Form.Label className="title-block">
                       <h5>Confirm password:</h5>
                     </Form.Label>
@@ -235,7 +235,7 @@ const Profile = () => {
                     </p>
                   </Form.Group>
 
-                  <Form.Group className="d-flex mb-3 align-items-baseline">
+                  <Form.Group className="d-flex align-items-baseline">
                     <Form.Label className="title-block">
                       <h5>First name:</h5>
                     </Form.Label>
@@ -246,7 +246,7 @@ const Profile = () => {
                       {...register("firstname")}
                     />
                   </Form.Group>
-                  <Form.Group className="d-flex mb-3 align-items-baseline">
+                  <Form.Group className="d-flex align-items-baseline">
                     <Form.Label className="title-block">
                       <h5>Last name:</h5>
                     </Form.Label>
@@ -260,7 +260,7 @@ const Profile = () => {
                 </Row>
               </Col>
               <Col md={5}>
-                <Form.Group className="d-flex mb-3 align-items-baseline">
+                <Form.Group className="d-flex align-items-baseline">
                   <Form.Label className="title-block">
                     <h5>Phone:</h5>
                   </Form.Label>
@@ -301,7 +301,7 @@ const Profile = () => {
                     {errors["phoneNumber"]?.message}
                   </p>
                 </Form.Group>
-                <Form.Group className="d-flex mb-3 align-items-baseline">
+                <Form.Group className="d-flex align-items-baseline">
                   <Form.Label className="title-block">
                     <h5>address:</h5>
                   </Form.Label>
