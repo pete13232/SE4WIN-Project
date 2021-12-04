@@ -53,6 +53,7 @@ export class ProductResolver {
   findAll(@Args('sort', { type: () => Int }) sort: number): Promise<Product[]> {
     return this.productService.findAll(sort);
   }
+  
   /**
    * Show all Products
    *

@@ -25,15 +25,16 @@ export class CategoryService {
    * return: Created Category
    */
   async create(createCategoryInput: CreateCategoryInput): Promise<Category> {
+
     //Check if category is already exists
     const category = await this.categoryRepository.findOne({
       name: createCategoryInput.name,
-    });
+    });    
     if (category) {
       throw new ForbiddenError('Category already existed.');
-    }
-
-    //Create a new category instance
+    }    
+    //Create new category instance
+    
     const newCategory = this.categoryRepository.create(createCategoryInput);
 
     //Save to database
@@ -56,6 +57,7 @@ export class CategoryService {
 
     return result;
   }
+
   /**
    * Show All Products
    *
@@ -95,6 +97,7 @@ export class CategoryService {
     id: number,
     updateCategoryInput: UpdateCategoryInput,
   ): Promise<Category> {
+    
     //Check if category is not exists
     const category = await this.findOne(id);
 

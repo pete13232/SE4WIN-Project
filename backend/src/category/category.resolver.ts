@@ -44,6 +44,7 @@ export class CategoryResolver {
   AdminFindAll(): Promise<Category[]> {
     return this.categoryService.AdminFindAll();
   }
+  
   /**
    * Show all Category
    *

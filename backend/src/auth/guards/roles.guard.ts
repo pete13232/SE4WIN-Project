@@ -8,7 +8,14 @@ import { ROLES_KEY } from '../decorators/roles.decorator';
 export class RolesGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
+  /**
+   * Check If Role Is Correct
+   * 
+   * parameter: context 
+   * return: Boolean 
+   */
   canActivate(context: ExecutionContext) {
+    //Get required role 
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -17,8 +24,13 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
+
     const ctx = GqlExecutionContext.create(context);
+
+    //Get user role
     const myRole = ctx.getContext().req.user['role'];
+
+    //Compare between required role and user role
     const isValid = requiredRoles.some((role) => myRole?.includes(role));
 
     // console.log('roles: ', requiredRoles);

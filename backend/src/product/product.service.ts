@@ -35,6 +35,7 @@ export class ProductService {
    * return: Created product
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
+
     //Check if product is already exists
     await this.findByName(createProductInput.name);
 
@@ -46,6 +47,7 @@ export class ProductService {
       where: { id: createProductInput.categoryId },
       relations: ['product'],
     });
+
     //Throw error if not found category
     if (!category) {
       throw new ForbiddenError('Category not found');
@@ -65,6 +67,7 @@ export class ProductService {
    * return: List of Products
    */
   async findAll(sort: number): Promise<Product[]> {
+
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
@@ -74,6 +77,7 @@ export class ProductService {
         createdAt: 'DESC',
       },
     });
+
     //Throw error if not found products
     if (!products) {
       throw new ForbiddenError('Product not found');
@@ -88,6 +92,7 @@ export class ProductService {
    * return: List of Products
    */
   async AdminFindAll(): Promise<Product[]> {
+
     //Find proudct
     const products = await this.productRepository.find({
       relations: ['category', 'order'],
@@ -97,6 +102,7 @@ export class ProductService {
         createdAt: 'DESC',
       },
     });
+
     //Throw error if not found products
     if (!products) {
       throw new ForbiddenError('Product not found');
@@ -112,7 +118,8 @@ export class ProductService {
    * return: Product
    */
   async findOne(id: number): Promise<Product> {
-    //count latest stock of product
+
+    //Count latest stock of product
     this.countStock(id);
 
     //Find proudct by id
@@ -136,6 +143,7 @@ export class ProductService {
    * return: Product
    */
   async findByName(name: string): Promise<Product[]> {
+
     //Find proudct by name
     const product = await this.productRepository.find({
       where: { name: Like('%' + name + '%') },
@@ -189,6 +197,7 @@ export class ProductService {
     id: number,
     updateProductInput: UpdateProductInput,
   ): Promise<Product> {
+
     //Find product
     const product = this.findOne(id);
 
@@ -206,6 +215,7 @@ export class ProductService {
    * return: Success Message
    */
   async remove(id: number): Promise<string> {
+
     //Find a product
     this.findOne(id);
 
@@ -232,7 +242,7 @@ export class ProductService {
       throw new ForbiddenError('Product not found');
     }
 
-    //Map to all order found and count their quantity
+    //Map to all order found and count quantity
     orders.map((product) => {
       stock += product.quantity;
     });
@@ -251,6 +261,7 @@ export class ProductService {
     productId: number,
     quantity: number,
   ): Promise<number> {
+
     //Create new a order to add the quantity to stock
     const createOrderInput = new CreateOrderInput();
     createOrderInput.userId = userId;
