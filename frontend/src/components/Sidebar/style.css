@@ -4,20 +4,25 @@
   height: 300px;
 }
 
-.sidebar {
-  background-color: #5b5b5b;
-  height: auto;
-}
-
 .sidebar svg {
   width: 24px;
   height: 24px;
 }
 
-.sidebar h5 {
-  color: white;
-}
-
 .sidebar a {
   text-decoration: none;
+}
+
+.sidebar-select {
+  background-color: rgba(0, 153, 255, 0.3);
+}
+
+.sidebar {
+  background-color: #5b5b5b;
+  height: auto;
+}
+
+
+.sidebar h5 {
+  color: white;
 }

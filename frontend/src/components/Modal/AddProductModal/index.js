@@ -1,17 +1,26 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ADD_PRODUCT } from "../../../Graphql/Mutations";
 import { ADMIN_GET_CATEGORIES } from "../../../Graphql/Queries";
 import { UPDATE_STOCK } from "../../../Graphql/Mutations";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Image } from "react-bootstrap";
 import * as yup from "yup";
 import axios from "axios";
 import Swal from "sweetalert2";
 import "./style.css";
 
 const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
+  /*------------------------ Preview Image --------------------------*/
+  const [selectedImage, setSelectedImage] = useState();
+
+  const imageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
   /*------------------------Modal--------------------------*/
 
   const handleClose = () => {
@@ -162,11 +171,13 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
           </Modal.Header>
           <Modal.Body className="d-flex gap-4 p-5">
             <div>
+              {selectedImage && (
+                <div className="product-image d-flex justify-content-center mb-3">
+                  <Image src={URL.createObjectURL(selectedImage)} />
+                </div>
+              )}
               <div className="text-center upload-btn">
                 {/*------------------------Pic upload--------------------------*/}
-                {/* <label htmlFor="files" className="btn btn-medium blue">
-                  Upload receipt
-                </label> */}
                 <Form.Control
                   name="picURL"
                   id="files"
@@ -174,6 +185,7 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
                   {...register("picURL")}
                   onChange={(event) => {
                     setPictureFile(event.target.files[0]);
+                    imageChange(event);
                   }}
                 />
                 {/*------------------------Pic upload--------------------------*/}
@@ -241,7 +253,13 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button className="grey btn-small" onClick={handleClose}>
+            <Button
+              className="grey btn-small"
+              onClick={() => {
+                handleClose();
+                setSelectedImage("");
+              }}
+            >
               Close
             </Button>
             <Button className="green btn-small" type="submit">
