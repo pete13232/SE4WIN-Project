@@ -30,7 +30,7 @@ import ProfileContainer from "./container/ProfileContainer/index.js";
 import OrderContainer from "./container/OrderContainer/index.js";
 import { AuthContext } from "./context/auth.js";
 import AdminContainer from "./container/AdminContainer/index.js";
-
+import { QueryProvider } from "./context/query";
 function App() {
   /* ----------------- Graphql Setup ----------------------- */
 
@@ -77,31 +77,33 @@ function App() {
   return (
     <AuthProvider>
       <ApolloProvider client={client}>
-        <Container className=" bg-container px-0">
-          <Switch>
-            <Route exact path="/">
-              <HomeContainer />
-            </Route>
-            <GuestRoute path="/signup" component={SignupContainer} />
-            <GuestRoute path="/login" component={LoginContainer} />
-            <UserRoute path="/order" component={OrderContainer} />
-            <UserRoute path="/profile" component={ProfileContainer} />
-            <AdminRoute path="/admin/:id" component={AdminContainer} />
-            <Route path="/products/:id">
-              <ProductSelectContainer />
-            </Route>
-            <Route exact path="/products">
-              <Redirect to="/"/>
-            </Route>
-            <Route exact path="/admin">
-              <Redirect to="/admin/stock"/>
-            </Route>
-            <Route path="/:id">
-              <p>Page not found</p>
-            </Route>
-          </Switch>
-          <Footer />
-        </Container>
+        <QueryProvider>
+          <Container className=" bg-container px-0">
+            <Switch>
+              <Route exact path="/">
+                <HomeContainer />
+              </Route>
+              <GuestRoute path="/signup" component={SignupContainer} />
+              <GuestRoute path="/login" component={LoginContainer} />
+              <UserRoute path="/order" component={OrderContainer} />
+              <UserRoute path="/profile" component={ProfileContainer} />
+              <AdminRoute path="/admin/:id" component={AdminContainer} />
+              <Route path="/products/:id">
+                <ProductSelectContainer />
+              </Route>
+              <Route exact path="/products">
+                <Redirect to="/" />
+              </Route>
+              <Route exact path="/admin">
+                <Redirect to="/admin/stock" />
+              </Route>
+              <Route path="/:id">
+                <p>Page not found</p>
+              </Route>
+            </Switch>
+            <Footer />
+          </Container>
+        </QueryProvider>
       </ApolloProvider>
     </AuthProvider>
   );

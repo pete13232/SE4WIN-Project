@@ -7,11 +7,13 @@ import Swal from "sweetalert2";
 import EditCategoryModal from "../../Modal/EditCategoryModal";
 
 const AdminCategoryChild = ({ id, categoryName, picURL, refetch }) => {
-  const [showEditCategory, setShowEditCategory] = useState(false);
+  const [showEditCategory, setShowEditCategory] = useState(false); // Modal show status
+
+  /*------------------------Delete Category-------------------------*/
 
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
   const deleteAlert = () => {
-    Swal.fire({
+    Swal.fire({ // Delete Category confirmation
       position: "top",
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -20,21 +22,21 @@ const AdminCategoryChild = ({ id, categoryName, picURL, refetch }) => {
       confirmButtonColor: "#d33",
       cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then((result) => { // confirm delete
       if (result.isConfirmed) {
-        removeCategory({
-          variables: { input: id },
+        removeCategory({ // delete category
+          variables: { input: id }, //delete by category id
         })
-          .then(() => {
+          .then(() => {// delete success
             Swal.fire({
               position: "top",
               title: "Deleted!",
               text: "This category has been deleted.",
               icon: "success",
             });
-            refetch();
+            refetch();// refetch changed data
           })
-          .catch((error) => {
+          .catch((error) => {//delete fail
             const err = error.message;
             Swal.fire({
               title: "Oops! !",
@@ -48,6 +50,7 @@ const AdminCategoryChild = ({ id, categoryName, picURL, refetch }) => {
     });
   };
 
+  /*------------------------Delete Category-------------------------*/
   return (
     <>
       <tr className="modify" key={id}>
