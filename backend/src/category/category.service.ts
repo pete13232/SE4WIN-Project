@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { Category } from './entities/category.entity';
+import { PaginatedCategory } from './pagination/PaginatedCategory';
 
 @Injectable()
 export class CategoryService {
@@ -46,14 +47,26 @@ export class CategoryService {
    * parameter: page
    * return: List of products
    */
-  async findAll(page: number): Promise<Category[]> {
-    const result = await this.categoryRepository.find({
+  async findAll(page: number): Promise<PaginatedCategory> {
+    const limit = 6;
+    const offset = (page - 1) * limit;
+
+    const categories = await this.categoryRepository.findAndCount({
       order: { name: 'ASC' },
-      skip: (page - 1) * 6,
-      take: 6,
+      skip: offset,
+      take: limit,
     });
 
-    return result;
+    const paginated = new PaginatedCategory();
+    paginated.data = categories[0];
+    paginated.totalCount = categories[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
+
+    return paginated;
   }
 
   /**
@@ -117,5 +130,9 @@ export class CategoryService {
 
   async countCategory() {
     return await this.categoryRepository.count();
+  }
+
+  checkNextPage(count: number, offset: number, limit: number): boolean {
+    return offset == 0 ? count > 6 : count % (offset + limit) < count;
   }
 }

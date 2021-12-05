@@ -9,6 +9,7 @@ import { Like, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
+import { PaginatedProduct } from './pagination/paginatedProduct';
 
 @Injectable()
 export class ProductService {
@@ -72,17 +73,19 @@ export class ProductService {
    * parameter: page, number
    * return: List of Products
    */
-  async findAll(page: number, sort: number): Promise<Product[]> {
+  async findAll(page: number, sort: number): Promise<PaginatedProduct> {
+    const limit = 12;
+    const offset = (page - 1) * limit;
     //Find proudct
-    const products = await this.productRepository.find({
+    const products = await this.productRepository.findAndCount({
       relations: ['category', 'order'],
       order: {
         price: sort ? 'ASC' : 'DESC',
         updatedAt: 'DESC',
         createdAt: 'DESC',
       },
-      skip: (page - 1) * 12,
-      take: 12,
+      skip: offset,
+      take: limit,
     });
 
     //Throw error if not found products
@@ -90,7 +93,16 @@ export class ProductService {
       throw new ForbiddenError('Product not found');
     }
 
-    return products;
+    const paginated = new PaginatedProduct();
+    paginated.data = products[0];
+    paginated.totalCount = products[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
+
+    return paginated;
   }
 
   /**
@@ -147,23 +159,38 @@ export class ProductService {
    * parameter: name
    * return: Product
    */
-  async findByName(name: string): Promise<Product[]> {
+  async findByName(
+    name: string,
+    page: number,
+    sort: number,
+  ): Promise<PaginatedProduct> {
+    const limit = 12;
+    const offset = (page - 1) * limit;
     //Find proudct by name
-    const product = await this.productRepository.find({
+    const products = await this.productRepository.findAndCount({
       where: { name: Like('%' + name + '%') },
       relations: ['category', 'order'],
-      order: { name: 'ASC' },
+      order: { price: sort ? 'ASC' : 'DESC', name: 'ASC' },
+      skip: offset,
+      take: limit,
     });
 
     //Throw error if not found
-    if (!product) {
+    if (!products) {
       throw new ForbiddenError('Product not found');
     }
 
-    //count latest stock of product
-    // this.countStock(product.id);
+    const paginated = new PaginatedProduct();
+    paginated.data = products[0];
+    paginated.totalCount = products[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
+    // console.log(paginated.totalCount % (offset + limit));
 
-    return product;
+    return paginated;
   }
 
   /**
@@ -172,23 +199,36 @@ export class ProductService {
    * parameter: categoryId
    * return:List of Product
    */
-  async findProductByCategory(categoryId: number): Promise<Product[]> {
+  async findProductByCategory(
+    categoryId: number,
+    page: number,
+    sort: number,
+  ): Promise<PaginatedProduct> {
+    const limit = 12;
+    const offset = (page - 1) * limit;
     //Find proudct by category
-    const product = await this.productRepository.find({
+    const products = await this.productRepository.findAndCount({
       where: { category: categoryId },
       relations: ['category', 'order'],
-      order: { name: 'ASC' },
+      order: { price: sort ? 'ASC' : 'DESC', name: 'ASC' },
+      skip: offset,
+      take: limit,
     });
 
     //Throw error if not found
-    if (!product) {
+    if (!products) {
       throw new ForbiddenError('Product not found');
     }
+    const paginated = new PaginatedProduct();
+    paginated.data = products[0];
+    paginated.totalCount = products[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
 
-    //count latest stock of product
-    // this.countStock(product.id);
-
-    return product;
+    return paginated;
   }
 
   /**
@@ -276,5 +316,9 @@ export class ProductService {
 
   async countProduct() {
     return await this.productRepository.count();
+  }
+
+  checkNextPage(count: number, offset: number, limit: number): boolean {
+    return offset == 0 ? count > 6 : count % (offset + limit) < count;
   }
 }

@@ -9,7 +9,6 @@ type Category {
   createdAt: DateTime!
   updatedAt: DateTime!
   product: [Product!]!
-  count: Int!
 }
 
 """
@@ -66,8 +65,19 @@ type Product {
   createdAt: DateTime!
   updatedAt: DateTime!
   order: [Order!]!
-  count: Int!
   stock: Int!
+}
+
+type PaginatedProduct {
+  data: [Product!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
+type PaginatedCategory {
+  data: [Category!]
+  totalCount: Int!
+  hasNextPage: Boolean!
 }
 
 type Query {
@@ -78,13 +88,13 @@ type Query {
   orders: [Order!]!
   order(id: Int!): Order!
   orderByUser: [Order!]!
-  products(sort: Int!, page: Int!): [Product!]!
+  products(sort: Int, page: Int): PaginatedProduct!
   AdminProducts: [Product!]!
   product(id: Int!): Product!
-  ProductByName(name: String!): [Product!]!
-  ProductByCategory(categoryId: Int!): [Product!]!
+  ProductByName(sort: Int, page: Int, name: String!): PaginatedProduct!
+  ProductByCategory(sort: Int, page: Int, categoryId: Int!): PaginatedProduct!
   AdminCategories: [Category!]!
-  categories(page: Int!): [Category!]!
+  categories(page: Int!): PaginatedCategory!
   category(id: Int!): Category!
   verify(token: String!): User!
 }

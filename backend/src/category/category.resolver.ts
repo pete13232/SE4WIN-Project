@@ -5,7 +5,6 @@ import {
   Args,
   Int,
   ResolveField,
-  Parent,
 } from '@nestjs/graphql';
 import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
@@ -16,6 +15,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Role } from 'src/user/enums/role.enum';
+import { PaginatedCategory } from './pagination/PaginatedCategory';
 
 @Resolver(() => Category)
 export class CategoryResolver {
@@ -62,22 +62,11 @@ export class CategoryResolver {
    * parameter: page
    * return: List of Category
    */
-  @Query(() => [Category], { name: 'categories' })
+  @Query(() => PaginatedCategory, { name: 'categories' })
   findAll(
     @Args('page', { type: () => Int }) page: number,
-  ): Promise<Category[]> {
+  ): Promise<PaginatedCategory> {
     return this.categoryService.findAll(page);
-  }
-
-  /**
-   * Find Quantity of Product in Stock
-   *
-   * parameter: product
-   * return: Quantity of Product in Stock
-   */
-  @ResolveField(() => Int)
-  count(): Promise<number> {
-    return this.categoryService.countCategory();
   }
 
   /**

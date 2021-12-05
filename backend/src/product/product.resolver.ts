@@ -18,6 +18,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/user/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { User } from 'src/user/entities/user.entity';
+import { PaginatedProduct } from 'src/product/pagination/paginatedProduct';
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -49,17 +50,12 @@ export class ProductResolver {
    *
    * return: List of Products
    */
-  @Query(() => [Product], { name: 'products' })
-  findAll(
-    @Args('page', { type: () => Int }) page: number,
-    @Args('sort', { type: () => Int }) sort: number,
-  ): Promise<Product[]> {
+  @Query(() => PaginatedProduct, { name: 'products' })
+  async findAll(
+    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args('sort', { type: () => Int, nullable: true }) sort?: number,
+  ): Promise<PaginatedProduct> {
     return this.productService.findAll(page, sort);
-  }
-
-  @ResolveField(() => Int)
-  count(): Promise<number> {
-    return this.productService.countProduct();
   }
 
   /**
@@ -103,11 +99,13 @@ export class ProductResolver {
    * parameter: name
    * return: Product
    */
-  @Query(() => [Product], { name: 'ProductByName' })
+  @Query(() => PaginatedProduct, { name: 'ProductByName' })
   findByName(
     @Args('name', { type: () => String }) name: string,
-  ): Promise<Product[]> {
-    return this.productService.findByName(name);
+    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args('sort', { type: () => Int, nullable: true }) sort?: number,
+  ): Promise<PaginatedProduct> {
+    return this.productService.findByName(name, page, sort);
   }
 
   /**
@@ -116,11 +114,13 @@ export class ProductResolver {
    * parameter: id
    * return: list of Product
    */
-  @Query(() => [Product], { name: 'ProductByCategory' })
+  @Query(() => PaginatedProduct, { name: 'ProductByCategory' })
   findProductByCategory(
     @Args('categoryId', { type: () => Int }) categoryId: number,
-  ): Promise<Product[]> {
-    return this.productService.findProductByCategory(categoryId);
+    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args('sort', { type: () => Int, nullable: true }) sort?: number,
+  ): Promise<PaginatedProduct> {
+    return this.productService.findProductByCategory(categoryId, page, sort);
   }
 
   /**
