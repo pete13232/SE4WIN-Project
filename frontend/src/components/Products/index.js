@@ -18,6 +18,7 @@ const Products = (categoryId, search) => {
   const [sort, setSort] = useState("Price, low to High");
   const [sortVal, setSortVal] = useState(1);
   const [products, setProducts] = useState([]);
+  const [count, setCount] = useState(1);
 
   const [
     getProducts,
@@ -34,6 +35,9 @@ const Products = (categoryId, search) => {
     setSort(event.target.innerText);
     setSortVal(val);
   };
+
+  const pageCount = Math.ceil(count / 12);
+
   useEffect(() => {
     switch (queryState) {
       case 1:
@@ -42,6 +46,8 @@ const Products = (categoryId, search) => {
         });
         if (dataNormal) {
           setProducts(dataNormal?.products.data);
+          setCount(dataNormal?.products.totalCount);
+          // pageCount();
         }
         break;
       case 2:
@@ -120,7 +126,7 @@ const Products = (categoryId, search) => {
       </Dropdown>
     );
   };
-  // console.log(sortVal);
+  console.log(`page =${pageCount}`);
   return (
     <>
       {products && (
@@ -139,7 +145,9 @@ const Products = (categoryId, search) => {
           </Row>
           <Pagination className="justify-content-end me-4">
             <Pagination.First />
+            <Pagination.Prev />
             <Pagination.Item>{1}</Pagination.Item>
+
             {page - 2 > 0 && <Pagination.Ellipsis disabled />}
             {page - 2 > 0 && <Pagination.Item>{page - 2}</Pagination.Item>}
             {page - 1 > 0 && <Pagination.Item>{page - 1}</Pagination.Item>}
@@ -148,6 +156,7 @@ const Products = (categoryId, search) => {
             <Pagination.Item disabled>{14}</Pagination.Item>
             <Pagination.Item>{20}</Pagination.Item>
             <Pagination.Ellipsis disabled />
+            <Pagination.Next />
             <Pagination.Last />
           </Pagination>
         </>
