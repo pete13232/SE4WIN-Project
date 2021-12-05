@@ -3,20 +3,40 @@ import { useQuery } from "@apollo/client";
 import { Col, Row, Image, Carousel } from "react-bootstrap";
 import Header from "../Header";
 import "./style.css";
-import { GET_PRODUCTS_BY_CATEGORY } from "../../Graphql/Queries";
+import { GET_CATEGORIES } from "../../Graphql/Queries";
 
 const Category = () => {
-  const { data, error, refetch } = useQuery(GET_PRODUCTS_BY_CATEGORY);
-  const [products, setProducts] = useState([]);
+  const [page, setpage] = useState(1);
+  const [maxPage, setMaxPage] = useState(0);
+  const { data, error, refetch } = useQuery(GET_CATEGORIES, {
+    variables: { page: page },
+  });
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     if (data) {
-      setProducts(data.AdminProducts);
+      setCategories(data.categories);
+      setMaxPage(data.categories[0]?.count);
     }
   }, [data]);
   return (
     <>
       <Header text="Category"></Header>
       <Carousel>
+        <Carousel.Item interval={100000000}>
+          <Row className="g-0 category">
+            {categories.map((category) => {
+              return (
+                <Col className="card" md={2}>
+                  <Image src={category.picURL}></Image>
+                  <div className="card-img-overlay text-center">
+                    <h4>{category.name}</h4>
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
+        </Carousel.Item>
+
         <Carousel.Item interval={100000000}>
           <Row className="g-0 category">
             <Col className="card">

@@ -1,28 +1,54 @@
 import { Row, Dropdown, Pagination } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_PRODUCTS } from "../../Graphql/Queries";
+import { GET_PRODUCTS, GET_PRODUCTS_BY_CATEGORY, GET_PRODUCTS_BY_NAME } from "../../Graphql/Queries";
 import Product from "./Product/index";
 import Header from "../../components/Header";
 import "./style.css";
 
-const Products = () => {
+const Products = ( categoryId, search ) => {
+  const [page, setPage] = useState(1)
   const [sort, setSort] = useState("Price, low to High");
   const [sortVal, setSortVal] = useState(1)
+  const [selectQuery,setSelectQuery] = useState()
   const inputSort = (event, val ) => {
     setSort(event.target.innerText);
     setSortVal(val)
   };
 
-  const { data, error } = useQuery(GET_PRODUCTS,{
-    variables: { sort: sortVal },
+  const { dataNormal } = useQuery(GET_PRODUCTS,{
+    variables: { sort: sortVal, page:page },
   } );
+
+  
+  const { dataByCategory } = useQuery(GET_PRODUCTS_BY_CATEGORY,{
+    variables: { categoryId: categoryId },
+  } );
+
+
+  const { dataByName } = useQuery(GET_PRODUCTS_BY_NAME,{
+    variables: { name: search },
+  } );
+
+
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    if (data) {
-      setProducts(data.products);
+    if (dataNormal) {
+      setProducts(dataNormal.products);
     }
-  }, [data]);
+  }, [dataNormal]);
+
+  useEffect(() => {
+    if (dataByCategory) {
+      setProducts(dataByCategory.ProductByCategory);
+    }
+  }, [dataByCategory]);
+
+  useEffect(() => {
+    if (dataByName) {
+      setProducts(dataByName.products);
+    }
+  }, [dataByName]);
 
   const dropdown = () => {
     return (
@@ -48,7 +74,7 @@ const Products = () => {
     );
   };
 
-  const [page, setPage] = useState(1)
+  console.log(products)
   return (
     <>
       <Header text="All Product" dropdown={dropdown()}></Header>
@@ -62,10 +88,10 @@ const Products = () => {
           />
         ))}
       </Row>
-      {/* <Pagination className="justify-content-end me-4">
+      <Pagination className="justify-content-end me-4">
         <Pagination.First />
         <Pagination.Item>{1}</Pagination.Item>
-        {page-2 > 0 (<Pagination.Ellipsis disabled/>)}
+        {page-2 > 0 &&(<Pagination.Ellipsis disabled/>)}
         {page-2 > 0 &&(<Pagination.Item>{page-2}</Pagination.Item>)}
         {page-1 > 0 &&(<Pagination.Item>{page-1}</Pagination.Item>)}
         <Pagination.Item active>{page}</Pagination.Item>
@@ -74,7 +100,7 @@ const Products = () => {
         <Pagination.Item>{20}</Pagination.Item>
         <Pagination.Ellipsis disabled/>
         <Pagination.Last />
-      </Pagination> */}
+      </Pagination>
     </>
   );
 };

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const GET_PRODUCTS = gql`
-  query ($sort: Int!) {
-    products(sort: $sort) {
+  query ($sort: Int!, $page: Int!) {
+    products(sort: $sort, page: $page) {
       id
       name
       price
@@ -153,6 +153,7 @@ export const GET_CATEGORIES = gql`
       id
       name
       picURL
+      count
     }
   }
 `;

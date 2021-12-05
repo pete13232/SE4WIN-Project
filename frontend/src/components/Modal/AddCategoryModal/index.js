@@ -65,7 +65,8 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
       data: formdata,
     })
       .then((res) => {
-        submit.picURL = res.data.imagePath;
+        const url = "http://20.212.81.174/";
+        submit.picURL = url + res.data.imagePath;
         console.log(submit);
         createCategory({
           variables: { input: submit },
