@@ -12,7 +12,7 @@ import "./style.css";
 
 const AdminOrder = ({ id }) => {
   /*-------------------------Query----------------------------- */
-  const { data, error, refetch } = useQuery(ADMIN_GET_ORDERS);
+  const { data, refetch } = useQuery(ADMIN_GET_ORDERS);
   const [orders, setOrders] = useState();
 
   useEffect(() => {

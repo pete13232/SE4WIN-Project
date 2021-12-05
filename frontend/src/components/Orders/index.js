@@ -7,7 +7,7 @@ import "./style.css";
 
 const Orders = () => {
   /*--------------------------Query-------------------------------*/
-  const { data, error, refetch } = useQuery(GET_USER_ORDERS);
+  const { data, refetch } = useQuery(GET_USER_ORDERS);
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
@@ -15,7 +15,6 @@ const Orders = () => {
       setOrders(data.orderByUser);
     }
   }, [data]);
-  console.log(data);
   /*--------------------------Query-------------------------------*/
   return (
     <>

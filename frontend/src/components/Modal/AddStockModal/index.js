@@ -27,14 +27,6 @@ const AddStockModal = ({
       
   };
 
-  const confirmAlert = () => {
-    Swal.fire({
-      position: "top",
-      title: "Success",
-      text: "Add stock success",
-      icon: "success",
-    });
-  };
 
   const [updateStock] = useMutation(UPDATE_STOCK);
 

@@ -1,9 +1,4 @@
-import {
-  Col,
-  Row,
-  Card,
-  Dropdown,
-} from "react-bootstrap";
+import { Col, Row, Card, Dropdown } from "react-bootstrap";
 import "./style.css";
 import React, { useState } from "react";
 
@@ -12,7 +7,6 @@ const Product = () => {
 
   const inputSort = (event) => {
     setSort(event.target.innerText);
-    console.log(event.target.innerHTML);
   };
 
   return (

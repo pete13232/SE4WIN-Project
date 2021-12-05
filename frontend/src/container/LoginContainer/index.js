@@ -12,14 +12,13 @@ import Swal from "sweetalert2";
 
 const LoginContainer = () => {
   const context = useContext(AuthContext);
-  const [login, { loading }] = useMutation(LOGIN_USER, {
+  const [login] = useMutation(LOGIN_USER, {
     update(_, { data: userData }) {
       context.login(userData);
     },
   });
 
   const loginUser = (data) => {
-    console.log(data);
     login({
       variables: { input: data },
     })

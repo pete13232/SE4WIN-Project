@@ -8,7 +8,7 @@ import "./style.css";
 
 const AdminCategory = ({ id }) => {
   /*--------------------------Query-------------------------------*/
-  const { data, error, refetch } = useQuery(ADMIN_GET_CATEGORIES);
+  const { data, refetch } = useQuery(ADMIN_GET_CATEGORIES);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -18,89 +18,6 @@ const AdminCategory = ({ id }) => {
   }, [data]);
   /*--------------------------Query-------------------------------*/
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-  const [showName, setShowName] = useState([true, true]);
-  const [text, setText] = useState("");
-  const [test, setTest] = useState([
-    { id: 1, name: "keyboard" },
-    {
-      id: 2,
-      name: "switch",
-    },
-  ]);
-  // useEffect(() => {
-  //   // console.log('useEFECT');
-  //   setTest([
-  //     { id: 1, name: "keyboard" },
-  //     {
-  //       id: 2,
-  //       name: "switch",
-  //     },
-  //   ]);
-  //   setShowName(c);
-  //   setShowDelete([true, true]);
-  // }, []);
-
-  const handleEdit = (index) => {
-    setText(test[index].name);
-    const newShowName = Array.from(
-      { length: showName.length },
-      (i) => (i = true)
-    );
-    newShowName[index] = false;
-    setShowName(newShowName);
-  };
-
-  const handleConfirm = (index) => {
-    /// DO SOMETHINH WITH BE
-    const newTest = [...test];
-    newTest[index].name = text;
-    setTest(newTest);
-    const newShowName = Array.from(
-      { length: showName.length },
-      (i) => (i = true)
-    );
-    setShowName(newShowName);
-  };
-
-  const handleText = (event) => {
-    setText(event.target.value);
-  };
-
-  // const textFieldShow = (index) => {
-  //   if (showName[index] === true) {
-  //     return <td>{test[index].name}</td>;
-  //   } else {
-  //     return (
-  //       <td>
-  //         <Form>
-  //           <FormControl
-  //             value={text}
-  //             type="text"
-  //             placeholder="put text here"
-  //             onChange={handleText}
-  //           />
-  //         </Form>
-  //       </td>
-  //     );
-  //   }
-  // };
-
-  // const editConfirmButton = (index) => {
-  //   // return <a>{ showName}</a>;
-  //   if (showName[index] === true) {
-  //     return (
-  //       <div className="edit">
-  //         <FaRegEdit onClick={() => handleEdit(index)} />
-  //       </div>
-  //     );
-  //   } else {
-  //     return (
-  //       <div className="check">
-  //         <AiOutlineCheckSquare onClick={() => handleConfirm(index)} />
-  //       </div>
-  //     );
-  //   }
-  // };
 
   return (
     <>
