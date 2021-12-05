@@ -22,28 +22,19 @@ const Products = (categoryId, search) => {
   const [count, setCount] = useState(1);
 
   const [categoryName, setCategoryName] = useState("");
-  const [getCategory, { data: categoryData }] = useLazyQuery(GET_CATEGORY);
+  const [getCategory, { data: dataCategory }] = useLazyQuery(GET_CATEGORY);
+
   useEffect(() => {
     if (filterCategoryId) {
       getCategory({
         variables: { id: Number(filterCategoryId) },
       });
-      if (categoryData) {
-        setCategoryName(categoryData?.category.name);
-      }
-      
     }
-  }, [filterCategoryId, categoryData, getCategory, setCategoryName]);
-  console.log(categoryData)
-  const [
-    getProducts,
-    { data: dataNormal, loading: loadingNormal, refetch, called },
-  ] = useLazyQuery(GET_PRODUCTS);
-  const [
-    getProductsByCategory,
-    { data: dataByCategory, loading: loadingCategory },
-  ] = useLazyQuery(GET_PRODUCTS_BY_CATEGORY);
-  const [getProductsByName, { data: dataByName, loading: loadingName }] =
+    if (dataCategory) {
+      setCategoryName(dataCategory?.category.name);
+    }
+  }, [filterCategoryId, dataCategory]);
+
   const [getProducts, { data: dataNormal }] = useLazyQuery(GET_PRODUCTS);
   const [getProductsByCategory, { data: dataByCategory }] = useLazyQuery(
     GET_PRODUCTS_BY_CATEGORY
@@ -59,7 +50,7 @@ const Products = (categoryId, search) => {
   const pageCount = Math.ceil(count / 12);
 
   useEffect(() => {
-    console.log(queryState);
+    // console.log(queryState);
     switch (queryState) {
       case 1:
         getProducts({
