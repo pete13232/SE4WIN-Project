@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { ADMIN_GET_PRODUCTS } from "../../Graphql/Queries";
-import { Col, Table, Button } from "react-bootstrap";
+import { Col, Table, Button, Tooltip } from "react-bootstrap";
 import AdminStockChild from "./AdminStockChild";
 import AddProductModal from "../Modal/AddProductModal";
 import "./style.css";

@@ -2,12 +2,15 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
+  NavDropdown,
+  Nav,
   Col,
   Form,
   Button,
   FormControl,
   InputGroup,
 } from "react-bootstrap";
+import { BsPersonCircle } from "react-icons/bs";
 import { AuthContext } from "../../context/auth";
 import { FaSearch } from "react-icons/fa";
 import "./style.css";
@@ -111,9 +114,20 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
             </Link>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            <Link to="/" onClick={context.logout}>
-              <h2>Logout</h2>
-            </Link>
+
+            <Nav className=" align-items-baseline">
+              <BsPersonCircle />
+              <NavDropdown title="User" menuVariant="light">
+                <NavDropdown.Item>
+                  <Link to="/profile">View Profile</Link>
+                </NavDropdown.Item>
+                <NavDropdown.Item>
+                  <Link to="/" onClick={context.logout}>
+                    Log out
+                  </Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
           </Col>
         </Navbar>
       );
@@ -126,12 +140,25 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
                 <h1>FAPP</h1>
               </Link>
             </Navbar.Brand>
+            <Navbar.Toggle aria-controls="navbar-dark-example" />
           </Col>
-          <Col md={8}></Col>
+          <Col md={9}></Col>
           <Col md={1} className="d-flex justify-content-center">
-            <Link to="/" onClick={context.logout}>
+            {/* <Link to="/" onClick={context.logout}>
               <h2>Logout</h2>
-            </Link>
+            </Link> */}
+            <Navbar.Collapse>
+              <Nav className=" align-items-baseline">
+                <BsPersonCircle />
+                <NavDropdown title="Admin" menuVariant="light">
+                  <NavDropdown.Item>
+                    <Link to="/" onClick={context.logout}>
+                      Log out
+                    </Link>
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>
           </Col>
         </Navbar>
       );
