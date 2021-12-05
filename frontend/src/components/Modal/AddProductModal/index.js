@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ADD_PRODUCT } from "../../../Graphql/Mutations";
 import { ADMIN_GET_CATEGORIES } from "../../../Graphql/Queries";
@@ -26,13 +26,14 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
   const handleClose = () => {
     document.getElementById("addProductForm").reset();
     setShowProduct(false);
+    clearErrors();
   };
 
   /*------------------------Modal--------------------------*/
 
   /*------------------------Query--------------------------*/
 
-  const { data, error } = useQuery(ADMIN_GET_CATEGORIES);
+  const { data } = useQuery(ADMIN_GET_CATEGORIES);
   const [categories, setCategories] = useState();
 
   useEffect(() => {
@@ -76,6 +77,7 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
     register,
     handleSubmit,
     formState: { errors },
+    clearErrors,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -83,14 +85,12 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
   const [pictureFile, setPictureFile] = useState("");
 
   const onSubmit = (submit) => {
-    // const token = localStorage.getItem("jwtToken") || "";
     let formdata = new FormData();
     formdata.append("file", pictureFile, pictureFile.name);
     axios({
       url: "http://20.212.81.174/upload",
       method: "POST",
       headers: {
-        // Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
       data: formdata,
@@ -100,7 +100,6 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
         const url = "http://20.212.81.174/";
         delete submit.stock;
         submit.picURL = url + res.data.imagePath;
-        console.log(submit.picURL);
         addProduct({
           variables: { input: submit },
         })
@@ -190,17 +189,37 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
                 />
                 {/*------------------------Pic upload--------------------------*/}
               </div>
-              <p className="errorMessage">{errors["picURL"]?.message}</p>
+              {errors["picURL"]?.message && (
+                <p className="errorMessage text-end">
+                  {errors["picURL"]?.message}
+                </p>
+              )}
             </div>
             <div>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
+              <Form.Group
+                className={
+                  errors["name"]?.message
+                    ? "d-flex align-items-baseline"
+                    : "d-flex mb-3 align-items-baseline"
+                }
+              >
                 <Form.Label className="title-block">
                   <h5>Name:</h5>
                 </Form.Label>
                 <Form.Control name="name" type="text" {...register("name")} />
-                <p className="errorMessage">{errors["name"]?.message}</p>
               </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
+              {errors["name"]?.message && (
+                <p className="errorMessage text-end">
+                  {errors["name"]?.message}
+                </p>
+              )}
+              <Form.Group
+                className={
+                  errors["categoryId"]?.message
+                    ? "d-flex align-items-baseline"
+                    : "d-flex mb-3 align-items-baseline"
+                }
+              >
                 <Form.Label className="title-block">
                   <h5>Category:</h5>
                 </Form.Label>
@@ -212,9 +231,19 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
                     </option>
                   ))}
                 </Form.Select>
-                <p className="errorMessage">{errors["categoryId"]?.message}</p>
               </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
+              {errors["categoryId"]?.message && (
+                <p className="errorMessage text-end">
+                  {errors["categoryId"]?.message}
+                </p>
+              )}
+              <Form.Group
+                className={
+                  errors["price"]?.message
+                    ? "d-flex align-items-baseline"
+                    : "d-flex mb-3 align-items-baseline"
+                }
+              >
                 <Form.Label className="title-block">
                   <h5>Price:</h5>
                 </Form.Label>
@@ -224,9 +253,19 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
                   min="0"
                   {...register("price")}
                 />
-                <p className="errorMessage">{errors["price"]?.message}</p>
               </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
+              {errors["price"]?.message && (
+                <p className="errorMessage text-end">
+                  {errors["price"]?.message}
+                </p>
+              )}
+              <Form.Group
+                className={
+                  errors["stock"]?.message
+                    ? "d-flex align-items-baseline"
+                    : "d-flex mb-3 align-items-baseline"
+                }
+              >
                 <Form.Label className="title-block">
                   <h5>Quantity:</h5>
                 </Form.Label>
@@ -236,9 +275,19 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
                   min="0"
                   {...register("stock")}
                 />
-                <p className="errorMessage">{errors["stock"]?.message}</p>
               </Form.Group>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
+              {errors["stock"]?.message && (
+                <p className="errorMessage text-end">
+                  {errors["stock"]?.message}
+                </p>
+              )}
+              <Form.Group
+                className={
+                  errors["desc"]?.message
+                    ? "d-flex align-items-baseline"
+                    : "d-flex mb-3 align-items-baseline"
+                }
+              >
                 <Form.Label className="title-block">
                   <h5>Description:</h5>
                 </Form.Label>
@@ -248,8 +297,12 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
                   as="textarea"
                   {...register("desc")}
                 />
-                <p className="errorMessage">{errors["desc"]?.message}</p>
               </Form.Group>
+              {errors["desc"]?.message && (
+                <p className="errorMessage text-end">
+                  {errors["desc"]?.message}
+                </p>
+              )}
             </div>
           </Modal.Body>
           <Modal.Footer>

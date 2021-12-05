@@ -10,7 +10,7 @@ import ProductDetail from "../../components/ProductDetail";
 const ProductSelectContainer = () => {
   const { id } = useParams();
 
-  const { data, error } = useQuery(GET_PRODUCT_INFO, {
+  const { data } = useQuery(GET_PRODUCT_INFO, {
     variables: { input: Number(id) },
   });
 

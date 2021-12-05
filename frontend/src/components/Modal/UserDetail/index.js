@@ -18,7 +18,7 @@ const UserDetail = ({ showUser, setShowUser, userId }) => {
   /*-------------------------Phone number modify----------------------------- */
 
   /*-------------------------Query----------------------------- */
-  const { data, error } = useQuery(ADMIN_GET_USER_INFO, {
+  const { data } = useQuery(ADMIN_GET_USER_INFO, {
     variables: { input: userId },
   });
   const [user, setUser] = useState();

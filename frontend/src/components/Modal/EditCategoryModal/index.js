@@ -88,7 +88,6 @@ const EditCategoryModal = ({
     );
     if (Object.keys(submit).length !== 0) {
       submit = Object.assign(categorytId, submit);
-      console.log(submit);
       updateCategory({
         variables: { input: submit },
       })

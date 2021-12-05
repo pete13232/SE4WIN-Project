@@ -33,8 +33,6 @@ const Order = ({
     return st;
   };
 
-  const [img, setImg] = useState(null);
-
   /*------------------------Submit--------------------------*/
   const [uploadReceipt] = useMutation(UPLOAD_RECEIPT);
   const schema = yup.object().shape({
@@ -56,7 +54,7 @@ const Order = ({
   const [pictureFile, setPictureFile] = useState("");
 
   const onSubmit = (submit) => {
-    if (status == "PENDING") {
+    if (status === "PENDING") {
       Swal.fire({
         position: "top",
         title: "Are you sure you want to \n re-upload receipt?",
@@ -80,7 +78,6 @@ const Order = ({
           })
             .then((res) => {
               submit.receiptURL = res.data.imagePath;
-              console.log(id, submit.receiptURL);
               uploadReceipt({
                 variables: { orderId: id, receiptURL: submit.receiptURL },
               }).then(() => {
@@ -119,7 +116,6 @@ const Order = ({
       })
         .then((res) => {
           submit.receiptURL = res.data.imagePath;
-          console.log(id, submit.receiptURL);
           uploadReceipt({
             variables: { orderId: id, receiptURL: submit.receiptURL },
           }).then(() => {
@@ -196,7 +192,7 @@ const Order = ({
             <h3>Status:</h3>
             <h6 className={statusFuction(status)}> {status}</h6>
           </div>
-          {status != "SUCCESS" && status != "FAIL" && (
+          {status !== "SUCCESS" && status !== "FAIL" && (
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Control
                 name="receiptURL"

@@ -6,8 +6,8 @@ import "./style.css";
 import { GET_PRODUCTS_BY_CATEGORY } from "../../Graphql/Queries";
 
 const Category = () => {
-  const { data, error, refetch } = useQuery(GET_PRODUCTS_BY_CATEGORY);
-  const [products, setProducts] = useState([]);
+  const { data } = useQuery(GET_PRODUCTS_BY_CATEGORY);
+  const [setProducts] = useState([]);
   useEffect(() => {
     if (data) {
       setProducts(data.AdminProducts);

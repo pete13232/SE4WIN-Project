@@ -16,7 +16,7 @@ import "./style.css";
 const Profile = () => {
   const context = useContext(AuthContext);
   /*-------------------------Query----------------------------- */
-  const { data, error } = useQuery(GET_USER_INFO);
+  const { data } = useQuery(GET_USER_INFO);
   const [user, setUser] = useState();
 
   useEffect(() => {
@@ -168,6 +168,7 @@ const Profile = () => {
   };
 
   /*--------------------------Button and Form display-----------------------------------*/
+
   return (
     <>
       {user && (
@@ -197,7 +198,7 @@ const Profile = () => {
               </Col>
               <Col md={4}>
                 <Row className="gap-1">
-                  <Form.Group className="d-flex align-items-baseline">
+                  <Form.Group className="d-flex mb-3 align-items-baseline">
                     <Form.Label className="alter-title-block">
                       <h5>Email:</h5>
                     </Form.Label>
@@ -208,7 +209,13 @@ const Profile = () => {
                       {...register("email")}
                     />
                   </Form.Group>
-                  <Form.Group className="d-flex align-items-baseline">
+                  <Form.Group
+                    className={
+                      errors["password"]?.message
+                        ? "d-flex align-items-baseline"
+                        : "d-flex mb-3 align-items-baseline"
+                    }
+                  >
                     <Form.Label className="alter-title-block">
                       <h5>Password:</h5>
                     </Form.Label>
@@ -218,33 +225,45 @@ const Profile = () => {
                       disabled={editProfile}
                       {...register("password")}
                       onChange={(event) => {
-                        if (event.target.value != "") setChangePassword(true);
+                        if (event.target.value !== "") setChangePassword(true);
                         else setChangePassword(false);
                       }}
                     />
-                    <p className="errorMessage">
+                  </Form.Group>
+                  {errors["password"]?.message && (
+                    <p className="errorMessage text-end">
                       {errors["password"]?.message}
                     </p>
-                  </Form.Group>
-
-                  {changePassword && (
-                    <Form.Group className="d-flex align-items-baseline">
-                      <Form.Label className="alter-title-block">
-                        <h5>Confirm password:</h5>
-                      </Form.Label>
-                      <Form.Control
-                        type="password"
-                        placeholder="*******"
-                        disabled={editProfile}
-                        {...register("ConfirmPassword")}
-                      />
-                      <p className="errorMessage">
-                        {errors["ConfirmPassword"]?.message}
-                      </p>
-                    </Form.Group>
                   )}
 
-                  <Form.Group className="d-flex align-items-baseline">
+                  {changePassword && (
+                    <>
+                      <Form.Group
+                        className={
+                          errors["ConfirmPassword"]?.message
+                            ? "d-flex align-items-baseline"
+                            : "d-flex mb-3 align-items-baseline"
+                        }
+                      >
+                        <Form.Label className="alter-title-block">
+                          <h5>Confirm password:</h5>
+                        </Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="*******"
+                          disabled={editProfile}
+                          {...register("ConfirmPassword")}
+                        />
+                      </Form.Group>
+                      {errors["ConfirmPassword"]?.message && (
+                        <p className="errorMessage text-end">
+                          {errors["ConfirmPassword"]?.message}
+                        </p>
+                      )}
+                    </>
+                  )}
+
+                  <Form.Group className="d-flex mb-3 align-items-baseline">
                     <Form.Label className="alter-title-block">
                       <h5>First name:</h5>
                     </Form.Label>
@@ -255,7 +274,7 @@ const Profile = () => {
                       {...register("firstname")}
                     />
                   </Form.Group>
-                  <Form.Group className="d-flex align-items-baseline">
+                  <Form.Group className="d-flex mb-3 align-items-baseline">
                     <Form.Label className="alter-title-block">
                       <h5>Last name:</h5>
                     </Form.Label>
@@ -269,8 +288,14 @@ const Profile = () => {
                 </Row>
               </Col>
               <Col md={4}>
-                <Form.Group className="d-flex align-items-baseline">
-                  <Form.Label className="title-block">
+                <Form.Group
+                  className={
+                    errors["phoneNumber"]?.message
+                      ? "d-flex align-items-baseline"
+                      : "d-flex mb-3 align-items-baseline"
+                  }
+                >
+                  <Form.Label className="profile-title-block">
                     <h5>Phone:</h5>
                   </Form.Label>
                   {editProfile ? (
@@ -305,13 +330,14 @@ const Profile = () => {
                       )}
                     />
                   )}
-                  <p className="errorMessage">
-                    {" "}
+                </Form.Group>
+                {errors["phoneNumber"]?.message && (
+                  <p className="errorMessage text-end">
                     {errors["phoneNumber"]?.message}
                   </p>
-                </Form.Group>
-                <Form.Group className="d-flex align-items-baseline">
-                  <Form.Label className="title-block">
+                )}
+                <Form.Group className="d-flex mb-3 align-items-baseline">
+                  <Form.Label className="profile-title-block">
                     <h5>address:</h5>
                   </Form.Label>
                   <Form.Control

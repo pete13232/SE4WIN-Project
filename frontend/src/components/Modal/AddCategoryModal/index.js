@@ -51,22 +51,19 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
   const [pictureFile, setPictureFile] = useState("");
 
   const onSubmit = (submit) => {
-    console.log(submit);
-    // const token = localStorage.getItem("jwtToken") || "";
     let formdata = new FormData();
     formdata.append("file", pictureFile, pictureFile.name);
     axios({
       url: "http://20.212.81.174/upload",
       method: "POST",
       headers: {
-        // Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
       data: formdata,
     })
       .then((res) => {
         submit.picURL = res.data.imagePath;
-        console.log(submit);
+
         createCategory({
           variables: { input: submit },
         })
@@ -143,13 +140,17 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
               <p className="errorMessage">{errors["picURL"]?.message}</p>
             </div>
             <div>
-              <Form.Group className="d-flex mb-3 align-items-baseline">
+              <Form.Group className="d-flex align-items-baseline">
                 <Form.Label className="title-block">
                   <h5>Name:</h5>
                 </Form.Label>
                 <Form.Control name="name" type="text" {...register("name")} />
-                <p className="errorMessage">{errors["name"]?.message}</p>
               </Form.Group>
+              {errors["name"]?.message && (
+                <p className="errorMessage text-end">
+                  {errors["name"]?.message}
+                </p>
+              )}
             </div>
           </Modal.Body>
           <Modal.Footer>

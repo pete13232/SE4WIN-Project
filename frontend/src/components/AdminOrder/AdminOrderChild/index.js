@@ -91,7 +91,6 @@ const AdminOrderChild = ({
   const [changeStatusGQL] = useMutation(CHANGE_STATUS);
 
   const onSubmit = (submit) => {
-    console.log(submit)
     if (submit !== status) {
       changeStatusGQL({
         variables: { id: orderId, status: submit },
@@ -125,10 +124,14 @@ const AdminOrderChild = ({
         <tr className="modify">
           <td>{orderId}</td>
           <td>{productId}</td>
-          <td onClick={() => {
+          <td
+            onClick={() => {
               setShowUser(true);
             }}
-            className="order-detail">{userId}</td>
+            className="order-detail"
+          >
+            {userId}
+          </td>
           <td>{address}</td>
           <td>{product}</td>
           <td>{quantity}</td>
@@ -151,7 +154,11 @@ const AdminOrderChild = ({
           </td>
         </tr>
       </tbody>
-      <UserDetail showUser={showUser} setShowUser={setShowUser} userId={userId}/>
+      <UserDetail
+        showUser={showUser}
+        setShowUser={setShowUser}
+        userId={userId}
+      />
     </>
   );
 };

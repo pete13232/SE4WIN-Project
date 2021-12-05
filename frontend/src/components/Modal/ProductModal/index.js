@@ -1,5 +1,5 @@
 import { Modal, Button, Image, Row, Form } from "react-bootstrap";
-import { useContext, useEffect, useState, } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { GET_USER_ADDRESS } from "../../../Graphql/Queries";
@@ -21,7 +21,7 @@ const ProductModal = ({
 }) => {
   const handleClose = () => setShowProduct(false);
   const context = useContext(AuthContext);
-  const { data, error } = useQuery(GET_USER_ADDRESS);
+  const { data } = useQuery(GET_USER_ADDRESS);
   const [address, setAddress] = useState("");
 
   useEffect(() => {
@@ -43,39 +43,38 @@ const ProductModal = ({
 
   const [createOrder] = useMutation(CREATE_ORDER);
   const onSubmit = (data) => {
-      const param = {
-        userId: Number(context.user.sub),
-        productId: Number(productId),
-        quantity: Number(-selectQuantity),
-        orderAddress: data.address,
-      };
-      createOrder({
-        variables: { input: param },
-      })
-        .then(() => {
-          Swal.fire({
-            title: "Create order success!",
-            html: "Press Ok to order page",
-            icon: "success",
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            didClose: () => {
-              window.location.replace("/order");
-            },
-          });
-        })
-        .catch((error) => {
-          const err = error.message;
-          Swal.fire({
-            title: "Oops! !",
-            html: err,
-            icon: "error",
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-          });
+    const param = {
+      userId: Number(context.user.sub),
+      productId: Number(productId),
+      quantity: Number(-selectQuantity),
+      orderAddress: data.address,
+    };
+    createOrder({
+      variables: { input: param },
+    })
+      .then(() => {
+        Swal.fire({
+          title: "Create order success!",
+          html: "Press Ok to order page",
+          icon: "success",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          didClose: () => {
+            window.location.replace("/order");
+          },
         });
+      })
+      .catch((error) => {
+        const err = error.message;
+        Swal.fire({
+          title: "Oops! !",
+          html: err,
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+      });
   };
-  console.log(showProduct);
   return (
     <>
       <div>

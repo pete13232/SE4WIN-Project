@@ -29,7 +29,7 @@ const EditStockModal = ({
 
   /*------------------------Query--------------------------*/
 
-  const { data, error } = useQuery(ADMIN_GET_CATEGORIES);
+  const { data } = useQuery(ADMIN_GET_CATEGORIES);
   const [categories, setCategories] = useState();
 
   useEffect(() => {
