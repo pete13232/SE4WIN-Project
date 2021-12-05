@@ -10,9 +10,9 @@
   text-decoration: none;
 }
 
-.search-bar .input-group {
+/* .search-bar .input-group {
   width: 80% !important;
-}
+} */
 
 .search-bar button {
   background-color: white;
@@ -23,7 +23,6 @@
   background-color: rgba(255, 255, 255, 0.486);
   border: white;
 }
-
 
 /*----------- Navbar B -----------*/
 .NavbarB {
@@ -47,4 +46,18 @@
 
 .NavbarB .text h1 {
   color: black;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  padding-top: 0px !important;
+  padding-left: 3px !important;
+}
+
+.navbar-light .navbar-nav svg {
+  color: white;
+  width: 24px;
+  height: 24px;
 }
