@@ -4,9 +4,12 @@ import { FaRegEdit } from "react-icons/fa";
 import { AiFillPlusCircle, AiFillPicture } from "react-icons/ai";
 import { ImBin } from "react-icons/im";
 import { REMOVE_PRODUCT } from "../../../Graphql/Mutations";
+import { OverlayTrigger, Tooltip, Image } from "react-bootstrap";
 import Swal from "sweetalert2";
 import AddStockModal from "../../Modal/AddStockModal";
 import EditStockModal from "../../Modal/EditStockModal";
+import "./style.css"
+
 const AdminStockChild = ({
   id,
   name,
@@ -18,7 +21,6 @@ const AdminStockChild = ({
   refetch,
 }) => {
   const [removeProduct] = useMutation(REMOVE_PRODUCT);
-
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const deleteAlert = () => {
@@ -59,6 +61,18 @@ const AdminStockChild = ({
     });
   };
 
+  // Description truncate
+  const tooltipDesc = (props) => <Tooltip {...props}>{desc}</Tooltip>;
+  const tooltipImg= (props) => <Tooltip className="tooltip-img" {...props}><Image src={img} alt="Product Image"/></Tooltip>;
+
+  const textCut = () => {
+    var text = desc;
+    if (text.length > 40) {
+      text = text.substring(0, 25).concat("...");
+    }
+    return text;
+  };
+
   return (
     <>
       <tr className="modify">
@@ -66,10 +80,22 @@ const AdminStockChild = ({
         <td>{name}</td>
         <td>{category}</td>
         <td>{price} ฿</td>
-        <td>{desc}</td>
-        <td className="text-center">
-          <AiFillPicture />
-        </td>
+        <OverlayTrigger
+          placement="right"
+          delay={{ show: 250, hide: 400 }}
+          overlay={tooltipDesc}
+        >
+          <td>{textCut()}</td>
+        </OverlayTrigger>
+        <OverlayTrigger
+          placement="right"
+          delay={{ show: 250, hide: 400 }}
+          overlay={tooltipImg}
+        >
+          <td className="text-center">
+            <AiFillPicture />
+          </td>
+        </OverlayTrigger>
         <td className="text-center">{stock}</td>
         <td>
           <div className="d-flex gap-1">
