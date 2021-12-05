@@ -44,7 +44,6 @@ export class CategoryService {
   /**
    * Show All Products
    *
-   * parameter: page
    * return: List of products
    */
   async findAll(): Promise<Category[]> {
@@ -77,7 +76,6 @@ export class CategoryService {
   /**
    * Show All Products
    *
-   * parameter: page
    * return: List of products
    */
   async AdminFindAll(): Promise<Category[]> {
@@ -133,10 +131,20 @@ export class CategoryService {
     return 'Delete success';
   }
 
+  /**
+   * Count Quantity of Category in Database
+   *
+   * return: Quantity of Product in Database
+   */
   async countCategory() {
     return await this.categoryRepository.count();
   }
-
+  
+  /**
+   * Check if next page available
+   *
+   * return: boolean
+   */
   checkNextPage(count: number, offset: number, limit: number): boolean {
     return offset == 0 ? count > 6 : count % (offset + limit) < count;
   }

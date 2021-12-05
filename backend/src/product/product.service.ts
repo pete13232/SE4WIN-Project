@@ -70,13 +70,13 @@ export class ProductService {
   /**
    * Show All Products
    *
-   * parameter: page, number
+   * parameters: page, number
    * return: List of Products
    */
   async findAll(page: number, sort: number): Promise<PaginatedProduct> {
     const limit = 12;
     const offset = (page - 1) * limit;
-    //Find proudct
+    //Find product with limit and offset
     const products = await this.productRepository.findAndCount({
       relations: ['category', 'order'],
       order: {
@@ -93,6 +93,7 @@ export class ProductService {
       throw new ForbiddenError('Product not found');
     }
 
+    //Wrap product and count into paginated
     const paginated = new PaginatedProduct();
     paginated.data = products[0];
     paginated.totalCount = products[1];
@@ -156,7 +157,7 @@ export class ProductService {
   /**
    * Find Product by Name
    *
-   * parameter: name
+   * parameters: name, page, sort
    * return: Product
    */
   async findByName(
@@ -166,7 +167,7 @@ export class ProductService {
   ): Promise<PaginatedProduct> {
     const limit = 12;
     const offset = (page - 1) * limit;
-    //Find proudct by name
+    //Find proudct by name with limit and offset
     const products = await this.productRepository.findAndCount({
       where: { name: ILike('%' + name + '%') },
       relations: ['category', 'order'],
@@ -180,6 +181,7 @@ export class ProductService {
       throw new ForbiddenError('Product not found');
     }
 
+    //Wrap product and count into paginated
     const paginated = new PaginatedProduct();
     paginated.data = products[0];
     paginated.totalCount = products[1];
@@ -196,7 +198,7 @@ export class ProductService {
   /**
    * Find Product by category
    *
-   * parameter: categoryId
+   * parameters: categoryId, page, sort
    * return:List of Product
    */
   async findProductByCategory(
@@ -206,7 +208,7 @@ export class ProductService {
   ): Promise<PaginatedProduct> {
     const limit = 12;
     const offset = (page - 1) * limit;
-    //Find proudct by category
+    //Find proudct by category with limit and offset
     const products = await this.productRepository.findAndCount({
       where: { category: categoryId },
       relations: ['category', 'order'],
@@ -219,6 +221,8 @@ export class ProductService {
     if (!products) {
       throw new ForbiddenError('Product not found');
     }
+
+    //Wrap product and count into paginated
     const paginated = new PaginatedProduct();
     paginated.data = products[0];
     paginated.totalCount = products[1];
@@ -314,10 +318,20 @@ export class ProductService {
     return this.countStock(productId);
   }
 
+  /**
+   * Count Quantity of Product in Database
+   *
+   * return: Quantity of Product in Database
+   */
   async countProduct() {
     return await this.productRepository.count();
   }
 
+  /**
+   * Check if next page available
+   *
+   * return: boolean
+   */
   checkNextPage(count: number, offset: number, limit: number): boolean {
     return offset == 0 ? count > 6 : count % (offset + limit) < count;
   }

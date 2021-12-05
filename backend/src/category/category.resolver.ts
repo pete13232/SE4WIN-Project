@@ -59,7 +59,6 @@ export class CategoryResolver {
   /**
    * Show all Category
    *
-   * parameter: page
    * return: List of Category
    */
   @Query(() => [Category], { name: 'categories' })

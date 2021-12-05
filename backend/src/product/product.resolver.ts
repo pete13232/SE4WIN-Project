@@ -48,6 +48,7 @@ export class ProductResolver {
   /**
    * Show all Products
    *
+   * parameters: page, sort
    * return: List of Products
    */
   @Query(() => PaginatedProduct, { name: 'products' })
@@ -96,7 +97,7 @@ export class ProductResolver {
    *
    * Find Product by name
    *
-   * parameter: name
+   * parameters: name, page, sort
    * return: Product
    */
   @Query(() => PaginatedProduct, { name: 'ProductByName' })
@@ -111,7 +112,7 @@ export class ProductResolver {
   /**
    * Find Product by category
    *
-   * parameter: id
+   * parameters: categoryId, page, sort
    * return: list of Product
    */
   @Query(() => PaginatedProduct, { name: 'ProductByCategory' })
