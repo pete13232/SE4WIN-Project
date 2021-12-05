@@ -49,7 +49,7 @@ export class CategoryService {
   async findAll(page: number): Promise<Category[]> {
     const result = await this.categoryRepository.find({
       order: { name: 'ASC' },
-      skip: page * 6,
+      skip: (page - 1) * 6,
       take: 6,
     });
 
@@ -66,7 +66,6 @@ export class CategoryService {
     const result = await this.categoryRepository.find({
       order: { id: 'ASC', updatedAt: 'DESC', createdAt: 'DESC' },
     });
-    console.log(result);
 
     return result;
   }

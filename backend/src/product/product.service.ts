@@ -81,7 +81,7 @@ export class ProductService {
         updatedAt: 'DESC',
         createdAt: 'DESC',
       },
-      skip: page * 12,
+      skip: (page - 1) * 12,
       take: 12,
     });
 
