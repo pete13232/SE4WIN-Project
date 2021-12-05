@@ -136,16 +136,20 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
 `;
 
 export const GET_PRODUCTS_BY_NAME = gql`
-  query ($name: String!) {
-    ProductByName(name: $name) {
-      category {
+  query ($name: String!, $sort: Int!, $page: Int!) {
+    ProductByName(name: $name, sort: $sort, page: $page) {
+      data {
+        category {
+          name
+        }
         name
+        desc
+        price
+        picURL
+        stock
       }
-      name
-      desc
-      price
-      picURL
-      stock
+      totalCount
+      hasNextPage
     }
   }
 `;

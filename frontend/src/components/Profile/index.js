@@ -218,7 +218,7 @@ const Profile = () => {
                       disabled={editProfile}
                       {...register("password")}
                       onChange={(event) => {
-                        if (event.target.value != "") setChangePassword(true);
+                        if (event.target.value !== "") setChangePassword(true);
                         else setChangePassword(false);
                       }}
                     />

@@ -44,6 +44,11 @@ const Products = (categoryId, search) => {
     { data: dataByCategory, loading: loadingCategory },
   ] = useLazyQuery(GET_PRODUCTS_BY_CATEGORY);
   const [getProductsByName, { data: dataByName, loading: loadingName }] =
+  const [getProducts, { data: dataNormal }] = useLazyQuery(GET_PRODUCTS);
+  const [getProductsByCategory, { data: dataByCategory }] = useLazyQuery(
+    GET_PRODUCTS_BY_CATEGORY
+  );
+  const [getProductsByName, { data: dataByName }] =
     useLazyQuery(GET_PRODUCTS_BY_NAME);
 
   const inputSort = (event, val) => {
@@ -54,6 +59,7 @@ const Products = (categoryId, search) => {
   const pageCount = Math.ceil(count / 12);
 
   useEffect(() => {
+    console.log(queryState);
     switch (queryState) {
       case 1:
         getProducts({
@@ -62,7 +68,6 @@ const Products = (categoryId, search) => {
         if (dataNormal) {
           setProducts(dataNormal?.products.data);
           setCount(dataNormal?.products.totalCount);
-          // pageCount();
         }
         break;
       case 2:
@@ -76,10 +81,11 @@ const Products = (categoryId, search) => {
         break;
       case 3:
         getProductsByName({
-          variables: { name: search },
+          variables: { name: searchName, sort: sortVal, page: page },
         });
         if (dataByName) {
-          setProducts(dataByName?.products.data);
+          console.log(dataByName);
+          setProducts(dataByName?.ProductByName.data);
         }
         break;
       default:
@@ -100,7 +106,7 @@ const Products = (categoryId, search) => {
     sortVal,
     page,
     categoryId,
-    search,
+    searchName,
     dataNormal,
     dataByName,
     dataByCategory,
