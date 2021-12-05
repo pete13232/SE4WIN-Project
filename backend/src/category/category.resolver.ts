@@ -62,11 +62,9 @@ export class CategoryResolver {
    * parameter: page
    * return: List of Category
    */
-  @Query(() => PaginatedCategory, { name: 'categories' })
-  findAll(
-    @Args('page', { type: () => Int }) page: number,
-  ): Promise<PaginatedCategory> {
-    return this.categoryService.findAll(page);
+  @Query(() => [Category], { name: 'categories' })
+  findAll(): Promise<Category[]> {
+    return this.categoryService.findAll();
   }
 
   /**

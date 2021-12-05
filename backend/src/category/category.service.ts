@@ -47,26 +47,31 @@ export class CategoryService {
    * parameter: page
    * return: List of products
    */
-  async findAll(page: number): Promise<PaginatedCategory> {
-    const limit = 6;
-    const offset = (page - 1) * limit;
+  async findAll(): Promise<Category[]> {
+    // const limit = 6;
+    // const offset = (page - 1) * limit;
 
-    const categories = await this.categoryRepository.findAndCount({
-      order: { name: 'ASC' },
-      skip: offset,
-      take: limit,
+    // const categories = await this.categoryRepository.findAndCount({
+    //   order: { name: 'ASC' },
+    //   skip: offset,
+    //   take: limit,
+    // });
+
+    // const paginated = new PaginatedCategory();
+    // paginated.data = categories[0];
+    // paginated.totalCount = categories[1];
+    // paginated.hasNextPage = this.checkNextPage(
+    //   paginated.totalCount,
+    //   offset,
+    //   limit,
+    // );
+
+    // return paginated;
+    const result = await this.categoryRepository.find({
+      order: { id: 'ASC', updatedAt: 'DESC', createdAt: 'DESC' },
     });
 
-    const paginated = new PaginatedCategory();
-    paginated.data = categories[0];
-    paginated.totalCount = categories[1];
-    paginated.hasNextPage = this.checkNextPage(
-      paginated.totalCount,
-      offset,
-      limit,
-    );
-
-    return paginated;
+    return result;
   }
 
   /**
