@@ -190,7 +190,6 @@ export class ProductService {
       offset,
       limit,
     );
-    // console.log(paginated.totalCount % (offset + limit));
 
     return paginated;
   }

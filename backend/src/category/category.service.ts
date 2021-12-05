@@ -134,7 +134,7 @@ export class CategoryService {
   /**
    * Count Quantity of Category in Database
    *
-   * return: Quantity of Product in Database
+   * return: Quantity of Category in Database
    */
   async countCategory() {
     return await this.categoryRepository.count();
