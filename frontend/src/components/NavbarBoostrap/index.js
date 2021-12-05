@@ -144,9 +144,6 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
           </Col>
           <Col md={9}></Col>
           <Col md={1} className="d-flex justify-content-center">
-            {/* <Link to="/" onClick={context.logout}>
-              <h2>Logout</h2>
-            </Link> */}
             <Navbar.Collapse>
               <Nav className=" align-items-baseline">
                 <BsPersonCircle />
