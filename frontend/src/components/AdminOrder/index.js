@@ -21,7 +21,6 @@ const AdminOrder = ({ id }) => {
     }
   }, [data]);
   /*-------------------------Query----------------------------- */
-
   return (
     <>
       {id === "order" && (
@@ -57,7 +56,7 @@ const AdminOrder = ({ id }) => {
               product={order.product.name}
               quantity={order.quantity}
               price={order.netPrice}
-              reciept={order.recieptURL}
+              receipt={order.receiptURL}
               status={order.status}
               refetch={refetch}
               />

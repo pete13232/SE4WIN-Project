@@ -1,4 +1,10 @@
-import { Button, Dropdown } from "react-bootstrap";
+import {
+  Button,
+  Dropdown,
+  Tooltip,
+  Image,
+  OverlayTrigger,
+} from "react-bootstrap";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { AiFillPicture, AiOutlineCheckSquare } from "react-icons/ai";
@@ -15,7 +21,7 @@ const AdminOrderChild = ({
   product,
   quantity,
   price,
-  reciept,
+  receipt,
   status,
   refetch,
 }) => {
@@ -117,6 +123,12 @@ const AdminOrderChild = ({
     }
   };
 
+  const tooltipImg = (props) => (
+    <Tooltip className="tooltip-img" {...props}>
+      <Image src={receipt} alt="Reciept Image" />
+    </Tooltip>
+  );
+
   /*------------------------Submit--------------------------*/
   return (
     <>
@@ -136,9 +148,15 @@ const AdminOrderChild = ({
           <td>{product}</td>
           <td>{quantity}</td>
           <td>{price} ฿</td>
-          <td className="text-center">
-            <AiFillPicture />
-          </td>
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 250, hide: 400 }}
+            overlay={tooltipImg}
+          >
+            <td className="text-center">
+              <AiFillPicture />
+            </td>
+          </OverlayTrigger>
           <td className="d-flex gap-2">
             {switchShow()}
 

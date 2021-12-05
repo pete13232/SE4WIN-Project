@@ -77,7 +77,8 @@ const Order = ({
             data: formdata,
           })
             .then((res) => {
-              submit.receiptURL = res.data.imagePath;
+              const url = "http://20.212.81.174/";
+              submit.receiptURL = url + res.data.imagePath;
               uploadReceipt({
                 variables: { orderId: id, receiptURL: submit.receiptURL },
               }).then(() => {
@@ -115,7 +116,8 @@ const Order = ({
         data: formdata,
       })
         .then((res) => {
-          submit.receiptURL = res.data.imagePath;
+          const url = "http://20.212.81.174/";
+          submit.receiptURL = url + res.data.imagePath;
           uploadReceipt({
             variables: { orderId: id, receiptURL: submit.receiptURL },
           }).then(() => {

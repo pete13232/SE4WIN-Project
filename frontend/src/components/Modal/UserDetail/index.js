@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { ADMIN_GET_USER_INFO } from "../../../Graphql/Queries";
 import { Modal, Col, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 const UserDetail = ({ showUser, setShowUser, userId }) => {
   const handleClose = () => setShowUser(false);
   /*-------------------------Phone number modify----------------------------- */
@@ -104,6 +105,11 @@ const UserDetail = ({ showUser, setShowUser, userId }) => {
               </Col>
             </Row>
           </Modal.Body>
+          <Modal.Footer>
+            <Button className="grey btn-small" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
         </Modal>
       )}
     </>

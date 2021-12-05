@@ -64,7 +64,6 @@ const AdminStockChild = ({
   // Description truncate
   const tooltipDesc = (props) => <Tooltip {...props}>{desc}</Tooltip>;
   const tooltipImg= (props) => <Tooltip className="tooltip-img" {...props}><Image src={img} alt="Product Image"/></Tooltip>;
-
   const textCut = () => {
     var text = desc;
     if (text.length > 40) {
