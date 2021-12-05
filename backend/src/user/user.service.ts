@@ -27,7 +27,6 @@ export class UserService {
    * return: Created User
    */
   async create(createUserInput: CreateUserInput): Promise<User> {
-
     //Check if product is already exists
     const user = await this.userRepository.findOne({
       email: createUserInput.email,
@@ -73,7 +72,6 @@ export class UserService {
    * return: User
    */
   async findByEmail(loginUserInput: LoginUserInput): Promise<User> {
-
     //Find user by email
     const user = await this.userRepository.findOne({
       email: loginUserInput.email,
@@ -94,7 +92,6 @@ export class UserService {
    * return: Updated User
    */
   async update(id: number, updateUserInput: UpdateUserInput): Promise<User> {
-
     //Find user
     const user = await this.userRepository.findOne(id);
 
@@ -123,7 +120,6 @@ export class UserService {
    * return: Success Message
    */
   async remove(id: number): Promise<string> {
-
     //Delete user in database
     await this.userRepository.delete(id);
     return 'Delete success';

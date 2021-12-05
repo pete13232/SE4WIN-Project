@@ -5,7 +5,7 @@ import { Category } from 'src/category/entities/category.entity';
 import { CreateOrderInput } from 'src/order/dto/create-order.input';
 import { Order } from 'src/order/entities/order.entity';
 import { OrderService } from 'src/order/order.service';
-import { Like, Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
@@ -168,7 +168,7 @@ export class ProductService {
     const offset = (page - 1) * limit;
     //Find proudct by name
     const products = await this.productRepository.findAndCount({
-      where: { name: Like('%' + name + '%') },
+      where: { name: ILike('%' + name + '%') },
       relations: ['category', 'order'],
       order: { price: sort ? 'ASC' : 'DESC', name: 'ASC' },
       skip: offset,
