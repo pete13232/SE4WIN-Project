@@ -6,36 +6,58 @@ import "./style.css";
 import { GET_CATEGORIES } from "../../Graphql/Queries";
 
 const Category = () => {
-  const [page, setpage] = useState(1);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState([]);
   const [maxPage, setMaxPage] = useState(0);
   const { data, error, refetch } = useQuery(GET_CATEGORIES, {
-    variables: { page: page },
+    variables: { page: 1 },
   });
   const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     if (data) {
-      setCategories(data.categories);
-      setMaxPage(data.categories[0]?.count);
+      setCategories(data.categories.data);
+      setPages(
+        Array.from(
+          { length: Math.ceil(data.categories.totalCount / 6) },
+          (_, index) => index + 1
+        )
+      );
     }
   }, [data]);
+
+  const carouselItem = () => {
+    console.log("carouselItem");
+    return (
+      <Carousel.Item interval={100000000}>
+        <Row className="g-0 category">
+          {categories.map((category) => {
+            console.log(2);
+            return (
+              <Col className="card" md={2}>
+                <Image src={category.picURL}></Image>
+                <div className="card-img-overlay text-center">
+                  <h4>{category.name}</h4>
+                </div>
+              </Col>
+            );
+          })}
+        </Row>
+      </Carousel.Item>
+    );
+  };
+console.log(pages);
   return (
     <>
       <Header text="Category"></Header>
       <Carousel>
-        <Carousel.Item interval={100000000}>
-          <Row className="g-0 category">
-            {categories.map((category) => {
-              return (
-                <Col className="card" md={2}>
-                  <Image src={category.picURL}></Image>
-                  <div className="card-img-overlay text-center">
-                    <h4>{category.name}</h4>
-                  </div>
-                </Col>
-              );
-            })}
-          </Row>
-        </Carousel.Item>
+        {pages.map((pageParam, i) => {
+          // setPage(1);
+          console.log("pageparam= "+pageParam)
+          console.log(i);
+          return carouselItem();
+          console.log(pageParam);
+        })}
 
         <Carousel.Item interval={100000000}>
           <Row className="g-0 category">

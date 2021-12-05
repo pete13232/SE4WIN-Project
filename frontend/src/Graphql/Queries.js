@@ -153,10 +153,12 @@ export const GET_PRODUCTS_BY_NAME = gql`
 export const GET_CATEGORIES = gql`
   query ($page: Int!) {
     categories(page: $page) {
-      id
-      name
-      picURL
-      count
+      data{
+        id
+        name
+        picURL
+      }
+      totalCount
     }
   }
 `;
