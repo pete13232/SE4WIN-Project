@@ -150,18 +150,13 @@ export const GET_PRODUCTS_BY_NAME = gql`
   }
 `;
 
-// export const GET_CATEGORIES = gql`
-//   query ($page: Int!) {
-//     categories(page: $page) {
-//       data{
-//         id
-//         name
-//         picURL
-//       }
-//       totalCount
-//     }
-//   }
-// `;
+export const GET_CATEGORY = gql`
+  query ($id: Int!) {
+    category(id: $id) {
+      name
+    }
+  }
+`;
 
 export const GET_CATEGORIES = gql`
   query {

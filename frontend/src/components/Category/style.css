@@ -38,3 +38,20 @@
 .category h3 {
   margin: 0;
 }
+.slick-arrow {
+  background-color: black;
+  height: 35px;
+  width: 35px;
+  border-radius: 100px;
+}
+.slick-prev{
+  left: -40px
+}
+.slick-next{
+  right: -40px
+}
+.slick-arrow:hover,
+.slick-arrow:active,
+.slick-arrow:focus {
+  background-color: grey !important;
+}

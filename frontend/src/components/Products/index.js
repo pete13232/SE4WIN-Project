@@ -1,7 +1,8 @@
 import { Row, Dropdown, Pagination } from "react-bootstrap";
 import { useEffect, useState, useContext } from "react";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import {
+  GET_CATEGORY,
   GET_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORY,
   GET_PRODUCTS_BY_NAME,
@@ -20,6 +21,20 @@ const Products = (categoryId, search) => {
   const [products, setProducts] = useState([]);
   const [count, setCount] = useState(1);
 
+  const [categoryName, setCategoryName] = useState("");
+  const [getCategory, { data: categoryData }] = useLazyQuery(GET_CATEGORY);
+  useEffect(() => {
+    if (filterCategoryId) {
+      getCategory({
+        variables: { id: Number(filterCategoryId) },
+      });
+      if (categoryData) {
+        setCategoryName(categoryData?.category.name);
+      }
+      
+    }
+  }, [filterCategoryId, categoryData, getCategory, setCategoryName]);
+  console.log(categoryData)
   const [
     getProducts,
     { data: dataNormal, loading: loadingNormal, refetch, called },
@@ -126,12 +141,26 @@ const Products = (categoryId, search) => {
       </Dropdown>
     );
   };
-  console.log(`page =${pageCount}`);
+
+  const selectHeaderText = () => {
+    if (queryState === 2) {
+      return `Category of "${categoryName}"`;
+    } else if (queryState === 3) {
+      return `Search result for "${searchName}"`;
+    } else {
+      return "";
+    }
+  };
+
   return (
     <>
       {products && (
         <>
-          <Header text="All Product" dropdown={dropdown()}></Header>
+          <Header
+            text={selectHeaderText()}
+            dropdown={dropdown()}
+            closeButton={queryState}
+          ></Header>
           <Row className="product-items mt-3">
             {products.map((product) => (
               <Product

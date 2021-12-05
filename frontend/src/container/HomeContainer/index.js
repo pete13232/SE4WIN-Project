@@ -17,7 +17,7 @@ const HomeContainer = () => {
         <>
           <NavbarBootstrap />
           <Category />
-          {/* <Products /> */}
+          <Products />
         </>
       )}
     </>
