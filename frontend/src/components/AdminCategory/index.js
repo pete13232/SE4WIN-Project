@@ -13,7 +13,7 @@ const AdminCategory = ({ id }) => {
 
   useEffect(() => {
     if (data) {
-      setCategories(data.AdminCategories);
+      setCategories(data.categories);
     }
   }, [data]);
   /*--------------------------Query-------------------------------*/

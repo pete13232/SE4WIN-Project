@@ -25,27 +25,30 @@ const AdminOrderChild = ({
   status,
   refetch,
 }) => {
+
+  /*-----------------------------UI state-------------------------*/
+
   const [confirm, setConfirm] = useState(true);
   const [choose, setChoose] = useState(true);
   const [currentStatus, setCurretnStatus] = useState(status);
   const [showUser, setShowUser] = useState(false);
 
-  const handleEdit = () => {
+  const handleEdit = () => { // change to edit state
     setConfirm(false);
     setChoose(false);
   };
 
-  const handleConfirm = () => {
-    onSubmit(currentStatus);
+  const handleConfirm = () => { //change to confirm state 
+    onSubmit(currentStatus);//submit curret selected status
     setConfirm(true);
     setChoose(true);
   };
 
-  const changeStatus = (event) => {
+  const changeStatus = (event) => {// when select new status , change to current status
     setCurretnStatus(event.target.innerText);
   };
 
-  const buttonStatus = () => {
+  const buttonStatus = () => {// button UI state
     if (status === "AWAITING") {
       return (
         <Button className="yellow btn-small text-black" disabled>
@@ -73,7 +76,7 @@ const AdminOrderChild = ({
     }
   };
 
-  const switchShow = () => {
+  const switchShow = () => {//edit button and dropdown showing 
     if (choose === true) {
       return buttonStatus();
     } else {
@@ -92,17 +95,17 @@ const AdminOrderChild = ({
       );
     }
   };
-
+  /*-----------------------------UI state-------------------------*/
   /*------------------------Submit--------------------------*/
   const [changeStatusGQL] = useMutation(CHANGE_STATUS);
 
   const onSubmit = (submit) => {
-    if (submit !== status) {
-      changeStatusGQL({
+    if (submit !== status) {// if submit status is not the same status
+      changeStatusGQL({//change status
         variables: { id: orderId, status: submit },
       })
-        .then((res) => {
-          var resText = res.data.changeStatus; //changeStatus
+        .then((res) => {// change status success
+          var resText = res.data.changeStatus; 
           Swal.fire({
             title: "Change status success!",
             text: resText,
@@ -110,7 +113,7 @@ const AdminOrderChild = ({
           });
           refetch();
         })
-        .catch((error) => {
+        .catch((error) => {// change status fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
