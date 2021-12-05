@@ -9,11 +9,13 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { AuthContext } from "../../context/auth";
+import { QueryContext } from "../../context/query";
 import { FaSearch } from "react-icons/fa";
 import "./style.css";
 
 const NavbarBootstrap = ({ secondTheme, page }) => {
   const context = useContext(AuthContext);
+  const { queryState, setQueryState } = useContext(QueryContext)
   const navbarSwitch = () => {
     if (secondTheme) {
       return (

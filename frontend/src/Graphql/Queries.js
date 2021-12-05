@@ -3,10 +3,13 @@ import { gql } from "@apollo/client";
 export const GET_PRODUCTS = gql`
   query ($sort: Int!, $page: Int!) {
     products(sort: $sort, page: $page) {
-      id
-      name
-      price
-      picURL
+      data {
+        id
+        name
+        price
+        picURL
+      }
+      totalCount
     }
   }
 `;
