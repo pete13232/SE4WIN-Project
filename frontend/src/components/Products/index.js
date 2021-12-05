@@ -21,7 +21,7 @@ const Products = (categoryId, search) => {
 
   const [
     getProducts,
-    { data: dataNormal, loading: loadingNormal,  refetch, called  },
+    { data: dataNormal, loading: loadingNormal, refetch, called },
   ] = useLazyQuery(GET_PRODUCTS);
   const [
     getProductsByCategory,
@@ -37,43 +37,53 @@ const Products = (categoryId, search) => {
   useEffect(() => {
     switch (queryState) {
       case 1:
-        {
-          getProducts({
-            variables: { sort: sortVal, page: page },
-          });
+        getProducts({
+          variables: { sort: sortVal, page: page },
+        });
+        if (dataNormal) {
+          setProducts(dataNormal?.products.data);
         }
         break;
       case 2:
-        {
-          getProductsByCategory({
-            variables: { categoryId: categoryId },
-          });
+        getProductsByCategory({
+          variables: { categoryId: categoryId },
+        });
+        if (dataByCategory) {
+          setProducts(dataByCategory?.products.data);
         }
+
         break;
       case 3:
-        {
-          getProductsByName({
-            variables: { name: search },
-          });
+        getProductsByName({
+          variables: { name: search },
+        });
+        if (dataByName) {
+          setProducts(dataByName?.products.data);
         }
         break;
-    }
-  }, [queryState, sortVal, page, categoryId, search]);
+      default:
+        getProducts({
+          variables: { sort: sortVal, page: page },
+        });
+        if (dataNormal) {
+          setProducts(dataNormal?.products.data);
+        }
 
-  useEffect(() => {
-    if (called) {
-      console.log("2");
-      refetch();
+        break;
     }
-    if (!loadingNormal) {
-      console.log("1");
-      setProducts(dataNormal?.products.data);
-    } else if (!loadingCategory) {
-      setProducts(dataByCategory?.products.data);
-    } else if (!loadingName) {
-      setProducts(dataByName?.products.data);
-    }
-  }, [loadingNormal, loadingCategory, loadingName]);
+  }, [
+    getProducts,
+    getProductsByCategory,
+    getProductsByName,
+    queryState,
+    sortVal,
+    page,
+    categoryId,
+    search,
+    dataNormal,
+    dataByName,
+    dataByCategory,
+  ]);
 
   const dropdown = () => {
     return (
