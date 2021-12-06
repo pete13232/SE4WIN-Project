@@ -13,12 +13,75 @@ const AdminCategory = ({ id }) => {
 
   useEffect(() => {
     if (data) {
-      setCategories(data.categories);
+      console.log(data);
+      setCategories(data.AdminCategories);
     }
   }, [data]);
   /*--------------------------Query-------------------------------*/
   const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
 
+  const handleEdit = (index) => {
+    setText(test[index].name);
+    const newShowName = Array.from(
+      { length: showName.length },
+      (i) => (i = true)
+    );
+    newShowName[index] = false;
+    setShowName(newShowName);
+  };
+
+  const handleConfirm = (index) => {
+    /// DO SOMETHINH WITH BE
+    const newTest = [...test];
+    newTest[index].name = text;
+    setTest(newTest);
+    const newShowName = Array.from(
+      { length: showName.length },
+      (i) => (i = true)
+    );
+    setShowName(newShowName);
+  };
+
+  const handleText = (event) => {
+    setText(event.target.value);
+  };
+
+  // const textFieldShow = (index) => {
+  //   if (showName[index] === true) {
+  //     return <td>{test[index].name}</td>;
+  //   } else {
+  //     return (
+  //       <td>
+  //         <Form>
+  //           <FormControl
+  //             value={text}
+  //             type="text"
+  //             placeholder="put text here"
+  //             onChange={handleText}
+  //           />
+  //         </Form>
+  //       </td>
+  //     );
+  //   }
+  // };
+
+  // const editConfirmButton = (index) => {
+  //   // return <a>{ showName}</a>;
+  //   if (showName[index] === true) {
+  //     return (
+  //       <div className="edit">
+  //         <FaRegEdit onClick={() => handleEdit(index)} />
+  //       </div>
+  //     );
+  //   } else {
+  //     return (
+  //       <div className="check">
+  //         <AiOutlineCheckSquare onClick={() => handleConfirm(index)} />
+  //       </div>
+  //     );
+  //   }
+  // };
+console.log(categories);
   return (
     <>
       {id === "category" && (

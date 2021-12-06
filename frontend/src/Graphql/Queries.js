@@ -136,32 +136,31 @@ export const GET_PRODUCTS_BY_CATEGORY = gql`
 `;
 
 export const GET_PRODUCTS_BY_NAME = gql`
-  query ($name: String!) {
-    ProductByName(name: $name) {
-      category {
+  query ($name: String!, $sort: Int!, $page: Int!) {
+    ProductByName(name: $name, sort: $sort, page: $page) {
+      data {
+        category {
+          name
+        }
         name
+        desc
+        price
+        picURL
+        stock
       }
-      name
-      desc
-      price
-      picURL
-      stock
+      totalCount
+      hasNextPage
     }
   }
 `;
 
-// export const GET_CATEGORIES = gql`
-//   query ($page: Int!) {
-//     categories(page: $page) {
-//       data{
-//         id
-//         name
-//         picURL
-//       }
-//       totalCount
-//     }
-//   }
-// `;
+export const GET_CATEGORY = gql`
+  query ($id: Int!) {
+    category(id: $id) {
+      name
+    }
+  }
+`;
 
 export const GET_CATEGORIES = gql`
   query {

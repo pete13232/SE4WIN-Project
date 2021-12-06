@@ -1,7 +1,8 @@
 import { Row, Dropdown, Pagination } from "react-bootstrap";
 import { useEffect, useState, useContext } from "react";
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useQuery } from "@apollo/client";
 import {
+  GET_CATEGORY,
   GET_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORY,
   GET_PRODUCTS_BY_NAME,
@@ -20,15 +21,25 @@ const Products = (categoryId, search) => {
   const [products, setProducts] = useState([]);
   const [count, setCount] = useState(1);
 
-  const [
-    getProducts,
-    { data: dataNormal, loading: loadingNormal, refetch, called },
-  ] = useLazyQuery(GET_PRODUCTS);
-  const [
-    getProductsByCategory,
-    { data: dataByCategory, loading: loadingCategory },
-  ] = useLazyQuery(GET_PRODUCTS_BY_CATEGORY);
-  const [getProductsByName, { data: dataByName, loading: loadingName }] =
+  const [categoryName, setCategoryName] = useState("");
+  const [getCategory, { data: dataCategory }] = useLazyQuery(GET_CATEGORY);
+
+  useEffect(() => {
+    if (filterCategoryId) {
+      getCategory({
+        variables: { id: Number(filterCategoryId) },
+      });
+    }
+    if (dataCategory) {
+      setCategoryName(dataCategory?.category.name);
+    }
+  }, [filterCategoryId, dataCategory]);
+
+  const [getProducts, { data: dataNormal }] = useLazyQuery(GET_PRODUCTS);
+  const [getProductsByCategory, { data: dataByCategory }] = useLazyQuery(
+    GET_PRODUCTS_BY_CATEGORY
+  );
+  const [getProductsByName, { data: dataByName }] =
     useLazyQuery(GET_PRODUCTS_BY_NAME);
 
   const inputSort = (event, val) => {
@@ -39,6 +50,7 @@ const Products = (categoryId, search) => {
   const pageCount = Math.ceil(count / 12);
 
   useEffect(() => {
+    // console.log(queryState);
     switch (queryState) {
       case 1:
         getProducts({
@@ -47,7 +59,6 @@ const Products = (categoryId, search) => {
         if (dataNormal) {
           setProducts(dataNormal?.products.data);
           setCount(dataNormal?.products.totalCount);
-          // pageCount();
         }
         break;
       case 2:
@@ -61,10 +72,11 @@ const Products = (categoryId, search) => {
         break;
       case 3:
         getProductsByName({
-          variables: { name: search },
+          variables: { name: searchName, sort: sortVal, page: page },
         });
         if (dataByName) {
-          setProducts(dataByName?.products.data);
+          console.log(dataByName);
+          setProducts(dataByName?.ProductByName.data);
         }
         break;
       default:
@@ -85,7 +97,7 @@ const Products = (categoryId, search) => {
     sortVal,
     page,
     categoryId,
-    search,
+    searchName,
     dataNormal,
     dataByName,
     dataByCategory,
@@ -126,12 +138,26 @@ const Products = (categoryId, search) => {
       </Dropdown>
     );
   };
-  console.log(`page =${pageCount}`);
+
+  const selectHeaderText = () => {
+    if (queryState === 2) {
+      return `Category of "${categoryName}"`;
+    } else if (queryState === 3) {
+      return `Search result for "${searchName}"`;
+    } else {
+      return "";
+    }
+  };
+
   return (
     <>
       {products && (
         <>
-          <Header text="All Product" dropdown={dropdown()}></Header>
+          <Header
+            text={selectHeaderText()}
+            dropdown={dropdown()}
+            closeButton={queryState}
+          ></Header>
           <Row className="product-items mt-3">
             {products.map((product) => (
               <Product

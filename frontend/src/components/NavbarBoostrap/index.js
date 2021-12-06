@@ -15,10 +15,20 @@ import { AuthContext } from "../../context/auth";
 import { QueryContext } from "../../context/query";
 import { FaSearch } from "react-icons/fa";
 import "./style.css";
+import { useForm } from "react-hook-form";
 
 const NavbarBootstrap = ({ secondTheme, page }) => {
   const context = useContext(AuthContext);
-  const { queryState, setQueryState } = useContext(QueryContext)
+  const { searchName, setSearchName, queryState, setQueryState } =
+    useContext(QueryContext);
+
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = (submit) => {
+    console.log(submit);
+    setSearchName(submit.name);
+    setQueryState(3);
+  };
   const navbarSwitch = () => {
     if (secondTheme) {
       return (
@@ -50,14 +60,15 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
             </Navbar.Brand>
           </Col>
           <Col md={7}>
-            <Form className="search-bar">
+            <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
               <InputGroup>
                 <FormControl
                   type="search"
                   placeholder="Search for product"
                   aria-label="Search"
+                  {...register("name")}
                 />
-                <Button variant="light">
+                <Button variant="light" type="submit">
                   <FaSearch style={{ color: "black" }} />
                 </Button>
               </InputGroup>
@@ -116,7 +127,6 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
             </Link>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-
             <Nav className=" align-items-baseline">
               <BsPersonCircle />
               <NavDropdown title="User" menuVariant="light">
