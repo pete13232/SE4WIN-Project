@@ -100,8 +100,8 @@ const AdminOrderChild = ({
   const [changeStatusGQL] = useMutation(CHANGE_STATUS);
 
   const onSubmit = (submit) => {
-    if (submit !== status) {// if submit status is not the same status
-      changeStatusGQL({//change status
+    if (submit !== status) {
+      changeStatusGQL({
         variables: { id: orderId, status: submit },
       })
         .then((res) => {// change status success
