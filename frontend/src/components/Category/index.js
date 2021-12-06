@@ -16,6 +16,7 @@ const Category = ({
   const [categories, setCategories] = useState([]);
 
   const settings = {
+    draggable: false,
     dots: true,
     infinite: true,
     speed: 500,

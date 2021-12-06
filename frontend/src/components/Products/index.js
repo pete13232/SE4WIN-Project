@@ -157,7 +157,7 @@ const Products = ({
     } else if (queryState === 3) {
       return `Search result for "${searchName}"`;
     } else {
-      return "";
+      return "All product";
     }
   };
   console.log(products);
