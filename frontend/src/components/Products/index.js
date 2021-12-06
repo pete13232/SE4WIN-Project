@@ -19,7 +19,7 @@ const Products = ({
   setSearchName,
   filterCategoryId,
   setFilterCategoryId,
-  resetState
+  resetState,
 }) => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("Price, low to High");
@@ -29,6 +29,13 @@ const Products = ({
 
   const [categoryName, setCategoryName] = useState("");
   const [getCategory, { data: dataCategory }] = useLazyQuery(GET_CATEGORY);
+
+  useEffect(() => {
+    if(queryState)
+    {
+      setPage(1)
+    }
+  }, [queryState]);
 
   useEffect(() => {
     if (filterCategoryId) {
@@ -53,7 +60,6 @@ const Products = ({
     setSortVal(val);
   };
 
-
   useEffect(() => {
     // console.log(queryState);
     switch (queryState) {
@@ -63,7 +69,7 @@ const Products = ({
         });
         if (dataNormal) {
           setProducts(dataNormal?.products.data);
-          setPageCount(Math.ceil(dataNormal?.products.totalCount)/12);
+          setPageCount(Math.ceil(dataNormal?.products.totalCount / 12));
         }
         break;
       case 2:
@@ -76,7 +82,9 @@ const Products = ({
         });
         if (dataByCategory) {
           setProducts(dataByCategory?.ProductByCategory.data);
-          setPageCount(Math.ceil(dataByCategory?.ProductByCategory.totalCount)/12);
+          setPageCount(
+            Math.ceil(dataByCategory?.ProductByCategory.totalCount / 12)
+          );
         }
 
         break;
@@ -87,7 +95,7 @@ const Products = ({
         if (dataByName) {
           console.log(dataByName);
           setProducts(dataByName?.ProductByName.data);
-          setPageCount(Math.ceil(dataByName?.ProductByName.totalCount)/12);
+          setPageCount(Math.ceil(dataByName?.ProductByName.totalCount / 12));
         }
         break;
       default:
@@ -96,7 +104,7 @@ const Products = ({
         });
         if (dataNormal) {
           setProducts(dataNormal?.products.data);
-          setPageCount(Math.ceil(dataNormal?.products.totalCount)/12);
+          setPageCount(Math.ceil(dataNormal?.products.totalCount / 12));
         }
 
         break;
@@ -160,7 +168,8 @@ const Products = ({
       return "All product";
     }
   };
-  console.log(products);
+  console.log(`max page = ${pageCount}`);
+  console.log(`current page = ${page}`);
   return (
     <>
       {products && (
@@ -183,20 +192,67 @@ const Products = ({
             ))}
           </Row>
           <Pagination className="justify-content-end me-4">
-            <Pagination.First />
-            <Pagination.Prev />
-            <Pagination.Item>{1}</Pagination.Item>
-
+            <Pagination.First
+              onClick={() => {
+                console.log("Pass");
+                setPage(1);
+              }}
+            />
+            <Pagination.Prev
+              onClick={() => {
+                if (page - 1 > 0) setPage(page - 1);
+              }}
+            />
             {page - 2 > 0 && <Pagination.Ellipsis disabled />}
-            {page - 2 > 0 && <Pagination.Item>{page - 2}</Pagination.Item>}
-            {page - 1 > 0 && <Pagination.Item>{page - 1}</Pagination.Item>}
+            {page - 2 > 0 && (
+              <Pagination.Item
+                onClick={() => {
+                  if (page - 2 > 0) setPage(page - 2);
+                }}
+              >
+                {page - 2}
+              </Pagination.Item>
+            )}
+            {page - 1 > 0 && (
+              <Pagination.Item
+                onClick={() => {
+                  if (page - 1 > 0) setPage(page - 1);
+                }}
+              >
+                {page - 1}
+              </Pagination.Item>
+            )}
             <Pagination.Item active>{page}</Pagination.Item>
-            <Pagination.Item>{13}</Pagination.Item>
-            <Pagination.Item disabled>{14}</Pagination.Item>
-            <Pagination.Item>{20}</Pagination.Item>
-            <Pagination.Ellipsis disabled />
-            <Pagination.Next />
-            <Pagination.Last />
+            {page + 1 <= pageCount && (
+              <Pagination.Item
+                onClick={() => {
+                  if (page + 1 <= pageCount) setPage(page + 1);
+                }}
+              >
+                {page + 1}
+              </Pagination.Item>
+            )}
+            {page + 2 <= pageCount && (
+              <Pagination.Item
+                onClick={() => {
+                  if (page + 2 <= pageCount) setPage(page + 2);
+                }}
+              >
+                {page + 2}
+              </Pagination.Item>
+            )}
+            {page + 2 < pageCount && <Pagination.Ellipsis disabled />}
+            <Pagination.Next
+              onClick={() => {
+                if (page + 1 <= pageCount) setPage(page + 1);
+              }}
+            />
+            <Pagination.Last
+              onClick={() => {
+                setPage(pageCount);
+
+              }}
+            />
           </Pagination>
         </>
       )}
