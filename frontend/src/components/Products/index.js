@@ -12,14 +12,20 @@ import Header from "../../components/Header";
 import "./style.css";
 import { QueryContext } from "../../context/query";
 
-const Products = (categoryId, search) => {
-  const { queryState, setQueryState, searchName, filterCategoryId } =
-    useContext(QueryContext);
+const Products = ({
+  queryState,
+  setQueryState,
+  searchName,
+  setSearchName,
+  filterCategoryId,
+  setFilterCategoryId,
+  resetState
+}) => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState("Price, low to High");
   const [sortVal, setSortVal] = useState(1);
   const [products, setProducts] = useState([]);
-  const [count, setCount] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
 
   const [categoryName, setCategoryName] = useState("");
   const [getCategory, { data: dataCategory }] = useLazyQuery(GET_CATEGORY);
@@ -47,7 +53,6 @@ const Products = (categoryId, search) => {
     setSortVal(val);
   };
 
-  const pageCount = Math.ceil(count / 12);
 
   useEffect(() => {
     // console.log(queryState);
@@ -58,15 +63,20 @@ const Products = (categoryId, search) => {
         });
         if (dataNormal) {
           setProducts(dataNormal?.products.data);
-          setCount(dataNormal?.products.totalCount);
+          setPageCount(Math.ceil(dataNormal?.products.totalCount)/12);
         }
         break;
       case 2:
         getProductsByCategory({
-          variables: { categoryId: categoryId },
+          variables: {
+            categoryId: filterCategoryId,
+            sort: sortVal,
+            page: page,
+          },
         });
         if (dataByCategory) {
-          setProducts(dataByCategory?.products.data);
+          setProducts(dataByCategory?.ProductByCategory.data);
+          setPageCount(Math.ceil(dataByCategory?.ProductByCategory.totalCount)/12);
         }
 
         break;
@@ -77,6 +87,7 @@ const Products = (categoryId, search) => {
         if (dataByName) {
           console.log(dataByName);
           setProducts(dataByName?.ProductByName.data);
+          setPageCount(Math.ceil(dataByName?.ProductByName.totalCount)/12);
         }
         break;
       default:
@@ -85,6 +96,7 @@ const Products = (categoryId, search) => {
         });
         if (dataNormal) {
           setProducts(dataNormal?.products.data);
+          setPageCount(Math.ceil(dataNormal?.products.totalCount)/12);
         }
 
         break;
@@ -96,7 +108,7 @@ const Products = (categoryId, search) => {
     queryState,
     sortVal,
     page,
-    categoryId,
+    filterCategoryId,
     searchName,
     dataNormal,
     dataByName,
@@ -148,7 +160,7 @@ const Products = (categoryId, search) => {
       return "";
     }
   };
-
+  console.log(products);
   return (
     <>
       {products && (
@@ -156,12 +168,13 @@ const Products = (categoryId, search) => {
           <Header
             text={selectHeaderText()}
             dropdown={dropdown()}
-            closeButton={queryState}
+            queryState={queryState}
+            resetState={resetState}
           ></Header>
           <Row className="product-items mt-3">
-            {products.map((product) => (
+            {products.map((product, index) => (
               <Product
-                key={product.id}
+                key={index}
                 name={product.name}
                 price={product.price}
                 img={product.picURL}

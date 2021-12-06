@@ -121,16 +121,20 @@ export const ADMIN_GET_USER_INFO = gql`
   }
 `;
 export const GET_PRODUCTS_BY_CATEGORY = gql`
-  query ($categoryId: Int!) {
-    ProductByCategory(categoryId: $categoryId) {
-      category {
+  query ($categoryId: Int!, $sort: Int!, $page: Int!) {
+    ProductByCategory(categoryId: $categoryId, sort: $sort, page: $page) {
+      data {
+        id
+        category {
+          name
+        }
         name
+        desc
+        price
+        picURL
+        stock
       }
-      name
-      desc
-      price
-      picURL
-      stock
+      totalCount
     }
   }
 `;
@@ -139,6 +143,7 @@ export const GET_PRODUCTS_BY_NAME = gql`
   query ($name: String!, $sort: Int!, $page: Int!) {
     ProductByName(name: $name, sort: $sort, page: $page) {
       data {
+        id
         category {
           name
         }

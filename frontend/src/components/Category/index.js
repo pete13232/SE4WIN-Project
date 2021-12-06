@@ -1,14 +1,17 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { Col, Row, Image, Carousel } from "react-bootstrap";
 import Header from "../Header";
 import "./style.css";
 import { GET_CATEGORIES } from "../../Graphql/Queries";
 import Slider from "react-slick";
-import { QueryContext } from "../../context/query";
-const Category = () => {
-  const { queryState, setQueryState,  filterCategoryId, setFilterCategoryId } =
-    useContext(QueryContext);
+
+const Category = ({
+  queryState,
+  setQueryState,
+  filterCategoryId,
+  setFilterCategoryId,
+}) => {
   const { data, error, refetch } = useQuery(GET_CATEGORIES, {});
   const [categories, setCategories] = useState([]);
 
@@ -25,12 +28,16 @@ const Category = () => {
   const sliders = () => {
     return categories.map((category) => {
       return (
-        <div className="g-0 category" key={category} >
+        <div
+          className="g-0 category"
+          key={category}
+          onClick={() => {
+            setFilterCategoryId(category.id);
+            setQueryState(2);
+          }}
+        >
           <div className="card" md={2}>
-            <Image alt="image" src={category.picURL} onClick={()=>{
-              setFilterCategoryId(category.id)
-              setQueryState(2)
-            }} />
+            <Image alt="image" src={category.picURL} />
             <div className="card-img-overlay text-center">
               <h4>{category.name}</h4>
             </div>
@@ -45,7 +52,7 @@ const Category = () => {
       setCategories(data?.categories);
     }
   }, [data]);
-
+  console.log("category page");
   return (
     <>
       <Header text="Category"></Header>

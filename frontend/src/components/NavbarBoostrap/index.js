@@ -17,16 +17,21 @@ import { FaSearch } from "react-icons/fa";
 import "./style.css";
 import { useForm } from "react-hook-form";
 
-const NavbarBootstrap = ({ secondTheme, page }) => {
+const NavbarBootstrap = ({
+  secondTheme,
+  page,
+  queryState,
+  setQueryState,
+  searchName,
+  setSearchName,
+}) => {
   const context = useContext(AuthContext);
-  const { setSearchName, setQueryState } = useContext(QueryContext);
-
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (submit) => {
     console.log(submit);
     setSearchName(submit.name);
-    setQueryState(3);
+    setQueryState(Number(3));
   };
   const navbarSwitch = () => {
     if (secondTheme) {
@@ -172,6 +177,7 @@ const NavbarBootstrap = ({ secondTheme, page }) => {
       );
     }
   };
+  console.log("navbar page");
   return <>{navbarSwitch()}</>;
 };
 

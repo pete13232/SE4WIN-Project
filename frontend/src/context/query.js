@@ -2,8 +2,14 @@ import React, { useState, createContext } from "react";
 
 const QueryContext = createContext({
   queryState: 1,
-  setQueryState: (state) => {},
-});
+  setQueryState: (val)=>{},
+  searchName: "",
+  setSearchName: (val)=>{},
+  filterCategoryId: null,
+  setFilterCategoryId: (val)=>{},
+}
+);
+
 
 function QueryProvider(props) {
   const [queryState, setQueryState] = useState(1);
