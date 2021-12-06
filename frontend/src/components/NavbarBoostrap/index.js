@@ -19,8 +19,7 @@ import { useForm } from "react-hook-form";
 
 const NavbarBootstrap = ({ secondTheme, page }) => {
   const context = useContext(AuthContext);
-  const { searchName, setSearchName, queryState, setQueryState } =
-    useContext(QueryContext);
+  const { setSearchName, setQueryState } = useContext(QueryContext);
 
   const { register, handleSubmit } = useForm();
 
