@@ -74,6 +74,12 @@ type PaginatedProduct {
   hasNextPage: Boolean!
 }
 
+type PaginatedCategory {
+  data: [Category!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
@@ -91,6 +97,7 @@ type Query {
   AdminCategories: [Category!]!
   categories: [Category!]!
   category(id: Int!): Category!
+  AdminCategoriesByName(name: String!): PaginatedCategory!
   verify(token: String!): User!
 }
 

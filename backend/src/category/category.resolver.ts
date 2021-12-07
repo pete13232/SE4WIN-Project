@@ -78,6 +78,23 @@ export class CategoryResolver {
   }
 
   /**
+   *
+   * Find Category by name
+   *
+   * require: Signed In with Admin Role
+   * parameters: name
+   * return: Paginated Category
+   */
+  @Query(() => PaginatedCategory, { name: 'AdminCategoriesByName' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  AdminFindByName(
+    @Args('name', { type: () => String }) name: string,
+  ): Promise<PaginatedCategory> {
+    return this.categoryService.findByName(name);
+  }
+
+  /**
    * Update Category Information
    *
    * require: Signed In with Admin Role

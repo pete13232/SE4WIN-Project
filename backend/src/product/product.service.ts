@@ -158,7 +158,7 @@ export class ProductService {
    * Find Product by Name
    *
    * parameters: name, page, sort
-   * return: Product
+   * return: Paginated Product
    */
   async findByName(
     name: string,
@@ -198,7 +198,7 @@ export class ProductService {
    * Find Product by category
    *
    * parameters: categoryId, page, sort
-   * return:List of Product
+   * return:Paginated Product
    */
   async findProductByCategory(
     categoryId: number,

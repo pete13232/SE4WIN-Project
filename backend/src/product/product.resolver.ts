@@ -100,7 +100,7 @@ export class ProductResolver {
    * Find Product by name
    *
    * parameters: name, page, sort
-   * return: Product
+   * return: Paginated Product
    */
   @Query(() => PaginatedProduct, { name: 'ProductByName' })
   findByName(
@@ -116,7 +116,7 @@ export class ProductResolver {
    *
    * require: Signed In with Admin Role
    * parameters: name
-   * return: Product
+   * return: Paginated Product
    */
   @Query(() => PaginatedProduct, { name: 'AdminProductByName' })
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -131,7 +131,7 @@ export class ProductResolver {
    * Find Product by category
    *
    * parameters: categoryId, page, sort
-   * return: list of Product
+   * return: Paginated Product
    */
   @Query(() => PaginatedProduct, { name: 'ProductByCategory' })
   findProductByCategory(

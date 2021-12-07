@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ForbiddenError } from 'apollo-server-express';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateCategoryInput } from './dto/create-category.input';
 import { UpdateCategoryInput } from './dto/update-category.input';
 import { Category } from './entities/category.entity';
@@ -42,9 +42,9 @@ export class CategoryService {
   }
 
   /**
-   * Show All Products
+   * Show All categories
    *
-   * return: List of products
+   * return: List of categories
    */
   async findAll(): Promise<Category[]> {
     // const limit = 6;
@@ -101,6 +101,46 @@ export class CategoryService {
   }
 
   /**
+   * Find Category by Name
+   *
+   * parameters: name, page, sort
+   * return: Paginated Category
+   */
+  async findByName(
+    name: string,
+    page?: number,
+    sort?: number,
+  ): Promise<PaginatedCategory> {
+    const limit = 12;
+    const offset = (page - 1) * limit;
+    //Find proudct by name with limit and offset
+    const products = await this.categoryRepository.findAndCount({
+      where: { name: ILike('%' + name + '%') },
+      relations: ['product'],
+      order: { name: sort ? 'ASC' : 'DESC', updatedAt: 'ASC' },
+      skip: page ? offset : null,
+      take: page ? limit : null,
+    });
+
+    //Throw error if not found
+    if (!products) {
+      throw new ForbiddenError('Product not found');
+    }
+
+    //Wrap product and count into paginated
+    const paginated = new PaginatedCategory();
+    paginated.data = products[0];
+    paginated.totalCount = products[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
+
+    return paginated;
+  }
+
+  /**
    * Update Category Information
    *
    * parameter: id, updateCategoryInput
@@ -139,7 +179,7 @@ export class CategoryService {
   async countCategory() {
     return await this.categoryRepository.count();
   }
-  
+
   /**
    * Check if next page available
    *
