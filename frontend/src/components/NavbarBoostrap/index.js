@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
@@ -16,7 +16,8 @@ import { FaSearch } from "react-icons/fa";
 import "./style.css";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-
+import { useQuery } from "@apollo/client";
+import { GET_USER_INFO } from "../../Graphql/Queries";
 const NavbarBootstrap = ({
   secondTheme,
   page,
@@ -24,8 +25,19 @@ const NavbarBootstrap = ({
   setQueryState,
   searchName,
   setSearchName,
+  resetState
 }) => {
   const context = useContext(AuthContext);
+
+  const { data } = useQuery(GET_USER_INFO);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    if (data) {
+      setUser(data.me);
+    }
+  }, [data]);
+
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (submit) => {
@@ -66,7 +78,7 @@ const NavbarBootstrap = ({
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
-              <Link to="/">
+              <Link to="/" onClick={()=>{resetState()}}>
                 <h1>FAPP</h1>
               </Link>
             </Navbar.Brand>
@@ -88,7 +100,7 @@ const NavbarBootstrap = ({
           </Col>
 
           <Col md={1} className="d-flex justify-content-center">
-            <Link to="/">
+            <Link to="/" onClick={()=>{resetState()}}>
               <h2>Home</h2>
             </Link>
           </Col>
@@ -109,7 +121,7 @@ const NavbarBootstrap = ({
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
-              <Link to="/">
+              <Link to="/" onClick={()=>{resetState()}}>
                 <h1>FAPP</h1>
               </Link>
             </Navbar.Brand>
@@ -130,7 +142,7 @@ const NavbarBootstrap = ({
             </Form>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            <Link to="/">
+            <Link to="/" onClick={()=>{resetState()}}>
               <h2>Home</h2>
             </Link>
           </Col>
@@ -142,7 +154,7 @@ const NavbarBootstrap = ({
           <Col md={1} className="d-flex justify-content-center">
             <Nav className=" align-items-baseline">
               <BsPersonCircle />
-              <NavDropdown title="User" menuVariant="light">
+              <NavDropdown title={user?.firstname} menuVariant="light">
                 <NavDropdown.Item>
                   <Link to="/profile">View Profile</Link>
                 </NavDropdown.Item>
@@ -198,7 +210,7 @@ const NavbarBootstrap = ({
       );
     }
   };
-  console.log("navbar page");
+  console.log(user);
   return <>{navbarSwitch()}</>;
 };
 

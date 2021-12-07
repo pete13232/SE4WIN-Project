@@ -28,6 +28,7 @@ const HomeContainer = () => {
             setQueryState={setQueryState}
             searchName={searchName}
             setSearchName={setSearchName}
+            resetState={resetState}
           />
           <Category
             queryState={queryState}
