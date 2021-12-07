@@ -8,6 +8,10 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
   const [selectQuantity, setSelectQuantity] = useState(1);
   const [showProduct, setShowProduct] = useState(false);
   const context = useContext(AuthContext);
+  function isInt(value) {
+    var x;
+    return isNaN(value) ? !1 : ((x = parseFloat(value)), (0 | x) === x);
+  }
   return (
     <>
       <Row className="detail mt-3">
@@ -51,20 +55,16 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
             </div>
             <Button
               className="btn-large blue"
-              disabled={stock <= 0}
+              disabled={
+                stock <= 0 ||
+                (selectQuantity > stock && selectQuantity > 0) ||
+                (selectQuantity <= stock && selectQuantity < 0) ||
+                !isInt(selectQuantity)
+              }
               onClick={() => {
                 if (context.user) {
-                  if(selectQuantity <= stock)
+                  if (selectQuantity <= stock && selectQuantity > 0)
                     setShowProduct(true);
-                  else{
-                    Swal.fire({
-                      title: "Oops! !",
-                      html: "Not enough stock",
-                      icon: "error",
-                      allowOutsideClick: false,
-                      allowEscapeKey: false,
-                    });
-                  }
                 } else {
                   window.location.replace("/login");
                 }

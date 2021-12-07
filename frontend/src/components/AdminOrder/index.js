@@ -6,7 +6,9 @@ import AdminOrderChild from "./AdminOrderChild";
 import "./style.css";
 import { useForm } from "react-hook-form";
 import Button from "@restart/ui/esm/Button";
-
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
 const AdminOrder = ({ id }) => {
   /*-------------------------Query----------------------------- */
   const { data, refetch } = useQuery(ADMIN_GET_ORDERS);
@@ -14,7 +16,23 @@ const AdminOrder = ({ id }) => {
   const [search, setSearch] = useState();
 
   const [getOrders, { data: dataSearch }] = useLazyQuery(ADMIN_SEARCH_ORDERS);
-  const { register, handleSubmit } = useForm();
+  const schema = yup.object().shape({
+    orderId: yup
+      .number("Please insert number of order ID")
+      .integer("Please insert number of order ID")
+      .min(1, "Please insert number of order ID")
+      .typeError("Please insert number of order ID")
+      .notRequired()
+      .nullable(),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = (submit) => {
     setSearch(submit.orderId);
@@ -22,15 +40,20 @@ const AdminOrder = ({ id }) => {
 
   useEffect(() => {
     if (search) {
-      getOrders({ variables: { id: Number(search) } });
+      getOrders({ variables: { id: Number(search) } })
     }
     if (data && !search) {
       setOrders(data.orders);
     } else if (dataSearch) {
       setOrders(dataSearch.order);
     }
+    else{
+      setOrders()
+    }
   }, [data, dataSearch, getOrders, search]);
   /*-------------------------Query----------------------------- */
+  console.log(dataSearch)
+  console.log(orders)
   return (
     <>
       {id === "order" && (
@@ -47,7 +70,13 @@ const AdminOrder = ({ id }) => {
                 className="me-2"
                 aria-label="Search"
                 {...register("orderId")}
+                onBlur={() => {
+                  clearErrors();
+                }}
               />
+              <p className="errorMessage text-start">
+                {errors["orderId"]?.message}
+              </p>
             </Form>
             {search && (
               <Button
