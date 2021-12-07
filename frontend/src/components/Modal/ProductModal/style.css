@@ -73,7 +73,9 @@
   border-radius: 4px !important;
   box-shadow: inset 0 4px 4px rgb(0 0 0 / 25%) !important;
 }
-
+.confirm-detail .errorMessage {
+  padding-right: 100px !important;
+}
 
 span svg {
   width: 20px;
