@@ -9,6 +9,7 @@ import Button from "@restart/ui/esm/Button";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
+import "./style.css";
 const AdminOrder = ({ id }) => {
   /*-------------------------Query----------------------------- */
   const { data, refetch } = useQuery(ADMIN_GET_ORDERS);
@@ -40,20 +41,19 @@ const AdminOrder = ({ id }) => {
 
   useEffect(() => {
     if (search) {
-      getOrders({ variables: { id: Number(search) } })
+      getOrders({ variables: { id: Number(search) } });
     }
     if (data && !search) {
       setOrders(data.orders);
     } else if (dataSearch) {
       setOrders(dataSearch.order);
-    }
-    else{
-      setOrders()
+    } else {
+      setOrders();
     }
   }, [data, dataSearch, getOrders, search]);
   /*-------------------------Query----------------------------- */
-  console.log(dataSearch)
-  console.log(orders)
+  console.log(dataSearch);
+  console.log(orders);
   return (
     <>
       {id === "order" && (
@@ -74,9 +74,11 @@ const AdminOrder = ({ id }) => {
                   clearErrors();
                 }}
               />
-              <p className="errorMessage text-start">
-                {errors["orderId"]?.message}
-              </p>
+              {errors["orderId"]?.message && (
+                <p className="errorMessage text-start">
+                  {errors["orderId"]?.message}
+                </p>
+              )}
             </Form>
             {search && (
               <Button
