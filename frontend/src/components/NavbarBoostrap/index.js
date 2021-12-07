@@ -12,7 +12,6 @@ import {
 } from "react-bootstrap";
 import { BsPersonCircle } from "react-icons/bs";
 import { AuthContext } from "../../context/auth";
-import { QueryContext } from "../../context/query";
 import { FaSearch } from "react-icons/fa";
 import "./style.css";
 import { useForm } from "react-hook-form";

@@ -78,6 +78,23 @@ export const ADMIN_GET_PRODUCTS = gql`
     }
   }
 `;
+export const ADMIN_SEARCH_PRODUCTS = gql`
+  query ($name: String!) {
+    AdminProductByName(name: $name) {
+      data {
+        id
+        name
+        category {
+          name
+        }
+        desc
+        price
+        picURL
+        stock
+      }
+    }
+  }
+`;
 
 export const ADMIN_GET_CATEGORIES = gql`
   query {
@@ -92,6 +109,25 @@ export const ADMIN_GET_CATEGORIES = gql`
 export const ADMIN_GET_ORDERS = gql`
   query {
     orders {
+      id
+      user {
+        id
+      }
+      product {
+        id
+        name
+      }
+      quantity
+      orderAddress
+      netPrice
+      receiptURL
+      status
+    }
+  }
+`;
+export const ADMIN_SEARCH_ORDERS = gql`
+  query ($id: Int!) {
+    order(id: $id) {
       id
       user {
         id
@@ -173,6 +209,17 @@ export const GET_CATEGORIES = gql`
       id
       name
       picURL
+    }
+  }
+`;
+export const GET_CATEGORIES_BY_NAME = gql`
+  query ($name: String!) {
+    AdminCategoriesByName(name: $name) {
+      data {
+        id
+        name
+        picURL
+      }
     }
   }
 `;

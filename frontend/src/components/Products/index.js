@@ -1,6 +1,6 @@
 import { Row, Dropdown, Pagination } from "react-bootstrap";
-import { useEffect, useState, useContext } from "react";
-import { useLazyQuery, useQuery } from "@apollo/client";
+import { useEffect, useState } from "react";
+import { useLazyQuery } from "@apollo/client";
 import {
   GET_CATEGORY,
   GET_PRODUCTS,
@@ -10,7 +10,6 @@ import {
 import Product from "./Product/index";
 import Header from "../../components/Header";
 import "./style.css";
-import { QueryContext } from "../../context/query";
 
 const Products = ({
   queryState,
@@ -31,9 +30,8 @@ const Products = ({
   const [getCategory, { data: dataCategory }] = useLazyQuery(GET_CATEGORY);
 
   useEffect(() => {
-    if(queryState)
-    {
-      setPage(1)
+    if (queryState) {
+      setPage(1);
     }
   }, [queryState]);
 
@@ -46,7 +44,7 @@ const Products = ({
     if (dataCategory) {
       setCategoryName(dataCategory?.category.name);
     }
-  }, [filterCategoryId, dataCategory]);
+  }, [filterCategoryId, dataCategory, getCategory]);
 
   const [getProducts, { data: dataNormal }] = useLazyQuery(GET_PRODUCTS);
   const [getProductsByCategory, { data: dataByCategory }] = useLazyQuery(
@@ -250,7 +248,6 @@ const Products = ({
             <Pagination.Last
               onClick={() => {
                 setPage(pageCount);
-
               }}
             />
           </Pagination>
