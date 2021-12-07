@@ -115,12 +115,13 @@ const NavbarBootstrap = ({
             </Navbar.Brand>
           </Col>
           <Col md={7}>
-            <Form className="search-bar">
+            <Form className="search-bar" onSubmit={handleSubmit(onSubmit)}>
               <InputGroup>
                 <FormControl
                   type="search"
                   placeholder="Search for product"
                   aria-label="Search"
+                  {...register("name")}
                 />
                 <Button variant="light">
                   <FaSearch style={{ color: "black" }} />
