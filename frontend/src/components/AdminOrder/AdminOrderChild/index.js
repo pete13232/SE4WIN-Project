@@ -138,11 +138,9 @@ const AdminOrderChild = ({
       <Image src={receipt} alt="Reciept Image" />
     </Tooltip>
   );
-  // console.log(address.length)
 
   const textCut = () => {
     var text = address;
-    // console.log(text.length);
     if (text !== null) {
       if (text.length > 40) {
         text = text.substring(0, 25).concat("...");

@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import Button from "@restart/ui/esm/Button";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Swal from "sweetalert2";
 import "./style.css";
 const AdminOrder = ({ id }) => {
   /*-------------------------Query----------------------------- */
