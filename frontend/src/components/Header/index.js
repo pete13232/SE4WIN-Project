@@ -11,7 +11,6 @@ const Header = ({
   setFilterCategoryId,
   resetState,
 }) => {
-  console.log(text);
   return (
     <>
       <div className=" header px-2 space-md">

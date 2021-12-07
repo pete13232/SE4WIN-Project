@@ -25,7 +25,7 @@ const NavbarBootstrap = ({
   setQueryState,
   searchName,
   setSearchName,
-  resetState
+  resetState,
 }) => {
   const context = useContext(AuthContext);
 
@@ -41,7 +41,6 @@ const NavbarBootstrap = ({
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (submit) => {
-    console.log(submit);
     setSearchName(submit.name);
     setQueryState(Number(3));
   };
@@ -78,7 +77,12 @@ const NavbarBootstrap = ({
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
-              <Link to="/" onClick={()=>{resetState()}}>
+              <Link
+                to="/"
+                onClick={() => {
+                  resetState();
+                }}
+              >
                 <h1>FAPP</h1>
               </Link>
             </Navbar.Brand>
@@ -100,7 +104,12 @@ const NavbarBootstrap = ({
           </Col>
 
           <Col md={1} className="d-flex justify-content-center">
-            <Link to="/" onClick={()=>{resetState()}}>
+            <Link
+              to="/"
+              onClick={() => {
+                resetState();
+              }}
+            >
               <h2>Home</h2>
             </Link>
           </Col>
@@ -121,7 +130,12 @@ const NavbarBootstrap = ({
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
             <Navbar.Brand className="px-3 d-flex justify-content-center">
-              <Link to="/" onClick={()=>{resetState()}}>
+              <Link
+                to="/"
+                onClick={() => {
+                  resetState();
+                }}
+              >
                 <h1>FAPP</h1>
               </Link>
             </Navbar.Brand>
@@ -142,7 +156,12 @@ const NavbarBootstrap = ({
             </Form>
           </Col>
           <Col md={1} className="d-flex justify-content-center">
-            <Link to="/" onClick={()=>{resetState()}}>
+            <Link
+              to="/"
+              onClick={() => {
+                resetState();
+              }}
+            >
               <h2>Home</h2>
             </Link>
           </Col>
@@ -210,7 +229,6 @@ const NavbarBootstrap = ({
       );
     }
   };
-  console.log(user);
   return <>{navbarSwitch()}</>;
 };
 

@@ -52,8 +52,6 @@ const AdminOrder = ({ id }) => {
     }
   }, [data, dataSearch, getOrders, search]);
   /*-------------------------Query----------------------------- */
-  console.log(dataSearch);
-  console.log(orders);
   return (
     <>
       {id === "order" && (

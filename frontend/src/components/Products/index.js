@@ -60,7 +60,6 @@ const Products = ({
   };
 
   useEffect(() => {
-    // console.log(queryState);
     switch (queryState) {
       case 1:
         getProducts({
@@ -92,7 +91,6 @@ const Products = ({
           variables: { name: searchName, sort: sortVal, page: page },
         });
         if (dataByName) {
-          console.log(dataByName);
           setProducts(dataByName?.ProductByName.data);
           setPageCount(Math.ceil(dataByName?.ProductByName.totalCount / 12));
         }
@@ -167,8 +165,6 @@ const Products = ({
       return "All product";
     }
   };
-  console.log(`max page = ${pageCount}`);
-  console.log(`current page = ${page}`);
   return (
     <>
       {products && (
@@ -195,7 +191,6 @@ const Products = ({
           <Pagination className="justify-content-end me-4">
             <Pagination.First
               onClick={() => {
-                console.log("Pass");
                 setPage(1);
               }}
             />
