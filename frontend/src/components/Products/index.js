@@ -2,6 +2,7 @@ import { Row, Dropdown, Pagination } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 import {
+  GET_CATEGORIES_BY_NAME,
   GET_CATEGORY,
   GET_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORY,
@@ -159,9 +160,9 @@ const Products = ({
 
   const selectHeaderText = () => {
     if (queryState === 2) {
-      return `Category of "${categoryName}"`;
+      return `Category of `;
     } else if (queryState === 3) {
-      return `Search result for "${searchName}"`;
+      return `Search result for `;
     } else {
       return "All product";
     }
@@ -174,6 +175,8 @@ const Products = ({
         <>
           <Header
             text={selectHeaderText()}
+            categoryColor={categoryName}
+            searchColor={searchName}
             dropdown={dropdown()}
             queryState={queryState}
             resetState={resetState}

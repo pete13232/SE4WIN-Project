@@ -44,14 +44,28 @@
   width: 35px;
   border-radius: 100px;
 }
-.slick-prev{
-  left: -40px
+.slick-prev {
+  position: absolute;
+  top: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:2;
 }
-.slick-next{
-  right: -40px
+.slick-next {
+  position: absolute;
+  top: 10;
+  left: 10;
+  right: 0;
+  bottom: 0;
 }
 .slick-arrow:hover,
 .slick-arrow:active,
 .slick-arrow:focus {
   background-color: grey !important;
+  transition: .5s ease;
+}
+
+.slick-list{
+  cursor: pointer;
 }

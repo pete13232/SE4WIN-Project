@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Col } from "react-bootstrap";
 import { FaBoxes } from "react-icons/fa";
 import { AiOutlineUnorderedList } from "react-icons/ai";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import "./style.css";
 
 const Sidebar = ({ id }) => {
-  const [stockSelect, setStockSelect] = useState(false);
+  const [stockSelect, setStockSelect] = useState(true);
   const [orderSelect, setOrderSelect] = useState(false);
   const [categorySelect, setCategorySelect] = useState(false);
 

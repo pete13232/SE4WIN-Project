@@ -101,6 +101,14 @@ body h6 {
   color: white !important;
 }
 
+.btn-clear {
+  width: 100px !important;
+  height: 28px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%) !important;
+  color: white !important;
+}
+
 /* -----Button color------ */
 .blue {
   background-color: #0099ff !important;
