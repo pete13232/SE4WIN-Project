@@ -86,7 +86,7 @@ const AdminOrder = ({ id }) => {
                   setSearch(null);
                   document.getElementById("search-form").reset();
                 }}
-                className="mx-4 my-3 red btn-small"
+                className="mx-4 my-3 red btn-small align-top"
               >
                 clear
               </Button>
