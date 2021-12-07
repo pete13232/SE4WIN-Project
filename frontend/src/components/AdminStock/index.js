@@ -52,7 +52,7 @@ const AdminStock = ({ id }) => {
             >
               <FormControl
                 type="search"
-                placeholder="Search for category"
+                placeholder="Search for product"
                 className="me-2"
                 aria-label="Search"
                 {...register("name")}

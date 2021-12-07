@@ -12,6 +12,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { CHANGE_STATUS } from "../../../Graphql/Mutations";
 import Swal from "sweetalert2";
 import UserDetail from "../../Modal/UserDetail";
+import "./style.css";
 
 const AdminOrderChild = ({
   orderId,
@@ -25,7 +26,6 @@ const AdminOrderChild = ({
   status,
   refetch,
 }) => {
-
   /*-----------------------------UI state-------------------------*/
 
   const [confirm, setConfirm] = useState(true);
@@ -33,22 +33,26 @@ const AdminOrderChild = ({
   const [currentStatus, setCurretnStatus] = useState(status);
   const [showUser, setShowUser] = useState(false);
 
-  const handleEdit = () => { // change to edit state
+  const handleEdit = () => {
+    // change to edit state
     setConfirm(false);
     setChoose(false);
   };
 
-  const handleConfirm = () => { //change to confirm state 
-    onSubmit(currentStatus);//submit curret selected status
+  const handleConfirm = () => {
+    //change to confirm state
+    onSubmit(currentStatus); //submit curret selected status
     setConfirm(true);
     setChoose(true);
   };
 
-  const changeStatus = (event) => {// when select new status , change to current status
+  const changeStatus = (event) => {
+    // when select new status , change to current status
     setCurretnStatus(event.target.innerText);
   };
 
-  const buttonStatus = () => {// button UI state
+  const buttonStatus = () => {
+    // button UI state
     if (status === "AWAITING") {
       return (
         <Button className="yellow btn-small text-black" disabled>
@@ -76,7 +80,8 @@ const AdminOrderChild = ({
     }
   };
 
-  const switchShow = () => {//edit button and dropdown showing 
+  const switchShow = () => {
+    //edit button and dropdown showing
     if (choose === true) {
       return buttonStatus();
     } else {
@@ -104,8 +109,9 @@ const AdminOrderChild = ({
       changeStatusGQL({
         variables: { id: orderId, status: submit },
       })
-        .then((res) => {// change status success
-          var resText = res.data.changeStatus; 
+        .then((res) => {
+          // change status success
+          var resText = res.data.changeStatus;
           Swal.fire({
             title: "Change status success!",
             text: resText,
@@ -113,7 +119,8 @@ const AdminOrderChild = ({
           });
           refetch();
         })
-        .catch((error) => {// change status fail
+        .catch((error) => {
+          // change status fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
