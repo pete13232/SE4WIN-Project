@@ -153,9 +153,6 @@ const EditStockModal = ({
             <div>
               <div className="text-center upload-btn">
                 {/*------------------------Pic upload--------------------------*/}
-                <label htmlFor="files" className="btn btn-medium blue">
-                  Upload receipt
-                </label>
                 <Form.Control
                   name="picURL"
                   id="files"

@@ -63,7 +63,7 @@ const Order = ({
         showCancelButton: true,
         confirmButtonColor: "#d33",
         cancelButtonColor: "#3085d6",
-        confirmButtonText: "Yes, delete it!",
+        confirmButtonText: "Yes, re-upload it!",
       }).then((result) => {
         if (result.isConfirmed) {
           let formdata = new FormData();
@@ -83,7 +83,7 @@ const Order = ({
                 variables: { orderId: id, receiptURL: submit.receiptURL },
               }).then(() => {
                 Swal.fire({
-                  title: "Add new product success!",
+                  title: "Upload Receipt Success",
                   html: "Press OK to continue",
                   icon: "success",
                   allowOutsideClick: false,
@@ -122,7 +122,7 @@ const Order = ({
             variables: { orderId: id, receiptURL: submit.receiptURL },
           }).then(() => {
             Swal.fire({
-              title: "Add new product success!",
+              title: "Upload Receipt Success",
               html: "Press Ok to continue",
               icon: "success",
               allowOutsideClick: false,
