@@ -43,18 +43,6 @@ const ProductSelectContainer = () => {
           />
         </div>
       )}
-      {/* <div>
-        <NavbarBootstrap />
-        <Header text={product.name} />
-        <ProductDetail
-          picURL={product.picURL}
-          name={product.name}
-          price={product.price}
-          stock={product.stock}
-        />
-        <Header text="Description" />
-        <ProductDescription category={product.category} desc={product.desc} />
-      </div> */}
     </>
   );
 };

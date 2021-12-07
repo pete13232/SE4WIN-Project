@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import { Col, Row, Image, Carousel } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import Header from "../Header";
 import "./style.css";
 import { GET_CATEGORIES } from "../../Graphql/Queries";
@@ -12,7 +12,7 @@ const Category = ({
   filterCategoryId,
   setFilterCategoryId,
 }) => {
-  const { data, error, refetch } = useQuery(GET_CATEGORIES, {});
+  const { data } = useQuery(GET_CATEGORIES, {});
   const [categories, setCategories] = useState([]);
 
   const settings = {

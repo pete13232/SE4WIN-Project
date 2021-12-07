@@ -27,21 +27,6 @@ const Sidebar = ({ id }) => {
       setCategorySelect(true);
     }
   }, [id]);
-  // const handleStockSelect = () => {
-  //   setStockSelect(true);
-  //   setOrderSelect(false);
-  //   setCategorySelect(false);
-  // };
-  // const handleOrderSelect = () => {
-  //   setStockSelect(false);
-  //   setOrderSelect(true);
-  //   setCategorySelect(false);
-  // };
-  // const handleCategorySelect = () => {
-  //   setStockSelect(false);
-  //   setOrderSelect(false);
-  //   setCategorySelect(true);
-  // };
   return (
     <>
       <Col

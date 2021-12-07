@@ -3,7 +3,6 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../context/auth";
 import ProductModal from "../Modal/ProductModal";
 import "./style.css";
-import Swal from "sweetalert2";
 const ProductDetail = ({ picURL, name, price, stock, productId }) => {
   const [selectQuantity, setSelectQuantity] = useState(1);
   const [showProduct, setShowProduct] = useState(false);

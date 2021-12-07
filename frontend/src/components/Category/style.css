@@ -1,3 +1,8 @@
+/* ---- Category Image ----- */
+.category h3 {
+  margin: 0;
+}
+
 .category img {
   min-width: 220px;
   max-width: 220px;
@@ -23,21 +28,9 @@
   filter: alpha(opacity=100);
 }
 
-.carousel-control-next {
-  width: 4% !important;
-}
 
-.carousel-control-prev {
-  width: 4% !important;
-}
 
-.carousel-indicators {
-  visibility: hidden;
-}
-
-.category h3 {
-  margin: 0;
-}
+/* ----Slider----- */
 .slick-arrow {
   background-color: black;
   height: 35px;

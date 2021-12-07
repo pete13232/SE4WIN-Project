@@ -54,7 +54,6 @@ const EditCategoryModal = ({
 
   const onSubmit = (submit) => {
     if (pictureFile) {
-      // const token = localStorage.getItem("jwtToken") || "";
       let formdata = new FormData();
       formdata.append("file", pictureFile, pictureFile.name);
       axios({
