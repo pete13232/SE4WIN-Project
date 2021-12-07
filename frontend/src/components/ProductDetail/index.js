@@ -52,6 +52,11 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
                   }}
                 />
               </div>
+              {(selectQuantity > stock || stock === 0) && (
+                <p className="errorMessage text-start ms-3">
+                  don't have enough stock
+                </p>
+              )}
             </div>
             <Button
               className="btn-large blue"

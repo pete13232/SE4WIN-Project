@@ -52,6 +52,17 @@ const NavbarBootstrap = ({
       icon: "info",
     });
   };
+
+  const textCut = () => {
+    var text = user?.firstname;
+    if (text !== null) {
+      if (text?.length > 6) {
+        text = text.substring(0, 6);
+      }
+    }
+    return text;
+  };
+
   const navbarSwitch = () => {
     if (secondTheme) {
       return (
@@ -181,7 +192,7 @@ const NavbarBootstrap = ({
           <Col md={1} className="d-flex justify-content-center">
             <Nav className=" align-items-baseline">
               <BsPersonCircle />
-              <NavDropdown title={user?.firstname} menuVariant="light">
+              <NavDropdown title={textCut()} menuVariant="light">
                 <NavDropdown.Item>
                   <Link to="/profile">View Profile</Link>
                 </NavDropdown.Item>
