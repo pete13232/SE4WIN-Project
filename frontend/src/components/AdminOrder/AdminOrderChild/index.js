@@ -138,7 +138,20 @@ const AdminOrderChild = ({
       <Image src={receipt} alt="Reciept Image" />
     </Tooltip>
   );
+  // console.log(address.length)
 
+  const textCut = () => {
+    var text = address;
+    // console.log(text.length);
+    if (text !== null) {
+      if (text.length > 40) {
+        text = text.substring(0, 25).concat("...");
+      }
+    }
+    return text;
+  };
+
+  const tooltipDesc = (props) => <Tooltip {...props}>{address}</Tooltip>;
   /*------------------------Submit--------------------------*/
   return (
     <>
@@ -154,7 +167,13 @@ const AdminOrderChild = ({
           >
             {userId}
           </td>
-          <td>{address}</td>
+          <OverlayTrigger
+            placement="right"
+            delay={{ show: 250, hide: 400 }}
+            overlay={tooltipDesc}
+          >
+            <td>{textCut()}</td>
+          </OverlayTrigger>
           <td>{product}</td>
           <td>{quantity}</td>
           <td>{price} ฿</td>

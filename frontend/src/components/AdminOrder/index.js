@@ -52,8 +52,6 @@ const AdminOrder = ({ id }) => {
     }
   }, [data, dataSearch, getOrders, search]);
   /*-------------------------Query----------------------------- */
-  console.log(dataSearch);
-  console.log(orders);
   return (
     <>
       {id === "order" && (
@@ -98,7 +96,7 @@ const AdminOrder = ({ id }) => {
                 <th>Order_ID</th>
                 <th>Product_ID</th>
                 <th>User_ID</th>
-                <th>Address</th>
+                <th style={{width:"150px"}}>Address</th>
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Price</th>

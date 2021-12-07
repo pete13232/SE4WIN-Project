@@ -82,6 +82,7 @@ const AdminCategory = ({ id }) => {
               <tr className="text-center">
                 <th>Category_ID</th>
                 <th>Category_Name</th>
+                
                 <th></th>
               </tr>
             </thead>

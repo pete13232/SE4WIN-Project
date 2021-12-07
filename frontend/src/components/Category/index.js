@@ -53,7 +53,6 @@ const Category = ({
       setCategories(data?.categories);
     }
   }, [data]);
-  console.log("category page");
   return (
     <>
       <Header text="Category"></Header>

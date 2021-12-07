@@ -16,7 +16,6 @@ const HomeContainer = () => {
     setSearchName("");
     setFilterCategoryId();
   }
-  console.log("Home Container");
   return (
     <>
       {context.user?.role === "admin" ? (

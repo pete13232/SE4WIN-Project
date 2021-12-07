@@ -41,7 +41,6 @@ const NavbarBootstrap = ({
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (submit) => {
-    console.log(submit);
     setSearchName(submit.name);
     setQueryState(Number(3));
   };
@@ -238,7 +237,6 @@ const NavbarBootstrap = ({
       );
     }
   };
-  console.log(user);
   return <>{navbarSwitch()}</>;
 };
 
