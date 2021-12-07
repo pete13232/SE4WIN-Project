@@ -84,7 +84,7 @@ const Order = ({
               }).then(() => {
                 Swal.fire({
                   title: "Add new product success!",
-                  html: "Press Ok to continue",
+                  html: "Press OK to continue",
                   icon: "success",
                   allowOutsideClick: false,
                   allowEscapeKey: false,

@@ -114,7 +114,7 @@ const EditStockModal = ({
         .then(() => {
           Swal.fire({
             title: "Update product success!",
-            html: "Press Ok to continue",
+            html: "Press OK to continue",
             icon: "success",
             allowOutsideClick: false,
             allowEscapeKey: false,

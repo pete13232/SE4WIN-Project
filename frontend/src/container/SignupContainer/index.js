@@ -138,7 +138,7 @@ const SignupContainer = () => {
     }else{
       Swal.fire({
         title: "Password and Confirm password is not the same",
-        html: "Press Ok to continue",
+        html: "Press OK to continue",
         icon: "error",
         allowOutsideClick: false,
         allowEscapeKey: false,

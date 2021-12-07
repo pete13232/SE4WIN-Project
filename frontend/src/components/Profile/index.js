@@ -136,7 +136,7 @@ const Profile = () => {
         .then(() => {
           Swal.fire({
             title: "Update profile success!",
-            html: "Press Ok to continue",
+            html: "Press OK to continue",
             icon: "success",
             allowOutsideClick: false,
             allowEscapeKey: false,

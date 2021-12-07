@@ -16,6 +16,7 @@ import { QueryContext } from "../../context/query";
 import { FaSearch } from "react-icons/fa";
 import "./style.css";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const NavbarBootstrap = ({
   secondTheme,
@@ -32,6 +33,14 @@ const NavbarBootstrap = ({
     console.log(submit);
     setSearchName(submit.name);
     setQueryState(Number(3));
+  };
+
+  const logoutSweetAlert = () => {
+    Swal.fire({
+      title: "You are logout!",
+      html: "Press Ok to continue",
+      icon: "info",
+    });
   };
   const navbarSwitch = () => {
     if (secondTheme) {
@@ -138,7 +147,13 @@ const NavbarBootstrap = ({
                   <Link to="/profile">View Profile</Link>
                 </NavDropdown.Item>
                 <NavDropdown.Item>
-                  <Link to="/" onClick={context.logout}>
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      context.logout();
+                      logoutSweetAlert();
+                    }}
+                  >
                     Log out
                   </Link>
                 </NavDropdown.Item>
@@ -165,7 +180,13 @@ const NavbarBootstrap = ({
                 <BsPersonCircle />
                 <NavDropdown title="Admin" menuVariant="light">
                   <NavDropdown.Item>
-                    <Link to="/" onClick={context.logout}>
+                    <Link
+                      to="/"
+                      onClick={() => {
+                        context.logout();
+                        logoutSweetAlert();
+                      }}
+                    >
                       Log out
                     </Link>
                   </NavDropdown.Item>
