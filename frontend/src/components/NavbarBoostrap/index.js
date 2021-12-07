@@ -80,7 +80,9 @@ const NavbarBootstrap = ({
               <Link
                 to="/"
                 onClick={() => {
-                  resetState();
+                  if (resetState) {
+                    resetState();
+                  }
                 }}
               >
                 <h1>FAPP</h1>
@@ -107,7 +109,9 @@ const NavbarBootstrap = ({
             <Link
               to="/"
               onClick={() => {
-                resetState();
+                if (resetState) {
+                  resetState();
+                }
               }}
             >
               <h2>Home</h2>
@@ -133,7 +137,9 @@ const NavbarBootstrap = ({
               <Link
                 to="/"
                 onClick={() => {
-                  resetState();
+                  if (resetState) {
+                    resetState();
+                  }
                 }}
               >
                 <h1>FAPP</h1>
@@ -159,7 +165,9 @@ const NavbarBootstrap = ({
             <Link
               to="/"
               onClick={() => {
-                resetState();
+                if (resetState) {
+                  resetState();
+                }
               }}
             >
               <h2>Home</h2>
