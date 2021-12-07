@@ -63,6 +63,7 @@ const ProductModal = ({
             window.location.replace("/order");
           },
         });
+        handleClose();
       })
       .catch((error) => {
         const err = error.message;
@@ -75,6 +76,7 @@ const ProductModal = ({
         });
       });
   };
+  console.log(errors["address"]?.message);
   return (
     <>
       <div>
@@ -135,23 +137,19 @@ const ProductModal = ({
                       />
                     </div>
                   </div>
+                  {errors["address"]?.message && (
+                    <p className="errorMessage text-end pe-5">
+                      {errors["address"]?.message}
+                    </p>
+                  )}
                 </Row>
-                <p className="errorMessage">{errors["address"]?.message}</p>
               </Row>
             </Modal.Body>
             <Modal.Footer>
               <Button className="grey btn-small" onClick={handleClose}>
                 Cancel
               </Button>
-              <Button
-                className="green btn-small"
-                type="submit"
-                onClick={() => {
-                  if (!errors["address"]?.message) {
-                    handleClose();
-                  }
-                }}
-              >
+              <Button className="green btn-small" type="submit">
                 Confirm
               </Button>
             </Modal.Footer>
