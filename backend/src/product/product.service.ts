@@ -162,8 +162,8 @@ export class ProductService {
    */
   async findByName(
     name: string,
-    page: number,
-    sort: number,
+    page?: number,
+    sort?: number,
   ): Promise<PaginatedProduct> {
     const limit = 12;
     const offset = (page - 1) * limit;
@@ -172,8 +172,8 @@ export class ProductService {
       where: { name: ILike('%' + name + '%') },
       relations: ['category', 'order'],
       order: { price: sort ? 'ASC' : 'DESC', name: 'ASC' },
-      skip: offset,
-      take: limit,
+      skip: page ? offset : null,
+      take: page ? limit : null,
     });
 
     //Throw error if not found

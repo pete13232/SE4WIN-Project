@@ -67,6 +67,8 @@ export class ProductResolver {
    * return: List of Products
    */
   @Query(() => [Product], { name: 'AdminProducts' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   AdminFindAll(): Promise<Product[]> {
     return this.productService.AdminFindAll();
   }
@@ -107,6 +109,22 @@ export class ProductResolver {
     @Args('sort', { type: () => Int, nullable: true }) sort?: number,
   ): Promise<PaginatedProduct> {
     return this.productService.findByName(name, page, sort);
+  }
+  /**
+   *
+   * Find Product by name
+   *
+   * require: Signed In with Admin Role
+   * parameters: name
+   * return: Product
+   */
+  @Query(() => PaginatedProduct, { name: 'AdminProductByName' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  AdminFindByName(
+    @Args('name', { type: () => String }) name: string,
+  ): Promise<PaginatedProduct> {
+    return this.productService.findByName(name);
   }
 
   /**
