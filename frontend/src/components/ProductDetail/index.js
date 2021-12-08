@@ -3,7 +3,6 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../../context/auth";
 import ProductModal from "../Modal/ProductModal";
 import "./style.css";
-import Swal from "sweetalert2";
 const ProductDetail = ({ picURL, name, price, stock, productId }) => {
   const context = useContext(AuthContext); // Authentication context
 
@@ -56,6 +55,11 @@ const ProductDetail = ({ picURL, name, price, stock, productId }) => {
                   }}
                 />
               </div>
+              {(selectQuantity > stock || stock === 0) && (
+                <p className="errorMessage text-start ms-3">
+                  don't have enough stock
+                </p>
+              )}
             </div>
             <Button
               className="btn-large blue"

@@ -57,6 +57,17 @@ const NavbarBootstrap = ({
   /*----------------------------Logout Alert---------------------------------*/
 
   /*----------------------------Navbar in different condition---------------------------------*/
+
+  const textCut = () => {
+    var text = user?.firstname;
+    if (text !== null) {
+      if (text?.length > 6) {
+        text = text.substring(0, 6);
+      }
+    }
+    return text;
+  };
+
   const navbarSwitch = () => {
     if (secondTheme) {
       // sign up, login Navbar
@@ -189,20 +200,17 @@ const NavbarBootstrap = ({
           <Col md={1} className="d-flex justify-content-center">
             <Nav className=" align-items-baseline">
               <BsPersonCircle />
-              <NavDropdown title={user?.firstname} menuVariant="light">
+              <NavDropdown title={textCut()} menuVariant="light">
                 <NavDropdown.Item>
                   <Link to="/profile">View Profile</Link>
                 </NavDropdown.Item>
-                <NavDropdown.Item>
-                  <Link
-                    to="/"
-                    onClick={() => {
-                      context.logout();
-                      logoutSweetAlert();
-                    }}
-                  >
-                    Log out
-                  </Link>
+                <NavDropdown.Item
+                  onClick={() => {
+                    context.logout();
+                    logoutSweetAlert();
+                  }}
+                >
+                  <Link to="/">Log out</Link>
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -227,16 +235,13 @@ const NavbarBootstrap = ({
               <Nav className=" align-items-baseline">
                 <BsPersonCircle />
                 <NavDropdown title="Admin" menuVariant="light">
-                  <NavDropdown.Item>
-                    <Link
-                      to="/"
-                      onClick={() => {
-                        context.logout();
-                        logoutSweetAlert();
-                      }}
-                    >
-                      Log out
-                    </Link>
+                  <NavDropdown.Item
+                    onClick={() => {
+                      context.logout();
+                      logoutSweetAlert();
+                    }}
+                  >
+                    <Link to="/">Log out</Link>
                   </NavDropdown.Item>
                 </NavDropdown>
               </Nav>

@@ -145,7 +145,7 @@ const AdminOrderChild = ({
 
   const textCut = () => { //long text cut function
     var text = address;
-    if (text !== null) {
+    if (text && text !== null) {
       if (text.length > 40) {
         text = text.substring(0, 25).concat("...");
       }

@@ -164,19 +164,12 @@ const EditStockModal = ({
           </Modal.Header>
           <Modal.Body className="d-flex gap-4 p-5">
             <div>
-              {/* <div className="product-image d-flex justify-content-center mb-3">
-              <Image src="https://www.gannett-cdn.com/-mm-/05398f80e3bde0326c872a093f3784aeee1c8a90/c=880-323-1833-861/local/-/media/2018/05/14/USATODAY/usatsports/wp-USAT-allthemoms-front1-19975-winnie-the-pooh-day.jpg?auto=webp&format=pjpg&width=1200" />
-            </div> */}
               <div className="text-center upload-btn">
                 {/*------------------------Pic upload--------------------------*/}
-                <label htmlFor="files" className="btn btn-medium blue">
-                  Upload receipt
-                </label>
                 <Form.Control
                   name="picURL"
                   id="files"
                   type="file"
-                  // style={{ visibility: "hidden" }}
                   {...register("picURL")}
                   onChange={(event) => {
                     setPictureFile(event.target.files[0]);

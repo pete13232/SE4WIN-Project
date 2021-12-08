@@ -24,6 +24,7 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
   const handleClose = () => {
     setShowCategory(false);
     document.getElementById("categoryForm").reset();
+    setSelectedImage();
   };
 
   /*------------------------Modal--------------------------*/

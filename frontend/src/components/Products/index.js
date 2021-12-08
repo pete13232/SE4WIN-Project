@@ -2,7 +2,6 @@ import { Row, Dropdown, Pagination } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 import {
-  GET_CATEGORIES_BY_NAME,
   GET_CATEGORY,
   GET_PRODUCTS,
   GET_PRODUCTS_BY_CATEGORY,

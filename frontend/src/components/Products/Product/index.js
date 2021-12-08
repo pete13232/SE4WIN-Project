@@ -14,7 +14,7 @@ const Product = ({ name, price, img, id }) => {
               </div>
               <br />
               <Card.Title className="product-name">{name}</Card.Title>
-              <Card.Title className="price mt-5 pe-3">{price}</Card.Title>
+              <Card.Title className="price mt-5 pe-3">฿{price}</Card.Title>
             </Card.Body>
           </Card>
         </Link>

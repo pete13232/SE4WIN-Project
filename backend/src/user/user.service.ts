@@ -100,6 +100,17 @@ export class UserService {
       throw new ForbiddenError('User not found.');
     }
 
+    //Check if email was used
+    if (updateUserInput.email) {
+      const existUser = await this.userRepository.findOneOrFail({
+        email: updateUserInput.email,
+      });
+
+      if (existUser) {
+        throw new ForbiddenError('Email already used!');
+      }
+    }
+
     //Check if password is correct
     if (updateUserInput.password) {
       const hashPassword = await bcrypt.hash(updateUserInput.password, 10);
