@@ -23,7 +23,6 @@ import ProductSelectContainer from "./container/ProductSelectContainer/index.js"
 import ProfileContainer from "./container/ProfileContainer/index.js";
 import OrderContainer from "./container/OrderContainer/index.js";
 import AdminContainer from "./container/AdminContainer/index.js";
-import { QueryProvider } from "./context/query";
 function App() {
   /* ----------------- Graphql Setup ----------------------- */
 
@@ -57,7 +56,6 @@ function App() {
   return (
     <AuthProvider>
       <ApolloProvider client={client}>
-        <QueryProvider>
           <Container className=" bg-container px-0">
             <Switch>
               <Route exact path="/">
@@ -83,7 +81,6 @@ function App() {
             </Switch>
             <Footer />
           </Container>
-        </QueryProvider>
       </ApolloProvider>
     </AuthProvider>
   );

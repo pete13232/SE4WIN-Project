@@ -76,7 +76,6 @@ const LoginContainer = () => {
 
     loginUser(param); //login with parameter
   };
-  s;
 
   return (
     <>
