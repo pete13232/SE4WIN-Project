@@ -6,9 +6,6 @@ const Header = ({
   queryState,
   categoryColor,
   searchColor,
-  setQueryState,
-  setSearchName,
-  setFilterCategoryId,
   resetState,
 }) => {
   return (

@@ -5,14 +5,14 @@ const initialState = {
   user: null
 };
 
-if (localStorage.getItem('jwtToken')) {
+if (localStorage.getItem('jwtToken')) { // get token from local storage if there any
   const decodedToken = jwtDecode(localStorage.getItem('jwtToken'));
   if (decodedToken) {
     initialState.user = decodedToken;
   }
 }
 
-const AuthContext = createContext({
+const AuthContext = createContext({// Authentcation context
   user: null,
   login: (userData) => {},
   logout: () => {}

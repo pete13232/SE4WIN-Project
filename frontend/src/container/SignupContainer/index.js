@@ -12,37 +12,8 @@ import Swal from "sweetalert2";
 import "./style.css";
 
 const SignupContainer = () => {
-  const [createUser] = useMutation(CREATE_USER);
-
-  const addUser = (data) => {
-    createUser({
-      variables: { input: data },
-    })
-      .then(() => {
-        Swal.fire({
-          title: "Sign up success!",
-          html: "Press Ok to login page",
-          icon: "success",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          didClose: () => {
-            window.location.replace("/login");
-          },
-        });
-      })
-      .catch((error) => {
-        const err = error.message;
-        Swal.fire({
-          title: "Oops! !",
-          html: err,
-          icon: "error",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        });
-      });
-  };
-
   const personalFormList = {
+    //list of input object properties
     inputs: [
       {
         label: "Email",
@@ -78,6 +49,7 @@ const SignupContainer = () => {
   };
 
   const contactFormList = {
+    //list of input object properties
     inputs: [
       {
         label: "Phone",
@@ -94,15 +66,48 @@ const SignupContainer = () => {
     ],
   };
 
+  /*----------------------------------Submit------------------------------------------*/
+  const [createUser] = useMutation(CREATE_USER); //create user mutation
+  const addUser = (data) => {
+    //Add user function
+    createUser({
+      //create new user to graphQL
+      variables: { input: data },
+    })
+      .then(() => {
+        //if create success
+        Swal.fire({
+          title: "Sign up success!",
+          html: "Press Ok to login page",
+          icon: "success",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          didClose: () => {
+            window.location.replace("/login");
+          },
+        });
+      })
+      .catch((error) => {
+        //if create fail
+        const err = error.message;
+        Swal.fire({
+          title: "Oops! !",
+          html: err,
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+      });
+  };
+
   const schema = yup.object().shape({
+    //form schema
     email: yup.string().required("Please enter your email"),
     password: yup
       .string()
       .required("Please enter your password")
       .min(7, "Please enter at least 7 characters password"),
-    ConfirmPassword: yup
-      .string()
-      .required("Please enter your password"),
+    ConfirmPassword: yup.string().required("Please enter your password"),
     firstname: yup.string().required("Please enter your first name"),
     lastname: yup.string().required("Please enter your last name"),
     phoneNumber: yup
@@ -119,23 +124,27 @@ const SignupContainer = () => {
     control,
     formState: { errors },
   } = useForm({
+    //form variables
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    if(data.ConfirmPassword === data.password)
-    {
+    //submit function
+    if (data.ConfirmPassword === data.password) {
+      //if confirm password is equal to password
       const param = {
-      email: data.email,
-      password: data.password,
-      firstname: data.firstname,
-      lastname: data.lastname,
-      address: data.address,
-      phoneNumber: data.phoneNumber.replaceAll("-", ""),
-      role: "CUSTOMER",
-    };
+        //create parameter to create user
+        email: data.email,
+        password: data.password,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        address: data.address,
+        phoneNumber: data.phoneNumber.replaceAll("-", ""), //replace to submit only phone number
+        role: "CUSTOMER",
+      };
       addUser(param);
-    }else{
+    } else {
+      //if assword and confirm password is not equal
       Swal.fire({
         title: "Password and Confirm password is not the same",
         html: "Press OK to continue",
@@ -144,9 +153,10 @@ const SignupContainer = () => {
         allowEscapeKey: false,
       });
     }
-    
   };
+  /*----------------------------------Submit------------------------------------------*/
 
+  /*----------------------------------Input mask------------------------------------------*/
   const [valuePhone, setvaluePhone] = useState("");
 
   const beforeMaskedValueChange = (newState, oldState, userInput) => {
@@ -168,7 +178,7 @@ const SignupContainer = () => {
       selection,
     };
   };
-
+  /*----------------------------------Input mask------------------------------------------*/
   return (
     <>
       <div>

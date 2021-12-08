@@ -7,12 +7,14 @@ import { Link } from "react-router-dom";
 import "./style.css";
 
 const Sidebar = ({ id }) => {
+  /*-----------------------Hightlight state----------------------------------*/
   const [stockSelect, setStockSelect] = useState(true);
   const [orderSelect, setOrderSelect] = useState(false);
   const [categorySelect, setCategorySelect] = useState(false);
-
+  /*-----------------------Hightlight state----------------------------------*/
   // Menu select highlight
   useEffect(() => {
+    // select high light by id of URL
     if (id === "stock") {
       setStockSelect(true);
       setOrderSelect(false);
@@ -27,21 +29,7 @@ const Sidebar = ({ id }) => {
       setCategorySelect(true);
     }
   }, [id]);
-  // const handleStockSelect = () => {
-  //   setStockSelect(true);
-  //   setOrderSelect(false);
-  //   setCategorySelect(false);
-  // };
-  // const handleOrderSelect = () => {
-  //   setStockSelect(false);
-  //   setOrderSelect(true);
-  //   setCategorySelect(false);
-  // };
-  // const handleCategorySelect = () => {
-  //   setStockSelect(false);
-  //   setOrderSelect(false);
-  //   setCategorySelect(true);
-  // };
+
   return (
     <>
       <Col

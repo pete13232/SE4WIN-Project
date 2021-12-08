@@ -14,28 +14,30 @@ const AddStockModal = ({
   ProductQuantity,
   refetch,
 }) => {
-  const [count, setCount] = useState(0);
+  /*-----------------------Modal--------------------------------*/
   const handleClose = () => setShowAdd(false);
+  /*-----------------------Modal--------------------------------*/
 
+  /*-----------------------Quantity State--------------------------------*/
+  const [count, setCount] = useState(0);
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 1);
   };
   const handleDecrement = () => {
-    if(count-1 >= -ProductQuantity){
+    if (count - 1 >= -ProductQuantity) {
       setCount((prevCount) => prevCount - 1);
     }
-      
   };
+  /*-----------------------Quantity State--------------------------------*/
 
-
-  const [updateStock] = useMutation(UPDATE_STOCK);
-
+  /*-----------------------------Submit--------------------------------*/
+  const [updateStock] = useMutation(UPDATE_STOCK); // update stock mutation
   const onSubmit = (quantity) => {
-    if (quantity !== 0) {
-      updateStock({
+    if (quantity !== 0) {//if submit by increase / decrease stock by 0
+      updateStock({// update stock to graphQL
         variables: { quantity: quantity, productId: ProductId },
       })
-        .then(() => {
+        .then(() => {// if update stock success
           handleClose();
           Swal.fire({
             title: "Add new product success!",
@@ -46,7 +48,7 @@ const AddStockModal = ({
           });
           refetch();
         })
-        .catch((error) => {
+        .catch((error) => {// if update stock fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
@@ -56,11 +58,11 @@ const AddStockModal = ({
             allowEscapeKey: false,
           });
         });
-    }else{
-      handleClose();
+    } else {
+      handleClose();// close Modal
     }
   };
-
+  /*-----------------------------Submit--------------------------------*/
   return (
     <>
       <Modal

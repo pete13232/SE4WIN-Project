@@ -5,13 +5,17 @@ import ProductModal from "../Modal/ProductModal";
 import "./style.css";
 import Swal from "sweetalert2";
 const ProductDetail = ({ picURL, name, price, stock, productId }) => {
-  const [selectQuantity, setSelectQuantity] = useState(1);
-  const [showProduct, setShowProduct] = useState(false);
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext); // Authentication context
+
+  const [selectQuantity, setSelectQuantity] = useState(1); // select quantity state
+  const [showProduct, setShowProduct] = useState(false); // modal show state
+
   function isInt(value) {
+    // check integer function
     var x;
     return isNaN(value) ? !1 : ((x = parseFloat(value)), (0 | x) === x);
   }
+
   return (
     <>
       <Row className="detail mt-3">

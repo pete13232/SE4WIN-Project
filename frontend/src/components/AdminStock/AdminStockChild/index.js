@@ -8,7 +8,7 @@ import { OverlayTrigger, Tooltip, Image } from "react-bootstrap";
 import Swal from "sweetalert2";
 import AddStockModal from "../../Modal/AddStockModal";
 import EditStockModal from "../../Modal/EditStockModal";
-import "./style.css"
+import "./style.css";
 
 const AdminStockChild = ({
   id,
@@ -20,10 +20,13 @@ const AdminStockChild = ({
   stock,
   refetch,
 }) => {
-  const [removeProduct] = useMutation(REMOVE_PRODUCT);
+  /*---------------------------------UI state-----------------------------------------*/
   const [showAdd, setShowAdd] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  /*---------------------------------UI state-----------------------------------------*/
+  const [removeProduct] = useMutation(REMOVE_PRODUCT);
   const deleteAlert = () => {
+    // confirmation alert
     Swal.fire({
       position: "top",
       title: "Are you sure?",
@@ -61,10 +64,15 @@ const AdminStockChild = ({
     });
   };
 
-  // Description truncate
-  const tooltipDesc = (props) => <Tooltip {...props}>{desc}</Tooltip>;
-  const tooltipImg= (props) => <Tooltip className="tooltip-img" {...props}><Image src={img} alt="Product Image"/></Tooltip>;
-  const textCut = () => {
+  const tooltipDesc = (props) => <Tooltip {...props}>{desc}</Tooltip>;// hover to show describtion function
+
+  const tooltipImg = (props) => (// hover to show image function
+    <Tooltip className="tooltip-img" {...props}>
+      <Image src={img} alt="Product Image" />
+    </Tooltip>
+  );
+
+  const textCut = () => {// hover to show image function
     var text = desc;
     if (text.length > 40) {
       text = text.substring(0, 25).concat("...");

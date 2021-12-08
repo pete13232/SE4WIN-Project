@@ -14,12 +14,13 @@ import Swal from "sweetalert2";
 import "./style.css";
 
 const Profile = () => {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext); // Authentication context
   /*-------------------------Query----------------------------- */
-  const { data } = useQuery(GET_USER_INFO);
-  const [user, setUser] = useState();
+  const { data } = useQuery(GET_USER_INFO); //query user infomation
+  const [user, setUser] = useState(); //user state
 
   useEffect(() => {
+    /// initial user data when data change
     if (data) {
       setUser(data.me);
     }
@@ -30,6 +31,7 @@ const Profile = () => {
   /*-------------------------Phone number modify----------------------------- */
 
   const phoneModify = (number) => {
+    //phone modify function for showing in placeholder
     const showNumber =
       number.substring(0, 3) +
       "-" +
@@ -42,9 +44,10 @@ const Profile = () => {
   /*-------------------------Phone number modify----------------------------- */
 
   /*-------------------------Input Mask----------------------------- */
-  const [valuePhone, setvaluePhone] = useState("");
+  const [valuePhone, setvaluePhone] = useState(""); // state of phone number
 
   const beforeMaskedValueChange = (newState, oldState, userInput) => {
+    // function for masking input
     var { value } = newState;
     var selection = newState.selection;
     var cursorPosition = selection ? selection.start : null;
@@ -66,9 +69,10 @@ const Profile = () => {
   /*-------------------------Input Mask----------------------------- */
 
   /*--------------------------Submit Form---------------------------- */
-  const [updateUser] = useMutation(UPDATE_USER_INFO);
-  const [changePassword, setChangePassword] = useState(false);
+  const [updateUser] = useMutation(UPDATE_USER_INFO); //update user mutation
+  const [changePassword, setChangePassword] = useState(false); //change password state
   const schema = yup.object().shape(
+    //form schema
     {
       email: yup.string().notRequired(),
       password: yup
@@ -80,7 +84,7 @@ const Profile = () => {
           then: (rule) =>
             rule.min(7, "Please enter at least 7 characters password"),
         }),
-      ConfirmPassword: yup.string().when("password", {
+      confirmPassword: yup.string().when("password", {
         is: (value) => value?.length,
         then: (rule) =>
           rule
@@ -115,25 +119,28 @@ const Profile = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm({//form variables
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (submit) => {
-    const userId = { id: context.user.sub };
-    delete submit.ConfirmPassword;
+  const onSubmit = (submit) => {//submit function
+    const userId = { id: context.user.sub };//get user id from context
     if (submit.phoneNumber) {
-      submit.phoneNumber = submit.phoneNumber.replaceAll("-", "");
+      submit.phoneNumber = submit.phoneNumber.replaceAll("-", "");//replace all "-" to "" to submit only phone number
     }
-    Object.keys(submit).forEach((key) =>
+    Object.keys(submit).forEach((key) =>// delete any not exist submit object
       submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
     );
-    if (Object.keys(submit).length !== 0) {
+    if (
+      Object.keys(submit).length !== 0 &&
+      submit.confirmPassword === submit.password
+    ) {//if there is submit object to update user profile and if confirm password is equal to password
+      delete submit.confirmPassword;// delete confirm password
       submit = Object.assign(userId, submit);
-      updateUser({
+      updateUser({// update user profile to graphql
         variables: { input: submit },
       })
-        .then(() => {
+        .then(() => {//if update success
           Swal.fire({
             title: "Update profile success!",
             html: "Press OK to continue",
@@ -143,7 +150,7 @@ const Profile = () => {
           });
           handleEdit();
         })
-        .catch((error) => {
+        .catch((error) => {//if update fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
@@ -161,10 +168,11 @@ const Profile = () => {
 
   /*--------------------------Button and Form display-----------------------------------*/
 
-  const [editProfile, setEditProfile] = useState(true);
-  const handleEdit = () => {
-    setEditProfile(!editProfile);
+  const [editProfile, setEditProfile] = useState(true);//edit profile button state
+  const handleEdit = () => {//handle function if click edit
     document.getElementById("userForm").reset();
+    setEditProfile(!editProfile);
+    setChangePassword(false);
   };
 
   /*--------------------------Button and Form display-----------------------------------*/
@@ -240,7 +248,7 @@ const Profile = () => {
                     <>
                       <Form.Group
                         className={
-                          errors["ConfirmPassword"]?.message
+                          errors["confirmPassword"]?.message
                             ? "d-flex align-items-baseline"
                             : "d-flex mb-3 align-items-baseline"
                         }
@@ -252,12 +260,12 @@ const Profile = () => {
                           type="password"
                           placeholder="*******"
                           disabled={editProfile}
-                          {...register("ConfirmPassword")}
+                          {...register("confirmPassword")}
                         />
                       </Form.Group>
                       {errors["ConfirmPassword"]?.message && (
                         <p className="errorMessage text-end">
-                          {errors["ConfirmPassword"]?.message}
+                          {errors["confirmPassword"]?.message}
                         </p>
                       )}
                     </>

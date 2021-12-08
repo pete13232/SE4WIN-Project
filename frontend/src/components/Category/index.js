@@ -6,15 +6,18 @@ import "./style.css";
 import { GET_CATEGORIES } from "../../Graphql/Queries";
 import Slider from "react-slick";
 
-const Category = ({
-  queryState,
-  setQueryState,
-  filterCategoryId,
-  setFilterCategoryId,
-}) => {
-  const { data, error, refetch } = useQuery(GET_CATEGORIES, {});
+const Category = ({ setQueryState, setFilterCategoryId }) => {
+  /*-------------------------Query------------------------------- */
+  const { data } = useQuery(GET_CATEGORIES, {});
+  useEffect(() => {
+    if (data) {
+      setCategories(data?.categories);
+    }
+  }, [data]);
   const [categories, setCategories] = useState([]);
+  /*-------------------------Query------------------------------- */
 
+  /*-------------------------React Slick setting------------------------------- */
   const settings = {
     draggable: false,
     dots: true,
@@ -26,7 +29,7 @@ const Category = ({
     autoplaySpeed: 4000,
   };
 
-  const sliders = () => {
+  const sliders = () => {// component to show in slick
     return categories.map((category) => {
       return (
         <div
@@ -47,12 +50,7 @@ const Category = ({
       );
     });
   };
-
-  useEffect(() => {
-    if (data) {
-      setCategories(data?.categories);
-    }
-  }, [data]);
+  /*-------------------------React Slick setting------------------------------- */
   return (
     <>
       <Header text="Category"></Header>

@@ -20,11 +20,13 @@ const UserDetail = ({ showUser, setShowUser, userId }) => {
 
   /*-------------------------Query----------------------------- */
   const { data } = useQuery(ADMIN_GET_USER_INFO, {
+    //query user infomation
     variables: { input: userId },
   });
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(); //user infomation state
 
   useEffect(() => {
+    // initial data when data change
     if (data) {
       setUser(data.user);
     }

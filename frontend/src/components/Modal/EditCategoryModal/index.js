@@ -24,25 +24,28 @@ const EditCategoryModal = ({
       setSelectedImage(e.target.files[0]);
     }
   };
+  /*------------------------ Preview Image --------------------------*/
 
   /*------------------------Modal--------------------------*/
 
   const handleClose = () => {
+    document.getElementById("categoryForm").reset();
     setShowEditCategory(false);
-    // document.getElementById("categoryForm").reset();
   };
 
   /*------------------------Modal--------------------------*/
 
   /*------------------------Submit--------------------------*/
-  const [updateCategory] = useMutation(UPDATE_CATEGORY);
+  const [updateCategory] = useMutation(UPDATE_CATEGORY); // update category mutation
 
   const schema = yup.object().shape({
+    // form schema
     name: yup.string().notRequired(),
     picURL: yup.mixed().notRequired(),
   });
 
   const {
+    //form variables
     register,
     handleSubmit,
     formState: { errors },
@@ -50,26 +53,29 @@ const EditCategoryModal = ({
     resolver: yupResolver(schema),
   });
 
-  const [pictureFile, setPictureFile] = useState("");
+  const [pictureFile, setPictureFile] = useState(""); // picture file state
 
   const onSubmit = (submit) => {
+    // submit function
     if (pictureFile) {
-      // const token = localStorage.getItem("jwtToken") || "";
+      //if update category picture
       let formdata = new FormData();
       formdata.append("file", pictureFile, pictureFile.name);
       axios({
+        // uplaod image to http://20.212.81.174/upload
         url: "http://20.212.81.174/upload",
         method: "POST",
         headers: {
-          // Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
         data: formdata,
       })
         .then((res) => {
-          submit.picURL = res.data.imagePath;
+          // if upload image success
+          submit.picURL = res.data.imagePath; // set picURL to file path from axios
         })
         .catch((error) => {
+          //if upload image fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
@@ -80,18 +86,22 @@ const EditCategoryModal = ({
           });
         });
     } else {
+      //if not update category picture
       submit.picURL = undefined;
     }
-    const categorytId = { id: categoryId };
+    const categorytId = { id: categoryId }; // create category id object
     Object.keys(submit).forEach((key) =>
       submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
-    );
+    ); // delete object in submit that is not exist
     if (Object.keys(submit).length !== 0) {
-      submit = Object.assign(categorytId, submit);
+      //if object in submit still have infomation to update
+      submit = Object.assign(categorytId, submit); //append category id object to submit
       updateCategory({
+        // update category to graphQL
         variables: { input: submit },
       })
         .then(() => {
+          //if update success
           Swal.fire({
             title: "Update category success!",
             html: "Press Ok to continue",
@@ -103,6 +113,7 @@ const EditCategoryModal = ({
           refetch();
         })
         .catch((error) => {
+          //if update fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
@@ -113,6 +124,7 @@ const EditCategoryModal = ({
           });
         });
     } else {
+      //if there is no infomation in submit object to update
       handleClose();
     }
   };

@@ -19,6 +19,7 @@ const Order = ({
   status,
   refetch,
 }) => {
+  /*------------------------Class Status--------------------------*/
   const statusFuction = (status) => {
     let st = "";
     if (status === "AWAITING") {
@@ -32,10 +33,10 @@ const Order = ({
     }
     return st;
   };
-
+  /*------------------------Class Status--------------------------*/
   /*------------------------Submit--------------------------*/
-  const [uploadReceipt] = useMutation(UPLOAD_RECEIPT);
-  const schema = yup.object().shape({
+  const [uploadReceipt] = useMutation(UPLOAD_RECEIPT);// upload receipt mutation
+  const schema = yup.object().shape({// form schema
     receiptURL: yup
       .mixed()
       .test("name", "Please upload receiptURL picture", (value) => {
@@ -43,7 +44,7 @@ const Order = ({
       }),
   });
 
-  const {
+  const {// form variables
     register,
     handleSubmit,
     formState: { errors },
@@ -51,11 +52,11 @@ const Order = ({
     resolver: yupResolver(schema),
   });
 
-  const [pictureFile, setPictureFile] = useState("");
+  const [pictureFile, setPictureFile] = useState("");// picture file state
 
-  const onSubmit = (submit) => {
-    if (status === "PENDING") {
-      Swal.fire({
+  const onSubmit = (submit) => {// submit function
+    if (status === "PENDING") {// if current status is pending
+      Swal.fire({// alert upload confirmation
         position: "top",
         title: "Are you sure you want to \n re-upload receipt?",
         text: "Your current receipt will be replace",
@@ -65,10 +66,10 @@ const Order = ({
         cancelButtonColor: "#3085d6",
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed) {//if confirm uplaod
           let formdata = new FormData();
           formdata.append("file", pictureFile, pictureFile.name);
-          axios({
+          axios({// uplaod image to http://20.212.81.174/upload
             url: "http://20.212.81.174/upload",
             method: "POST",
             headers: {
@@ -76,12 +77,12 @@ const Order = ({
             },
             data: formdata,
           })
-            .then((res) => {
+            .then((res) => {// if upload success
               const url = "http://20.212.81.174/";
               submit.receiptURL = url + res.data.imagePath;
-              uploadReceipt({
+              uploadReceipt({//upload receipt to Graphql
                 variables: { orderId: id, receiptURL: submit.receiptURL },
-              }).then(() => {
+              }).then(() => {// if upload receipt success
                 Swal.fire({
                   title: "Add new product success!",
                   html: "Press OK to continue",
@@ -92,7 +93,7 @@ const Order = ({
                 refetch();
               });
             })
-            .catch((error) => {
+            .catch((error) => {//if upload receipt fail
               const err = error.message;
               Swal.fire({
                 title: "Oops! !",
@@ -104,10 +105,10 @@ const Order = ({
             });
         }
       });
-    } else {
+    } else {//if status is not PENDING
       let formdata = new FormData();
       formdata.append("file", pictureFile, pictureFile.name);
-      axios({
+      axios({// uplaod image to http://20.212.81.174/upload
         url: "http://20.212.81.174/upload",
         method: "POST",
         headers: {
@@ -115,12 +116,12 @@ const Order = ({
         },
         data: formdata,
       })
-        .then((res) => {
+        .then((res) => {// if upload success
           const url = "http://20.212.81.174/";
           submit.receiptURL = url + res.data.imagePath;
-          uploadReceipt({
+          uploadReceipt({//upload receipt to Graphql
             variables: { orderId: id, receiptURL: submit.receiptURL },
-          }).then(() => {
+          }).then(() => {// if upload receipt success
             Swal.fire({
               title: "Add new product success!",
               html: "Press Ok to continue",
@@ -131,7 +132,7 @@ const Order = ({
             refetch();
           });
         })
-        .catch((error) => {
+        .catch((error) => {// if upload receipt fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",

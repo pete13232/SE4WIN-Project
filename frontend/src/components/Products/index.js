@@ -21,22 +21,28 @@ const Products = ({
   setFilterCategoryId,
   resetState,
 }) => {
-  const [page, setPage] = useState(1);
-  const [sort, setSort] = useState("Price, low to High");
-  const [sortVal, setSortVal] = useState(1);
-  const [products, setProducts] = useState([]);
-  const [pageCount, setPageCount] = useState(1);
+  /*-----------------------Initial State---------------------------------*/
+  const [page, setPage] = useState(1); // select page state
+  const [sort, setSort] = useState("Price, low to High"); // select sort text state
+  const [sortVal, setSortVal] = useState(1); //select sort value state
+  const [products, setProducts] = useState([]); //show products state
+  const [pageCount, setPageCount] = useState(1); //page count of show products state
+  const [categoryName, setCategoryName] = useState(""); // filtered category name state
+  /*-----------------------Initial State---------------------------------*/
 
-  const [categoryName, setCategoryName] = useState("");
-  const [getCategory, { data: dataCategory }] = useLazyQuery(GET_CATEGORY);
+  /*----------------------------Query------------------------------------*/
+
+  const [getCategory, { data: dataCategory }] = useLazyQuery(GET_CATEGORY); //query to get category name
 
   useEffect(() => {
+    // initial state of page when query state is change
     if (queryState) {
       setPage(1);
     }
   }, [queryState]);
 
   useEffect(() => {
+    // initial state when filtered by category
     if (filterCategoryId) {
       getCategory({
         variables: { id: Number(filterCategoryId) },
@@ -47,31 +53,35 @@ const Products = ({
     }
   }, [filterCategoryId, dataCategory, getCategory]);
 
-  const [getProducts, { data: dataNormal }] = useLazyQuery(GET_PRODUCTS);
+  const [getProducts, { data: dataNormal }] = useLazyQuery(GET_PRODUCTS); //query for all products
   const [getProductsByCategory, { data: dataByCategory }] = useLazyQuery(
     GET_PRODUCTS_BY_CATEGORY
-  );
+  ); //query for filtred product by category
   const [getProductsByName, { data: dataByName }] =
-    useLazyQuery(GET_PRODUCTS_BY_NAME);
+    useLazyQuery(GET_PRODUCTS_BY_NAME); //query for filtered products by search name
 
   const inputSort = (event, val) => {
+    // set sort value and text state function
     setSort(event.target.innerText);
     setSortVal(val);
   };
 
   useEffect(() => {
+    //initial state of show products by changing of queryState
     switch (queryState) {
-      case 1:
+      case 1: // All products
         getProducts({
+          //query all products
           variables: { sort: sortVal, page: page },
         });
         if (dataNormal) {
-          setProducts(dataNormal?.products.data);
-          setPageCount(Math.ceil(dataNormal?.products.totalCount / 12));
+          setProducts(dataNormal?.products.data); //set show products
+          setPageCount(Math.ceil(dataNormal?.products.totalCount / 12)); //set page count of show products
         }
         break;
-      case 2:
+      case 2: //Filtered products by category
         getProductsByCategory({
+          //query products by category
           variables: {
             categoryId: filterCategoryId,
             sort: sortVal,
@@ -79,23 +89,25 @@ const Products = ({
           },
         });
         if (dataByCategory) {
-          setProducts(dataByCategory?.ProductByCategory.data);
+          setProducts(dataByCategory?.ProductByCategory.data); //set show products
           setPageCount(
-            Math.ceil(dataByCategory?.ProductByCategory.totalCount / 12)
+            Math.ceil(dataByCategory?.ProductByCategory.totalCount / 12) //set page count of show products
           );
         }
 
         break;
-      case 3:
+      case 3: //Filtered products by name
         getProductsByName({
+          //query products by naem
           variables: { name: searchName, sort: sortVal, page: page },
         });
         if (dataByName) {
-          setProducts(dataByName?.ProductByName.data);
-          setPageCount(Math.ceil(dataByName?.ProductByName.totalCount / 12));
+          setProducts(dataByName?.ProductByName.data); //set show products
+          setPageCount(Math.ceil(dataByName?.ProductByName.totalCount / 12)); //set page count of show products
         }
         break;
       default:
+        // default state (all prducts)
         getProducts({
           variables: { sort: sortVal, page: page },
         });
@@ -118,7 +130,11 @@ const Products = ({
     dataNormal,
     dataByName,
     dataByCategory,
-  ]);
+  ]); //dependency value
+
+  /*----------------------------Query------------------------------------*/
+
+  /*----------------------------Sorting dropdown component state------------------------------------*/
 
   const dropdown = () => {
     return (
@@ -156,6 +172,8 @@ const Products = ({
     );
   };
 
+  /*----------------------------Sorting dropdown component state------------------------------------*/
+  /*--------------------Header text selector------------------------------*/
   const selectHeaderText = () => {
     if (queryState === 2) {
       return `Category of `;
@@ -165,9 +183,10 @@ const Products = ({
       return "All product";
     }
   };
+  /*--------------------Header text selector------------------------------*/
   return (
     <>
-      {products && (
+      {products && ( // show if only have products
         <>
           <Header
             text={selectHeaderText()}
@@ -188,6 +207,7 @@ const Products = ({
               />
             ))}
           </Row>
+          {/* -------------------------------Pagination------------------------------------  */}
           <Pagination className="justify-content-end me-4">
             <Pagination.First
               onClick={() => {
@@ -249,6 +269,7 @@ const Products = ({
               }}
             />
           </Pagination>
+          {/* -------------------------------Pagination------------------------------------  */}
         </>
       )}
     </>

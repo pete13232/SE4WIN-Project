@@ -6,19 +6,20 @@ import NavbarBootstrap from "../../components/NavbarBoostrap/index";
 import Products from "../../components/Products/index";
 
 const HomeContainer = () => {
-  const context = useContext(AuthContext);
-  const [queryState, setQueryState] = useState(1);
-  const [searchName, setSearchName] = useState("");
-  const [filterCategoryId, setFilterCategoryId] = useState();
+  const context = useContext(AuthContext); // Authentication context
+  const [queryState, setQueryState] = useState(1); // query state
+  const [searchName, setSearchName] = useState(""); // search naem state
+  const [filterCategoryId, setFilterCategoryId] = useState(); // filtered category id state
 
   const resetState = () => {
+    // reset all state to default function
     setQueryState(1);
     setSearchName("");
     setFilterCategoryId();
-  }
+  };
   return (
     <>
-      {context.user?.role === "admin" ? (
+      {context.user?.role === "admin" ? (// if admin redirect to home, redirect to admin stock page
         <Redirect to="/admin/stock" />
       ) : (
         <>
@@ -30,9 +31,7 @@ const HomeContainer = () => {
             resetState={resetState}
           />
           <Category
-            queryState={queryState}
             setQueryState={setQueryState}
-            filterCategoryId={filterCategoryId}
             setFilterCategoryId={setFilterCategoryId}
           />
           <Products

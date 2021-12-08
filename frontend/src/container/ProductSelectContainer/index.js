@@ -8,15 +8,17 @@ import Header from "../../components/Header";
 import ProductDetail from "../../components/ProductDetail";
 
 const ProductSelectContainer = () => {
-  const { id } = useParams();
+  const { id } = useParams(); //get id from url
 
   const { data } = useQuery(GET_PRODUCT_INFO, {
+    // query product information
     variables: { input: Number(id) },
   });
 
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState(); //product state
 
   useEffect(() => {
+    //initial product data when data change
     if (data) {
       setProduct(data.product);
     }
@@ -36,25 +38,13 @@ const ProductSelectContainer = () => {
             s
             productId={id}
           />
-            <Header text="Description" />
+          <Header text="Description" />
           <ProductDescription
             category={product.category.name}
             desc={product.desc}
           />
         </div>
       )}
-      {/* <div>
-        <NavbarBootstrap />
-        <Header text={product.name} />
-        <ProductDetail
-          picURL={product.picURL}
-          name={product.name}
-          price={product.price}
-          stock={product.stock}
-        />
-        <Header text="Description" />
-        <ProductDescription category={product.category} desc={product.desc} />
-      </div> */}
     </>
   );
 };

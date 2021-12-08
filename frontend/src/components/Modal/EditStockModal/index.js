@@ -29,10 +29,11 @@ const EditStockModal = ({
 
   /*------------------------Query--------------------------*/
 
-  const { data } = useQuery(ADMIN_GET_CATEGORIES);
-  const [categories, setCategories] = useState();
+  const { data } = useQuery(ADMIN_GET_CATEGORIES); // query categories
+  const [categories, setCategories] = useState(); //categories state
 
   useEffect(() => {
+    // initial data when data change
     if (data) {
       setCategories(data.AdminCategories);
     }
@@ -41,9 +42,10 @@ const EditStockModal = ({
   /*------------------------Query--------------------------*/
 
   /*------------------------Submit--------------------------*/
-  const [updateProduct] = useMutation(UPDATE_PRODUCT);
+  const [updateProduct] = useMutation(UPDATE_PRODUCT); //update product mutation
 
   const schema = yup.object().shape({
+    // form schema
     name: yup.string().notRequired(),
     categoryId: yup.number().min(0).notRequired(),
     desc: yup.string().notRequired(),
@@ -57,6 +59,7 @@ const EditStockModal = ({
   });
 
   const {
+    // form variables
     register,
     handleSubmit,
     formState: { errors },
@@ -64,26 +67,29 @@ const EditStockModal = ({
     resolver: yupResolver(schema),
   });
 
-  const [pictureFile, setPictureFile] = useState("");
+  const [pictureFile, setPictureFile] = useState(""); // picture file state
 
   const onSubmit = (submit) => {
+    // submit function
     if (pictureFile) {
-      // const token = localStorage.getItem("jwtToken") || "";
+      // if there is picture file submit
       let formdata = new FormData();
       formdata.append("file", pictureFile, pictureFile.name);
       axios({
+        // upload image to http://20.212.81.174/upload
         url: "http://20.212.81.174/upload",
         method: "POST",
         headers: {
-          // Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
         data: formdata,
       })
         .then((res) => {
-          submit.picURL = res.data.imagePath;
+          // if upload success
+          submit.picURL = res.data.imagePath; // set picURL to image path from axios
         })
         .catch((error) => {
+          //if upload fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
@@ -94,24 +100,28 @@ const EditStockModal = ({
           });
         });
     } else {
+      //if no picture file submit
       submit.picURL = undefined;
     }
-    const productId = { id: id };
+    const productId = { id: id }; // create product id object
     if (
       categories.find((category) => category.id === submit.categoryId).name ===
-      category
+      category // if submit same category drop down
     ) {
-      submit.categoryId = undefined;
+      submit.categoryId = undefined; // category id set to undefined (don't update)
     }
     Object.keys(submit).forEach((key) =>
       submit[key] === undefined || submit[key] === "" ? delete submit[key] : {}
-    );
+    ); // delete submit object that is not exist
     if (Object.keys(submit).length !== 0) {
-      submit = Object.assign(productId, submit);
+      //if there are still have some infomation in submit
+      submit = Object.assign(productId, submit); // append proudctId to submit object
       updateProduct({
+        //update product to graphQl
         variables: { input: submit },
       })
         .then(() => {
+          //if update success
           Swal.fire({
             title: "Update product success!",
             html: "Press OK to continue",
@@ -123,6 +133,7 @@ const EditStockModal = ({
           refetch();
         })
         .catch((error) => {
+          //if update fail
           const err = error.message;
           Swal.fire({
             title: "Oops! !",
@@ -133,6 +144,7 @@ const EditStockModal = ({
           });
         });
     } else {
+      //if there is no infomation in submit to update
       handleClose();
     }
   };

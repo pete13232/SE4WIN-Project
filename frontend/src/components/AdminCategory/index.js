@@ -12,20 +12,20 @@ import { useForm } from "react-hook-form";
 
 const AdminCategory = ({ id }) => {
   /*--------------------------Query-------------------------------*/
-  const { data, refetch } = useQuery(ADMIN_GET_CATEGORIES);
-  const [categories, setCategories] = useState([]);
-  const [search, setSearch] = useState("");
-  const { register, handleSubmit } = useForm();
+  const { data, refetch } = useQuery(ADMIN_GET_CATEGORIES); // all categories query
+  const [categories, setCategories] = useState([]);// categories variable
+  const [search, setSearch] = useState("");// search variable
+  const { register, handleSubmit } = useForm(); // form variable
 
   const [getCategories, { data: dataSearch }] = useLazyQuery(
     GET_CATEGORIES_BY_NAME
-  );
+  ); // searched categories query
 
-  const onSubmit = (submit) => {
+  const onSubmit = (submit) => { // when search set search variable
     setSearch(submit.name);
   };
 
-  useEffect(() => {
+  useEffect(() => { // initial data when data change
     if (search) {
       getCategories({ variables: { name: search } });
     }
@@ -36,7 +36,8 @@ const AdminCategory = ({ id }) => {
     }
   }, [data, dataSearch, getCategories, search]);
   /*--------------------------Query-------------------------------*/
-  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
+  
+  const [showAddCategoryModal, setShowAddCategoryModal] = useState(false); // Modal show variable
 
   return (
     <>

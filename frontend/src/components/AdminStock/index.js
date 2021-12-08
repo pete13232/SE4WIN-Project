@@ -11,22 +11,17 @@ import "./style.css";
 import { useForm } from "react-hook-form";
 
 const AdminStock = ({ id }) => {
-  const { data, refetch } = useQuery(ADMIN_GET_PRODUCTS);
-  const [getProducts, { data: dataSearch }] = useLazyQuery(
-    ADMIN_SEARCH_PRODUCTS
-  );
+  /*-------------------------State-------------------------*/
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
-
   const [showProduct, setShowProduct] = useState(false);
-
-  const { register, handleSubmit } = useForm();
-
-  const onSubmit = (submit) => {
-    setSearch(submit.name);
-  };
-
+  /*-------------------------State-------------------------*/
+  const { data, refetch } = useQuery(ADMIN_GET_PRODUCTS); // query products
+  const [getProducts, { data: dataSearch }] = useLazyQuery( // query searched products
+    ADMIN_SEARCH_PRODUCTS
+  );
   useEffect(() => {
+    // initial data when data change
     if (search) {
       getProducts({
         variables: { name: search },
@@ -39,6 +34,13 @@ const AdminStock = ({ id }) => {
       setProducts(dataSearch.AdminProductByName.data);
     }
   }, [data, getProducts, search, dataSearch]);
+  /*-------------------------Query-------------------------*/
+  /*-------------------------Search-------------------------*/
+  const { register, handleSubmit } = useForm();// form variable
+  const onSubmit = (submit) => {//submit form function
+    setSearch(submit.name);
+  };
+  /*-------------------------Search-------------------------*/
 
   return (
     <>

@@ -20,7 +20,7 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
       setSelectedImage(e.target.files[0]);
     }
   };
-
+  /*------------------------ Preview Image --------------------------*/
   /*------------------------Modal--------------------------*/
 
   const handleClose = () => {
@@ -33,10 +33,11 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
 
   /*------------------------Query--------------------------*/
 
-  const { data } = useQuery(ADMIN_GET_CATEGORIES);
+  const { data } = useQuery(ADMIN_GET_CATEGORIES); //query categories
   const [categories, setCategories] = useState();
 
   useEffect(() => {
+    // initial data when data change
     if (data) {
       setCategories(data.AdminCategories);
     }
@@ -45,10 +46,11 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
   /*------------------------Query--------------------------*/
 
   /*------------------------Submit--------------------------*/
-  const [addProduct] = useMutation(ADD_PRODUCT);
-  const [updateStock] = useMutation(UPDATE_STOCK);
+  const [addProduct] = useMutation(ADD_PRODUCT); // add product mutation
+  const [updateStock] = useMutation(UPDATE_STOCK); //update stock mutation
 
   const schema = yup.object().shape({
+    //schema of form
     name: yup.string().required("Please enter product name"),
     categoryId: yup
       .number()
@@ -79,15 +81,18 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
     formState: { errors },
     clearErrors,
   } = useForm({
+    //form variables
     resolver: yupResolver(schema),
   });
 
-  const [pictureFile, setPictureFile] = useState("");
+  const [pictureFile, setPictureFile] = useState(""); // picture file state
 
   const onSubmit = (submit) => {
+    // submit function
     let formdata = new FormData();
     formdata.append("file", pictureFile, pictureFile.name);
     axios({
+      // upload image to http://20.212.81.174/upload
       url: "http://20.212.81.174/upload",
       method: "POST",
       headers: {
@@ -96,19 +101,24 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
       data: formdata,
     })
       .then((res) => {
+        // if upload image success
         const stock = submit.stock;
         const url = "http://20.212.81.174/";
         delete submit.stock;
-        submit.picURL = url + res.data.imagePath;
+        submit.picURL = url + res.data.imagePath; //upload image path to graphQL
         addProduct({
+          // add product to graphQL
           variables: { input: submit },
         })
           .then((res) => {
+            //if add product success
             if (stock && stock > 0) {
               const id = res.data.createProduct.id;
               updateStock({
+                //update stock to graphQL
                 variables: { quantity: stock, productId: id },
               }).catch((error) => {
+                // if update stock fail
                 const err = error.message;
                 Swal.fire({
                   title: "Oops! !",
@@ -130,6 +140,7 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
             refetch();
           })
           .catch((error) => {
+            //if add product fail
             const err = error.message;
             Swal.fire({
               title: "Oops! !",
@@ -141,6 +152,7 @@ const AddProductModal = ({ showProduct, setShowProduct, refetch }) => {
           });
       })
       .catch((error) => {
+        //if upload image fail
         const err = error.message;
         Swal.fire({
           title: "Oops! !",

@@ -53,7 +53,7 @@ function App() {
     link: logoutLink.concat(authMiddleware.concat(link)),
   });
 
-  /* -------------------------------------------------------- */
+  /* ----------------- Graphql Setup ----------------------- */
   return (
     <AuthProvider>
       <ApolloProvider client={client}>

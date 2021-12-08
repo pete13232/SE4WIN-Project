@@ -27,8 +27,8 @@ const NavbarBootstrap = ({
   setSearchName,
   resetState,
 }) => {
-  const context = useContext(AuthContext);
-
+  const context = useContext(AuthContext); // Authen tication context
+  /*----------------------------Query---------------------------------*/
   const { data } = useQuery(GET_USER_INFO);
   const [user, setUser] = useState();
 
@@ -37,14 +37,16 @@ const NavbarBootstrap = ({
       setUser(data.me);
     }
   }, [data]);
-
+  /*----------------------------Query---------------------------------*/
+  /*----------------------------Search---------------------------------*/
   const { register, handleSubmit } = useForm();
-
   const onSubmit = (submit) => {
     setSearchName(submit.name);
     setQueryState(Number(3));
   };
+  /*----------------------------Search---------------------------------*/
 
+  /*----------------------------Logout Alert---------------------------------*/
   const logoutSweetAlert = () => {
     Swal.fire({
       title: "You are logout!",
@@ -52,8 +54,12 @@ const NavbarBootstrap = ({
       icon: "info",
     });
   };
+  /*----------------------------Logout Alert---------------------------------*/
+
+  /*----------------------------Navbar in different condition---------------------------------*/
   const navbarSwitch = () => {
     if (secondTheme) {
+      // sign up, login Navbar
       return (
         <Navbar collapseOnSelect expand="lg" className="NavbarB">
           <Col className="d-flex justify-content-center " md={3}>
@@ -73,6 +79,7 @@ const NavbarBootstrap = ({
         </Navbar>
       );
     } else if (context.user === null) {
+      // Guest Navbar
       return (
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
@@ -130,6 +137,7 @@ const NavbarBootstrap = ({
         </Navbar>
       );
     } else if (context.user.role === "customer") {
+      // customer Navbar
       return (
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
@@ -202,6 +210,7 @@ const NavbarBootstrap = ({
         </Navbar>
       );
     } else if (context.user?.role === "admin") {
+      // admin Navbar
       return (
         <Navbar collapseOnSelect expand="lg" className="NavbarA">
           <Col md={2}>
@@ -237,6 +246,7 @@ const NavbarBootstrap = ({
       );
     }
   };
+  /*----------------------------Navbar in different condition---------------------------------*/
   return <>{navbarSwitch()}</>;
 };
 

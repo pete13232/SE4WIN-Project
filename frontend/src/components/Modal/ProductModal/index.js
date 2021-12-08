@@ -19,21 +19,28 @@ const ProductModal = ({
   showProduct,
   setShowProduct,
 }) => {
-  const handleClose = () => setShowProduct(false);
-  const context = useContext(AuthContext);
-  const { data } = useQuery(GET_USER_ADDRESS);
-  const [address, setAddress] = useState("");
+  const context = useContext(AuthContext); // Authentication context
+
+  const handleClose = () => setShowProduct(false); // Modal state
+
+  /*----------------------------Query----------------------------------*/
+  const { data } = useQuery(GET_USER_ADDRESS); //query user address
+  const [address, setAddress] = useState(""); //address state
 
   useEffect(() => {
+    // initial data when data change
     if (data) {
       setAddress(data.me.address);
     }
   }, [data]);
-
+  /*----------------------------Query----------------------------------*/
+  /*----------------------------Submit---------------------------------*/
   const schema = yup.object().shape({
+    // form schema
     address: yup.string().required("Please enter your address"),
   });
   const {
+    // form variables
     register,
     handleSubmit,
     formState: { errors },
@@ -41,18 +48,22 @@ const ProductModal = ({
     resolver: yupResolver(schema),
   });
 
-  const [createOrder] = useMutation(CREATE_ORDER);
+  const [createOrder] = useMutation(CREATE_ORDER); //create order mutation
   const onSubmit = (data) => {
+    // submit function
     const param = {
+      // parameter to submit
       userId: Number(context.user.sub),
       productId: Number(productId),
       quantity: Number(-selectQuantity),
       orderAddress: data.address,
     };
     createOrder({
+      //create order to graphQL
       variables: { input: param },
     })
       .then(() => {
+        //if create order success
         Swal.fire({
           title: "Create order success!",
           html: "Press Ok to order page",
@@ -60,12 +71,14 @@ const ProductModal = ({
           allowOutsideClick: false,
           allowEscapeKey: false,
           didClose: () => {
-            window.location.replace("/order");
+            // close sweet alert
+            window.location.replace("/order"); // go to order page
           },
         });
         handleClose();
       })
       .catch((error) => {
+        // if create order fail
         const err = error.message;
         Swal.fire({
           title: "Oops! !",
@@ -76,7 +89,7 @@ const ProductModal = ({
         });
       });
   };
-  console.log(errors["address"]?.message);
+  /*----------------------------Submit---------------------------------*/
   return (
     <>
       <div>

@@ -133,16 +133,18 @@ const AdminOrderChild = ({
     }
   };
 
-  const tooltipImg = (props) => (
+  /*------------------------Submit--------------------------*/
+
+  const tooltipImg = (props) => (// hover to show image function
     <Tooltip className="tooltip-img" {...props}>
-      <Image src={receipt} alt="Reciept Image" />
+      <Image src={receipt} alt="Receipt Image" />
     </Tooltip>
   );
-  // console.log(address.length)
 
-  const textCut = () => {
+  const tooltipDesc = (props) => <Tooltip {...props}>{address}</Tooltip>; //hover to show describtion function
+
+  const textCut = () => { //long text cut function
     var text = address;
-    // console.log(text.length);
     if (text !== null) {
       if (text.length > 40) {
         text = text.substring(0, 25).concat("...");
@@ -151,8 +153,6 @@ const AdminOrderChild = ({
     return text;
   };
 
-  const tooltipDesc = (props) => <Tooltip {...props}>{address}</Tooltip>;
-  /*------------------------Submit--------------------------*/
   return (
     <>
       <tbody>

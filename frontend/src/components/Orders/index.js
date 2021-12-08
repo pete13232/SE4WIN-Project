@@ -7,10 +7,10 @@ import "./style.css";
 
 const Orders = () => {
   /*--------------------------Query-------------------------------*/
-  const { data, refetch } = useQuery(GET_USER_ORDERS);
-  const [orders, setOrders] = useState([]);
+  const { data, refetch } = useQuery(GET_USER_ORDERS);//query user orders
+  const [orders, setOrders] = useState([]);//orders state
 
-  useEffect(() => {
+  useEffect(() => {//initial data when data change
     if (data) {
       setOrders(data.orderByUser);
     }

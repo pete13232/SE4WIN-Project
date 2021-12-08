@@ -17,29 +17,8 @@ const AdminOrder = ({ id }) => {
   const [search, setSearch] = useState();
 
   const [getOrders, { data: dataSearch }] = useLazyQuery(ADMIN_SEARCH_ORDERS);
-  const schema = yup.object().shape({
-    orderId: yup
-      .number("Please insert number of order ID")
-      .integer("Please insert number of order ID")
-      .min(1, "Please insert number of order ID")
-      .typeError("Please insert number of order ID")
-      .notRequired()
-      .nullable(),
-  });
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    clearErrors,
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
 
-  const onSubmit = (submit) => {
-    setSearch(submit.orderId);
-  };
-
-  useEffect(() => {
+  useEffect(() => { // initial data when data change
     if (search) {
       getOrders({ variables: { id: Number(search) } });
     }
@@ -52,6 +31,30 @@ const AdminOrder = ({ id }) => {
     }
   }, [data, dataSearch, getOrders, search]);
   /*-------------------------Query----------------------------- */
+  /*-------------------------Search----------------------------- */
+  const schema = yup.object().shape({
+    // validation schema
+    orderId: yup
+      .number("Please insert number of order ID")
+      .integer("Please insert number of order ID")
+      .min(1, "Please insert number of order ID")
+      .typeError("Please insert number of order ID")
+      .notRequired()
+      .nullable(),
+  });
+  const { //  form variable
+    register,
+    handleSubmit,
+    formState: { errors },
+    clearErrors,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (submit) => {//  submit function
+    setSearch(submit.orderId);
+  };
+  /*-------------------------Search----------------------------- */
   return (
     <>
       {id === "order" && (
@@ -96,11 +99,11 @@ const AdminOrder = ({ id }) => {
                 <th>Order_ID</th>
                 <th>Product_ID</th>
                 <th>User_ID</th>
-                <th style={{width:"150px"}}>Address</th>
+                <th style={{ width: "150px" }}>Address</th>
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                <th>Reciept</th>
+                <th>Receipt</th>
                 <th>Status</th>
               </tr>
             </thead>

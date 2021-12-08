@@ -18,7 +18,7 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
       setSelectedImage(e.target.files[0]);
     }
   };
-
+  /*------------------------ Preview Image --------------------------*/
   /*------------------------Modal--------------------------*/
 
   const handleClose = () => {
@@ -29,9 +29,10 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
   /*------------------------Modal--------------------------*/
 
   /*------------------------Submit--------------------------*/
-  const [createCategory] = useMutation(CREATE_CATEGORY);
+  const [createCategory] = useMutation(CREATE_CATEGORY); // create category mutation
 
   const schema = yup.object().shape({
+    //schema of form
     name: yup.string().required("Please enter category name"),
     picURL: yup
       .mixed()
@@ -41,6 +42,7 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
   });
 
   const {
+    // form variable
     register,
     handleSubmit,
     formState: { errors },
@@ -48,12 +50,14 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
     resolver: yupResolver(schema),
   });
 
-  const [pictureFile, setPictureFile] = useState("");
+  const [pictureFile, setPictureFile] = useState(""); // picture file state
 
   const onSubmit = (submit) => {
+    // submit function
     let formdata = new FormData();
     formdata.append("file", pictureFile, pictureFile.name);
     axios({
+      // upload image to  http://20.212.81.174/upload
       url: "http://20.212.81.174/upload",
       method: "POST",
       headers: {
@@ -62,12 +66,14 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
       data: formdata,
     })
       .then((res) => {
+        // if uplaod success
         const url = "http://20.212.81.174/";
-        submit.picURL = url + res.data.imagePath;
+        submit.picURL = url + res.data.imagePath; //submit image path to graphQL
         createCategory({
+          //create category in graphql
           variables: { input: submit },
         })
-          .then((res) => {
+          .then((res) => {// if create success
             var name = res.data.createCategory.name;
             Swal.fire({
               title: "Add new category success!",
@@ -79,7 +85,7 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
             handleClose();
             refetch();
           })
-          .catch((error) => {
+          .catch((error) => {//if create category fail
             const err = error.message;
             Swal.fire({
               title: "Oops! !",
@@ -90,7 +96,7 @@ const AddCategoryModal = ({ showCategory, setShowCategory, refetch }) => {
             });
           });
       })
-      .catch((error) => {
+      .catch((error) => {//if upload fail
         const err = error.message;
         Swal.fire({
           title: "Oops! !",
