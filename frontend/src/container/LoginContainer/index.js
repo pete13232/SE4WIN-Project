@@ -1,4 +1,3 @@
-import NavbarBootstrap from "../../components/NavbarBoostrap";
 import { Form, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useContext } from "react";
@@ -6,24 +5,28 @@ import { LOGIN_USER } from "../../Graphql/Mutations";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { AuthContext } from "../../context/auth";
+import * as yup from "yup";
+import NavbarBootstrap from "../../components/NavbarBoostrap";
 import Swal from "sweetalert2";
 
 const LoginContainer = () => {
-  const context = useContext(AuthContext);
-  const [login, { loading }] = useMutation(LOGIN_USER, {
+  const context = useContext(AuthContext); // Authentication context
+  const [login] = useMutation(LOGIN_USER, {
+    //login mutation
     update(_, { data: userData }) {
       context.login(userData);
     },
   });
 
   const loginUser = (data) => {
-    console.log(data);
+    //login function
     login({
+      //login user and get token from graphQl
       variables: { input: data },
     })
       .then(() => {
+        //if login success
         Swal.fire({
           title: "Login success!",
           html: "Press Ok to home page",
@@ -36,6 +39,7 @@ const LoginContainer = () => {
         });
       })
       .catch((error) => {
+        //if login fail
         const err = error.message;
         Swal.fire({
           title: "Oops! !",
@@ -48,6 +52,7 @@ const LoginContainer = () => {
   };
 
   const schema = yup.object().shape({
+    //form schema
     email: yup.string().required("Please enter your email"),
     password: yup.string().required("Please enter your password"),
   });
@@ -57,21 +62,24 @@ const LoginContainer = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    //form variables
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
+    //submit function
     const param = {
+      //create login parameter
       email: data.email,
       password: data.password,
     };
 
-    loginUser(param);
+    loginUser(param); //login with parameter
   };
 
   return (
-    <div>
-      <NavbarBootstrap secondTheme={true} page={"Log-in"}/>
+    <>
+      <NavbarBootstrap secondTheme={true} page={"Log-in"} />
       <Row className="bg-signup mx-0 justify-content-center">
         <Col md={4} className="form bg-light my-5">
           <div className="border-bottom border-dark py-3 mb-3">
@@ -114,7 +122,7 @@ const LoginContainer = () => {
           </Form>
         </Col>
       </Row>
-    </div>
+    </>
   );
 };
 

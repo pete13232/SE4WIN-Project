@@ -5,6 +5,7 @@
 type Category {
   id: Int!
   name: String!
+  picURL: String
   createdAt: DateTime!
   updatedAt: DateTime!
   product: [Product!]!
@@ -39,15 +40,15 @@ type Order {
   user: User!
   product: Product!
   quantity: Int!
-  order_address: String
+  orderAddress: String
   netPrice: Float!
   receiptURL: String
-  status: Order_Status!
+  status: OrderStatus!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-enum Order_Status {
+enum OrderStatus {
   AWAITING
   PENDING
   SUCCESS
@@ -67,6 +68,18 @@ type Product {
   stock: Int!
 }
 
+type PaginatedProduct {
+  data: [Product!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
+type PaginatedCategory {
+  data: [Category!]
+  totalCount: Int!
+  hasNextPage: Boolean!
+}
+
 type Query {
   users: [User!]!
   user(id: Int!): User!
@@ -75,10 +88,16 @@ type Query {
   orders: [Order!]!
   order(id: Int!): Order!
   orderByUser: [Order!]!
-  products: [Product!]!
+  products(sort: Int, page: Int): PaginatedProduct!
+  AdminProducts: [Product!]!
   product(id: Int!): Product!
+  ProductByName(sort: Int, page: Int, name: String!): PaginatedProduct!
+  AdminProductByName(name: String!): PaginatedProduct!
+  ProductByCategory(sort: Int, page: Int, categoryId: Int!): PaginatedProduct!
+  AdminCategories: [Category!]!
   categories: [Category!]!
   category(id: Int!): Category!
+  AdminCategoriesByName(name: String!): PaginatedCategory!
   verify(token: String!): User!
 }
 
@@ -94,14 +113,15 @@ type Mutation {
   createOrder(createOrderInput: CreateOrderInput!): Order!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   removeOrder(id: Int!): String!
-  changeSatus(status: Order_Status!, id: Int!): String!
+  changeStatus(status: OrderStatus!, id: Int!): String!
+  uploadReceipt(receiptURL: String!, orderId: Int!): String!
   createProduct(createProductInput: CreateProductInput!): Product!
   updateStock(quantity: Int!, productId: Int!): Int!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(id: Int!): String!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
-  removeCategory(id: Int!): Category!
+  removeCategory(id: Int!): String!
   login(loginUserInput: LoginUserInput!): String!
 }
 
@@ -130,7 +150,7 @@ input CreateOrderInput {
   userId: Int!
   productId: Int!
   quantity: Int!
-  order_address: String
+  orderAddress: String
   receiptURL: String
 }
 
@@ -138,7 +158,7 @@ input UpdateOrderInput {
   userId: Int
   productId: Int
   quantity: Int
-  order_address: String
+  orderAddress: String
   receiptURL: String
   id: Int!
 }
@@ -162,9 +182,11 @@ input UpdateProductInput {
 
 input CreateCategoryInput {
   name: String!
+  picURL: String
 }
 
 input UpdateCategoryInput {
   name: String
+  picURL: String
   id: Int!
 }

@@ -1,5 +1,6 @@
+/* ---------Background--------- */
 .bg-signup {
-  background-color: #51d378;
+  background: #ff6600;
   width: 100%;
   height: 100%;
 }
@@ -8,6 +9,7 @@
   background-color: white !important;
 }
 
+/* ---------Form--------- */
 .form {
   box-shadow: 0 4px 4px 2px rgb(0 0 0 / 25%);
   border-radius: 4px;
@@ -22,6 +24,8 @@
   color: white;
 }
 
+/* ---------Alternative--------- */
+
 .alternative {
   text-align: end;
   margin-bottom: 40px;
@@ -31,6 +35,7 @@
   opacity: 50%;
   font-weight: bold;
 }
+
 
 .alternative a {
   opacity: 100% !important;

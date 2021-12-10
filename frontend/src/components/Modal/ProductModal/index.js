@@ -1,102 +1,175 @@
-import { Modal, Button, Image, Row } from "react-bootstrap";
-import React, { useState } from "react";
-import ButtonCustom from "../../ButtonCustom";
-import SuccessModal from "../SuccessModal";
-import { FaEdit } from "react-icons/fa";
-import { FaCheckCircle } from "react-icons/fa";
-import { BsFillXCircleFill } from "react-icons/bs";
+import { Modal, Button, Image, Row, Form } from "react-bootstrap";
+import { useContext, useEffect, useState } from "react";
+import { useQuery, useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import { GET_USER_ADDRESS } from "../../../Graphql/Queries";
+import { AuthContext } from "../../../context/auth";
+import { CREATE_ORDER } from "../../../Graphql/Mutations";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import Swal from "sweetalert2";
 import "./style.css";
 
-const ProductModal = () => {
-  const [show, setShow] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+const ProductModal = ({
+  picURL,
+  name,
+  selectQuantity,
+  totalPrice,
+  productId,
+  showProduct,
+  setShowProduct,
+}) => {
+  const context = useContext(AuthContext); // Authentication context
+
+  const handleClose = () => setShowProduct(false); // Modal state
+
+  /*----------------------------Query----------------------------------*/
+  const { data } = useQuery(GET_USER_ADDRESS); //query user address
+  const [address, setAddress] = useState(""); //address state
+
+  useEffect(() => {
+    // initial data when data change
+    if (data) {
+      setAddress(data.me.address);
+    }
+  }, [data]);
+  /*----------------------------Query----------------------------------*/
+  /*----------------------------Submit---------------------------------*/
+  const schema = yup.object().shape({
+    // form schema
+    address: yup.string().required("Please enter your address"),
+  });
+  const {
+    // form variables
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const [createOrder] = useMutation(CREATE_ORDER); //create order mutation
+  const onSubmit = (data) => {
+    // submit function
+    const param = {
+      // parameter to submit
+      userId: Number(context.user.sub),
+      productId: Number(productId),
+      quantity: Number(-selectQuantity),
+      orderAddress: data.address,
+    };
+    createOrder({
+      //create order to graphQL
+      variables: { input: param },
+    })
+      .then(() => {
+        //if create order success
+        Swal.fire({
+          title: "Create order success!",
+          html: "Press Ok to order page",
+          icon: "success",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          didClose: () => {
+            // close sweet alert
+            window.location.replace("/order"); // go to order page
+          },
+        });
+        handleClose();
+      })
+      .catch((error) => {
+        // if create order fail
+        const err = error.message;
+        Swal.fire({
+          title: "Oops! !",
+          html: err,
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+      });
+  };
+  /*----------------------------Submit---------------------------------*/
   return (
-    <div>
-      <Button className="ms-4 blue btn btn-large" onClick={handleShow}>
-        Buy
-      </Button>
-
-      <Modal
-        size="lg"
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <h2>Confirmation</h2>
-        </Modal.Header>
-        <Modal.Body>
-          <Row className="gap-3">
-            <div className="confirm-image d-flex justify-content-center">
-              <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png" />
-            </div>
-            <div className="d-flex align-items-center">
-              <div className="title-block d-flex align-items-center justify-content-end">
-                <h5>Product:</h5>
-              </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center">
-                <h3>
-                  Keychron K3 Ultra-slim Wireless Mechanical Keyboard (Version2)
-                </h3>
-              </div>
-            </div>
-
-            <div className="d-flex align-items-center">
-              <div className="title-block d-flex align-items-center justify-content-end">
-                <h5>Quantity:</h5>
-              </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center quantity-background">
-                <h3>3</h3>
-              </div>
-            </div>
-
-            <div className="d-flex align-items-center">
-              <div className="title-block d-flex align-items-center justify-content-end">
-                <h5>TotalPricey:</h5>
-              </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center total-background">
-                <h3>$138</h3>
-              </div>
-            </div>
-
-            <div className="d-flex align-items-center">
-              <div className="title-block d-flex align-items-center justify-content-end">
-                <h5>Delivery address:</h5>
-              </div>
-              <div className="ms-4 d-flex align-items-center justify-content-center address-background">
-                <h3>
-                  126 Pracha Uthit Rd., Bang Mod, Thung Khru, Bangkok 10140,
-                  Thailand.
-                </h3>
-                {/* <span className="pe-3">
-                  <a href="#">
-                    <FaEdit />
-                  </a>
-                </span> */}
-              </div>
-            </div>
-          </Row>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button className="grey btn-small" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button
-            className="green btn-small"
-            onClick={() => {
-              setShowSuccess(true);
-              handleClose();
-            }}
-          >
-            Confirm
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <SuccessModal showSuccess={showSuccess} setShowSuccess={setShowSuccess} text="Order Confirmed"/>
-    </div>
+    <>
+      <div>
+        <Modal
+          size="lg"
+          show={showProduct}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header closeButton>
+            <h2>Confirmation</h2>
+          </Modal.Header>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Modal.Body>
+              <Row className="gap-3">
+                <div>
+                  <div className="confirm-image d-flex justify-content-center">
+                    <Image src={picURL} />
+                  </div>
+                </div>
+                <Row className="gap-3 ms-5 confirm-detail">
+                  <div className="d-flex align-items-baseline">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>Product:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <h3>{name}</h3>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-baseline">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>Quantity:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center quantity-background">
+                      <h3>{selectQuantity}</h3>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-baseline">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>TotalPrice:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center total-background">
+                      <h3>{totalPrice} ฿</h3>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-baseline">
+                    <div className="title-block d-flex align-items-center justify-content-end">
+                      <h5>Delivery address:</h5>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-center">
+                      <Form.Control
+                        name="address"
+                        defaultValue={address}
+                        type="text"
+                        placeholder="Enter address"
+                        {...register("address")}
+                      />
+                    </div>
+                  </div>
+                  {errors["address"]?.message && (
+                    <p className="errorMessage text-end pe-5">
+                      {errors["address"]?.message}
+                    </p>
+                  )}
+                </Row>
+              </Row>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button className="grey btn-small" onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button className="green btn-small" type="submit">
+                Confirm
+              </Button>
+            </Modal.Footer>
+          </Form>
+        </Modal>
+      </div>
+    </>
   );
 };
 export default ProductModal;

@@ -20,6 +20,10 @@ export class Category {
   @Field()
   name: string;
 
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  picURL?: string;
+
   @CreateDateColumn()
   @Field()
   createdAt: Date;

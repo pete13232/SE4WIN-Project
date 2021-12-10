@@ -4,4 +4,7 @@ import { InputType, Field } from '@nestjs/graphql';
 export class CreateCategoryInput {
   @Field()
   name: string;
+
+  @Field({ nullable: true })
+  picURL?: string;
 }

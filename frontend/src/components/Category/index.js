@@ -1,80 +1,63 @@
-import { Col, Row, Image, Carousel } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { Image } from "react-bootstrap";
+import Header from "../Header";
 import "./style.css";
+import { GET_CATEGORIES } from "../../Graphql/Queries";
+import Slider from "react-slick";
 
-const Category = () => {
+const Category = ({ setQueryState, setFilterCategoryId }) => {
+  /*-------------------------Query------------------------------- */
+  const { data } = useQuery(GET_CATEGORIES, {});
+  useEffect(() => {
+    if (data) {
+      setCategories(data?.categories);
+    }
+  }, [data]);
+  const [categories, setCategories] = useState([]);
+  /*-------------------------Query------------------------------- */
+
+  /*-------------------------React Slick setting------------------------------- */
+  const settings = {
+    draggable: false,
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 6,
+    autoplay: true,
+    autoplaySpeed: 4000,
+  };
+
+  const sliders = () => {// component to show in slick
+    return categories.map((category) => {
+      return (
+        <div
+          className="g-0 category"
+          key={category}
+          onClick={() => {
+            setFilterCategoryId(category.id);
+            setQueryState(2);
+          }}
+        >
+          <div className="card" md={2}>
+            <Image alt="image" src={category.picURL} />
+            <div className="card-img-overlay text-center">
+              <h4>{category.name}</h4>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
+  /*-------------------------React Slick setting------------------------------- */
   return (
-    <div className="space-md">
-      <div className="header px-2">
-        <h3>Category</h3>
+    <>
+      <Header text="Category"></Header>
+      <div>
+        <Slider {...settings}>{sliders()}</Slider>
       </div>
-      <Carousel>
-        <Carousel.Item interval={100000000}>
-          <Row className="g-0 category">
-            {/*ใส่สไตล์เพื่อเช็ค padding เดี๋ยวมาลบ*/}
-            <Col className="card">
-              <a href="#">
-                <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"></Image>
-              </a>
-              <div className="card-img-overlay text-center">
-                <h4>test2</h4>
-              </div>
-            </Col>
-            <Col className="card">
-              <a href="#">
-                <Image src="https://cdn4.425degree.com/media/SaekiiOnDuty/Keychron/DSC03812-Edit.png"></Image>
-              </a>
-              <div className="card-img-overlay text-center">
-                <h4>test2</h4>
-              </div>
-            </Col>
-            <Col className="card">
-              <Image src="https://cf.shopee.co.th/file/357d8160cfdc5098363d37e0c39b6fa4"></Image>
-              <div className="card-img-overlay text-center">
-                <h4>test3</h4>
-              </div>
-            </Col>
-            <Col className="card">
-              <Image src="https://cf.shopee.co.th/file/c223514d0c7dc1a0419abb9618dad98a"></Image>
-              <div className="card-img-overlay text-center">
-                <h4>test4</h4>
-              </div>
-            </Col>
-            <Col className="card">
-              <Image src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"></Image>
-            </Col>
-            <Col className="card">
-              <Image src="https://media.istockphoto.com/photos/programming-code-abstract-technology-background-of-software-developer-picture-id1224500457?b=1&k=20&m=1224500457&s=170667a&w=0&h=OOPEMFamnZo63_2t_W40mYSfU1WrFAHHZRBgNN-GSgI="></Image>
-            </Col>
-          </Row>
-        </Carousel.Item>
-        <Carousel.Item interval={100000000}>
-          <Row className="g-0 category">
-            {/*ใส่สไตล์เพื่อเช็ค padding เดี๋ยวมาลบ*/}
-            <Col className="card">
-              <Image src="https://ae01.alicdn.com/kf/Hfc71b9e78e54414f9e1f87a928fedbb1F/Beats-Powerbeats-Pro.jpg_q50.jpg"></Image>
-              <div className="card-img-overlay text-white d-flex align-items-end align-content-center">
-                <h4>test อีกหน้า</h4>
-              </div>
-            </Col>
-            <Col className="card">
-              <Image src="https://ae01.alicdn.com/kf/Hfc71b9e78e54414f9e1f87a928fedbb1F/Beats-Powerbeats-Pro.jpg_q50.jpg"></Image>
-            </Col>
-            <Col className="card">
-              <Image src="https://ae01.alicdn.com/kf/Hfc71b9e78e54414f9e1f87a928fedbb1F/Beats-Powerbeats-Pro.jpg_q50.jpg"></Image>
-            </Col>
-            <Col className="card">
-              <Image src="https://ae01.alicdn.com/kf/Hfc71b9e78e54414f9e1f87a928fedbb1F/Beats-Powerbeats-Pro.jpg_q50.jpg"></Image>
-            </Col>
-            <Col className="card">
-              <Image src="https://blog.nsru.ac.th/wp-content/uploads/2019/10/Key_1_1.jpg"></Image>
-            </Col>
-            <Col className="card">
-              <Image src="https://ae01.alicdn.com/kf/Hfc71b9e78e54414f9e1f87a928fedbb1F/Beats-Powerbeats-Pro.jpg_q50.jpg"></Image>
-            </Col>
-          </Row>
-        </Carousel.Item>
-      </Carousel>
-    </div>
+    </>
   );
 };
 

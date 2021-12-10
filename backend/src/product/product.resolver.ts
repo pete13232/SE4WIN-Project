@@ -18,22 +18,23 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/user/enums/role.enum';
 import { CurrentUser } from 'src/auth/decorators/currentUser.decorator';
 import { User } from 'src/user/entities/user.entity';
+import { PaginatedProduct } from 'src/product/pagination/paginatedProduct';
 
 @Resolver(() => Product)
 export class ProductResolver {
   /**
-   * Inject product service
+   * Inject Product Service
    *
-   * @param productService
+   * parameter: productService
    */
   constructor(private readonly productService: ProductService) {}
 
   /**
-   * Create product
+   * Create Product
    *
-   * @requires signed in and role admin
-   * @param createProductInput
-   * @returns Created product
+   * require: Signed In with Admin Role
+   * parameter: createProductInput
+   * return: Created Product
    */
   @Mutation(() => Product)
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -45,30 +46,109 @@ export class ProductResolver {
   }
 
   /**
-   * Show all product
+   * Show all Products
    *
-   * @requires signed in and role admin
-   * @returns list of product
+   * parameters: page, sort
+   * return: List of Products
    */
-  @Query(() => [Product], { name: 'products' })
-  findAll(): Promise<Product[]> {
-    return this.productService.findAll();
+  @Query(() => PaginatedProduct, { name: 'products' })
+  async findAll(
+    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args('sort', { type: () => Int, nullable: true }) sort?: number,
+  ): Promise<PaginatedProduct> {
+    return this.productService.findAll(page, sort);
   }
 
   /**
-   * Find user by id
+   * Show all Products
    *
-   * @param id
-   * @returns Product
+   * require: Signed In with Admin Role
+   *
+   * return: List of Products
+   */
+  @Query(() => [Product], { name: 'AdminProducts' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  AdminFindAll(): Promise<Product[]> {
+    return this.productService.AdminFindAll();
+  }
+
+  /**
+   * Find Product by Id
+   *
+   * parameter: id
+   * return: Product
    */
   @Query(() => Product, { name: 'product' })
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Product> {
     return this.productService.findOne(id);
   }
+
+  /**
+   * Find Quantity of Product in Stock
+   *
+   * parameter: product
+   * return: Quantity of Product in Stock
+   */
   @ResolveField(() => Int)
   stock(@Parent() product: Product): Promise<number> {
     return this.productService.countStock(product.id);
   }
+
+  /**
+   *
+   * Find Product by name
+   *
+   * parameters: name, page, sort
+   * return: Paginated Product
+   */
+  @Query(() => PaginatedProduct, { name: 'ProductByName' })
+  findByName(
+    @Args('name', { type: () => String }) name: string,
+    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args('sort', { type: () => Int, nullable: true }) sort?: number,
+  ): Promise<PaginatedProduct> {
+    return this.productService.findByName(name, page, sort);
+  }
+  /**
+   *
+   * Find Product by name
+   *
+   * require: Signed In with Admin Role
+   * parameters: name
+   * return: Paginated Product
+   */
+  @Query(() => PaginatedProduct, { name: 'AdminProductByName' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  AdminFindByName(
+    @Args('name', { type: () => String }) name: string,
+  ): Promise<PaginatedProduct> {
+    return this.productService.findByName(name);
+  }
+
+  /**
+   * Find Product by category
+   *
+   * parameters: categoryId, page, sort
+   * return: Paginated Product
+   */
+  @Query(() => PaginatedProduct, { name: 'ProductByCategory' })
+  findProductByCategory(
+    @Args('categoryId', { type: () => Int }) categoryId: number,
+    @Args('page', { type: () => Int, nullable: true }) page?: number,
+    @Args('sort', { type: () => Int, nullable: true }) sort?: number,
+  ): Promise<PaginatedProduct> {
+    return this.productService.findProductByCategory(categoryId, page, sort);
+  }
+
+  /**
+   * Update Quantity of Product in Stock
+   *
+   * require: Signed In with Admin Role
+   * parameters: user ,productId ,quantity
+   * return: Updated Quantity in Stock
+   */
 
   @Mutation(() => Int)
   @UseGuards(GqlAuthGuard, RolesGuard)
@@ -82,14 +162,15 @@ export class ProductResolver {
   }
 
   /**
-   * Update product information
+   * Update Product Information
    *
-   * @param id
-   * @param updateProductInput
-   * @returns updated product
+   * require: Signed In with Admin Role
+   * parameter: updateProductInput
+   * return: Updated Product
    */
   @Mutation(() => Product)
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   updateProduct(
     @Args('updateProductInput') updateProductInput: UpdateProductInput,
   ): Promise<Product> {
@@ -100,10 +181,11 @@ export class ProductResolver {
   }
 
   /**
-   * Remove product
+   * Remove Product
    *
-   * @param id
-   * @returns success message
+   * require: Signed In with Admin Role
+   * parameter: id
+   * return: Success Message
    */
   @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)

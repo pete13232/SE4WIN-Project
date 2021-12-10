@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+} from '@nestjs/graphql';
 import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
 import { CreateCategoryInput } from './dto/create-category.input';
@@ -8,11 +15,24 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Role } from 'src/user/enums/role.enum';
+import { PaginatedCategory } from './pagination/PaginatedCategory';
 
 @Resolver(() => Category)
 export class CategoryResolver {
+  /**
+   * Inject Category Service
+   *
+   * parameter: categoryService
+   */
   constructor(private readonly categoryService: CategoryService) {}
 
+  /**
+   * Create Category
+   *
+   * require: Signed In with Admin Role
+   * parameter: createCategoryInput
+   * return: Created Category
+   */
   @Mutation(() => Category)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -22,16 +42,65 @@ export class CategoryResolver {
     return this.categoryService.create(createCategoryInput);
   }
 
+  /**
+   * Show all Category
+   *
+   * require: Signed In with Admin Role
+   *
+   * return: List of Category
+   */
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Query(() => [Category], { name: 'AdminCategories' })
+  AdminFindAll(): Promise<Category[]> {
+    return this.categoryService.AdminFindAll();
+  }
+
+  /**
+   * Show all Category
+   *
+   * return: List of Category
+   */
   @Query(() => [Category], { name: 'categories' })
   findAll(): Promise<Category[]> {
     return this.categoryService.findAll();
   }
 
+  /**
+   * Find Category by Id
+   *
+   * parameter: id
+   * return: Category
+   */
   @Query(() => Category, { name: 'category' })
   findOne(@Args('id', { type: () => Int }) id: number): Promise<Category> {
     return this.categoryService.findOne(id);
   }
 
+  /**
+   *
+   * Find Category by name
+   *
+   * require: Signed In with Admin Role
+   * parameters: name
+   * return: Paginated Category
+   */
+  @Query(() => PaginatedCategory, { name: 'AdminCategoriesByName' })
+  @UseGuards(GqlAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  AdminFindByName(
+    @Args('name', { type: () => String }) name: string,
+  ): Promise<PaginatedCategory> {
+    return this.categoryService.findByName(name);
+  }
+
+  /**
+   * Update Category Information
+   *
+   * require: Signed In with Admin Role
+   * parameter: updateCategoryInput
+   * return: Updated Category
+   */
   @Mutation(() => Category)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
@@ -44,7 +113,14 @@ export class CategoryResolver {
     );
   }
 
-  @Mutation(() => Category)
+  /**
+   * Remove Product
+   *
+   * require: Signed In with Admin Role
+   * parameter: id
+   * return: Success Message
+   */
+  @Mutation(() => String)
   @UseGuards(GqlAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   removeCategory(@Args('id', { type: () => Int }) id: number): Promise<string> {

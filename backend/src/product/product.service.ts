@@ -5,10 +5,11 @@ import { Category } from 'src/category/entities/category.entity';
 import { CreateOrderInput } from 'src/order/dto/create-order.input';
 import { Order } from 'src/order/entities/order.entity';
 import { OrderService } from 'src/order/order.service';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Product } from './entities/product.entity';
+import { PaginatedProduct } from './pagination/paginatedProduct';
 
 @Injectable()
 export class ProductService {
@@ -29,20 +30,21 @@ export class ProductService {
   ) {}
 
   /**
-   * Create product
+   * Create Product
    *
-   * @param createProductInput
-   * @returns Created product
+   * parameter: createProductInput
+   * return: Created product
    */
   async create(createProductInput: CreateProductInput): Promise<Product> {
-    //Check exist product name
+    //Check if product is already exists
     const product = await this.productRepository.findOne({
-      name: createProductInput.name,
+      where: { name: createProductInput.name },
     });
-    if (product) {
-      throw new ForbiddenError('Product already existed.');
-    }
 
+    //Throw error if not found products
+    if (product) {
+      throw new ForbiddenError('Product already existed');
+    }
     //Create new product instance
     const newProduct = this.productRepository.create(createProductInput);
 
@@ -51,12 +53,14 @@ export class ProductService {
       where: { id: createProductInput.categoryId },
       relations: ['product'],
     });
+
+    //Throw error if not found category
     if (!category) {
       throw new ForbiddenError('Category not found');
     }
     category.product.push(newProduct);
 
-    //Save to db
+    //Save to database
     await this.productRepository.save(newProduct);
     await this.categoryRepository.save(category);
 
@@ -64,30 +68,76 @@ export class ProductService {
   }
 
   /**
-   * Show all product
+   * Show All Products
    *
-   * @returns List of product
+   * parameters: page, number
+   * return: List of Products
    */
-  async findAll(): Promise<Product[]> {
-    //Find proudct
-    const products = await this.productRepository.find({
+  async findAll(page: number, sort: number): Promise<PaginatedProduct> {
+    const limit = 12;
+    const offset = (page - 1) * limit;
+    //Find product with limit and offset
+    const products = await this.productRepository.findAndCount({
       relations: ['category', 'order'],
+      order: {
+        price: sort ? 'ASC' : 'DESC',
+        updatedAt: 'DESC',
+        createdAt: 'DESC',
+      },
+      skip: offset,
+      take: limit,
     });
-    //Throw error if not found any
+
+    //Throw error if not found products
     if (!products) {
       throw new ForbiddenError('Product not found');
     }
+
+    //Wrap product and count into paginated
+    const paginated = new PaginatedProduct();
+    paginated.data = products[0];
+    paginated.totalCount = products[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
+
+    return paginated;
+  }
+
+  /**
+   * Show All Products
+   *
+   * return: List of Products
+   */
+  async AdminFindAll(): Promise<Product[]> {
+    //Find proudct
+    const products = await this.productRepository.find({
+      relations: ['category', 'order'],
+      order: {
+        id: 'ASC',
+        updatedAt: 'DESC',
+        createdAt: 'DESC',
+      },
+    });
+
+    //Throw error if not found products
+    if (!products) {
+      throw new ForbiddenError('Product not found');
+    }
+
     return products;
   }
 
   /**
-   * Find user by id
+   * Find Product by Id
    *
-   * @param id
-   * @returns Product
+   * parameter: id
+   * return: Product
    */
   async findOne(id: number): Promise<Product> {
-    //count latest stock of product
+    //Count latest stock of product
     this.countStock(id);
 
     //Find proudct by id
@@ -100,15 +150,95 @@ export class ProductService {
     if (!product) {
       throw new ForbiddenError('Product not found');
     }
+
     return product;
   }
 
   /**
-   * Update product information
+   * Find Product by Name
    *
-   * @param id
-   * @param updateProductInput
-   * @returns updated product
+   * parameters: name, page, sort
+   * return: Paginated Product
+   */
+  async findByName(
+    name: string,
+    page?: number,
+    sort?: number,
+  ): Promise<PaginatedProduct> {
+    const limit = 12;
+    const offset = (page - 1) * limit;
+    //Find proudct by name with limit and offset
+    const products = await this.productRepository.findAndCount({
+      where: { name: ILike('%' + name + '%') },
+      relations: ['category', 'order'],
+      order: { price: sort ? 'ASC' : 'DESC', name: 'ASC' },
+      skip: page ? offset : null,
+      take: page ? limit : null,
+    });
+
+    //Throw error if not found
+    if (!products) {
+      throw new ForbiddenError('Product not found');
+    }
+
+    //Wrap product and count into paginated
+    const paginated = new PaginatedProduct();
+    paginated.data = products[0];
+    paginated.totalCount = products[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
+
+    return paginated;
+  }
+
+  /**
+   * Find Product by category
+   *
+   * parameters: categoryId, page, sort
+   * return:Paginated Product
+   */
+  async findProductByCategory(
+    categoryId: number,
+    page: number,
+    sort: number,
+  ): Promise<PaginatedProduct> {
+    const limit = 12;
+    const offset = (page - 1) * limit;
+    //Find proudct by category with limit and offset
+    const products = await this.productRepository.findAndCount({
+      where: { category: categoryId },
+      relations: ['category', 'order'],
+      order: { price: sort ? 'ASC' : 'DESC', name: 'ASC' },
+      skip: offset,
+      take: limit,
+    });
+
+    //Throw error if not found
+    if (!products) {
+      throw new ForbiddenError('Product not found');
+    }
+
+    //Wrap product and count into paginated
+    const paginated = new PaginatedProduct();
+    paginated.data = products[0];
+    paginated.totalCount = products[1];
+    paginated.hasNextPage = this.checkNextPage(
+      paginated.totalCount,
+      offset,
+      limit,
+    );
+
+    return paginated;
+  }
+
+  /**
+   * Update Product Information
+   *
+   * parameters: id, updateProductInput
+   * return: Updated Product
    */
   async update(
     id: number,
@@ -117,34 +247,33 @@ export class ProductService {
     //Find product
     const product = this.findOne(id);
 
-    //Copy update info to current info
+    //Copy update infomation to current infomation
     const updated = Object.assign(product, updateProductInput);
 
-    //Save to db
+    //Save to database
     return await this.productRepository.save(updated);
   }
 
   /**
-   * Remove product
+   * Remove Product
    *
-   * @param id
-   * @returns success message
+   * parameter: id
+   * return: Success Message
    */
   async remove(id: number): Promise<string> {
-    //Find product
+    //Find a product
     this.findOne(id);
 
-    //Delete product in db
+    //Delete product in database
     await this.productRepository.delete(id);
-
     return 'Delete success!';
   }
 
   /**
-   * Count quantity of product left in stock
+   * Count Quantity of Product in Stock
    *
-   * @param id
-   * @returns number of stock
+   * parameter: id
+   * return: Quantity of Product in Stock
    */
   async countStock(id: number): Promise<number> {
     let stock = 0;
@@ -158,7 +287,7 @@ export class ProductService {
       throw new ForbiddenError('Product not found');
     }
 
-    //map to all order found and count their quantity
+    //Map to all order found and count quantity
     orders.map((product) => {
       stock += product.quantity;
     });
@@ -166,17 +295,43 @@ export class ProductService {
     return stock;
   }
 
+  /**
+   * Update Quantity of Product in Stock
+   *
+   * parameterss: userId ,productId ,quantity
+   * return: Updated Quantity in Stock
+   */
   async updateStock(
     userId: number,
     productId: number,
     quantity: number,
   ): Promise<number> {
+    //Create new a order to add the quantity to stock
     const createOrderInput = new CreateOrderInput();
     createOrderInput.userId = userId;
     createOrderInput.productId = productId;
     createOrderInput.quantity = quantity;
     await this.orderService.create(createOrderInput);
 
+    //Check if the stock updated correctly
     return this.countStock(productId);
+  }
+
+  /**
+   * Count Quantity of Product in Database
+   *
+   * return: Quantity of Product in Database
+   */
+  async countProduct() {
+    return await this.productRepository.count();
+  }
+
+  /**
+   * Check if next page available
+   *
+   * return: boolean
+   */
+  checkNextPage(count: number, offset: number, limit: number): boolean {
+    return offset == 0 ? count > 6 : count % (offset + limit) < count;
   }
 }

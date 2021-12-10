@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
-
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 body {
   margin: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -41,12 +42,12 @@ body h4 {
   font-size: 14px;
 }
 
-body h5{
+body h5 {
   color: #000000;
   font-size: 18px;
 }
 
-body h6{
+body h6 {
   color: #000000;
   font-weight: bold;
   font-size: 18px;
@@ -63,12 +64,100 @@ body h6{
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 40px;
   background-color: white;
   /* box-shadow: 0 1px 4px rgb(0 0 0 / 25%); */
-  border-bottom: 1px solid rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 }
 
-.bg-container{
-  background-color: #EAEAEA;
+.bg-container {
+  background-color: #eaeaea;
+}
+
+/* -----Button size----- */
+
+.btn-medium {
+  width: 140px !important;
+  height: 38px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%) !important;
+  color: white !important;
+}
+
+.btn-small {
+  width: 100px !important;
+  height: 34px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%) !important;
+  color: white !important;
+}
+
+.btn-large {
+  width: 180px !important;
+  height: 50px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%) !important;
+  color: white !important;
+}
+
+.btn-clear {
+  width: 100px !important;
+  height: 28px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 25%) !important;
+  color: white !important;
+}
+
+/* -----Button color------ */
+.blue {
+  background-color: #0099ff !important;
+}
+
+.blue:hover {
+  background-color: #007ccf !important;
+}
+
+.red {
+  background-color: #d75a4a !important;
+}
+
+.red:hover {
+  background-color: #a7473b !important;
+}
+
+.orange {
+  background-color: #ff6600 !important;
+}
+
+.orange:hover {
+  background-color: #ca5100 !important ;
+}
+
+.green {
+  background-color: #77d068 !important;
+}
+
+.green:hover {
+  background-color: #4f9e41 !important;
+}
+
+.yellow {
+  background-color: #feb905 !important;
+}
+
+.yellow:hover {
+  background-color: #cc9201 !important;
+}
+
+.grey {
+  background-color: #c4c4c4 !important;
+}
+
+.grey:hover {
+  background-color: #949191 !important;
+}
+
+.modal-header button {
+  display: none;
 }

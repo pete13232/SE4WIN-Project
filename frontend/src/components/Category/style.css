@@ -1,32 +1,64 @@
-.category img {
-    /* max-width: 100%;
-    width: auto;
-    height: auto; */
-    min-width: 220px;
-    max-width: 220px;
-    min-height: 168px;
-    max-height: 168px;
-    border: 1px solid rgba(0,0,0,0.3);
-  }
-  
-  .category .card-img-overlay {
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -10px);
-  }
-
-  .category .card{
-    opacity: 1.0;
-    filter: alpha(opacity=40);
-  }
-
-  .category .card:hover {
-    opacity: 0.5;
-    filter: alpha(opacity=100);
-}
-
-.category h3{
+/* ---- Category Image ----- */
+.category h3 {
   margin: 0;
 }
 
+.category img {
+  min-width: 220px;
+  max-width: 220px;
+  min-height: 168px;
+  max-height: 168px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.category .card-img-overlay {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -10px);
+}
+
+.category .card {
+  opacity: 1;
+  filter: alpha(opacity=40);
+}
+
+.category .card:hover {
+  opacity: 0.5;
+  filter: alpha(opacity=100);
+}
+
+
+
+/* ----Slider----- */
+.slick-arrow {
+  background-color: black;
+  height: 35px;
+  width: 35px;
+  border-radius: 100px;
+}
+.slick-prev {
+  position: absolute;
+  top: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index:2;
+}
+.slick-next {
+  position: absolute;
+  top: 10;
+  left: 10;
+  right: 0;
+  bottom: 0;
+}
+.slick-arrow:hover,
+.slick-arrow:active,
+.slick-arrow:focus {
+  background-color: grey !important;
+  transition: .5s ease;
+}
+
+.slick-list{
+  cursor: pointer;
+}

@@ -1,0 +1,27 @@
+.order-container {
+  box-shadow: 0 4px 4px rgb(0 0 0 / 25%) !important;
+  height: auto;
+  padding-block: 40px;
+}
+
+.order-image img{
+  width: 100%;
+  height: 100%;
+  padding-inline: 40px;
+}
+
+.status-awaiting{
+  color: #FEB905
+}
+
+.status-pending{
+  color: #59BCB0
+}
+
+.status-success{
+  color: #77D068
+}
+
+.status-fail{
+  color: #FF7B7B
+}

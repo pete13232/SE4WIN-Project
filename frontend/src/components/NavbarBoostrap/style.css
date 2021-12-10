@@ -1,25 +1,63 @@
+/*----------- Navbar A -----------*/
 .NavbarA {
-    /* width: 1320 px;
-    height: 86 px; */
-    color: #ff6600;
-    background-color: #ff6600;
-    padding-top: 15px!important;
-    padding-bottom: 15px!important;
-  }
+  color: #ff6600;
+  background-color: #ff6600;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
 
-.NavbarA a{
+.NavbarA a {
   text-decoration: none;
 }
-  
-  .NavbarB {
-    background-color:#ff6600;
-    padding-top: 15px!important;
-    padding-bottom: 15px!important;
-  }
 
-  .vl {
-    border-left: 1px solid grey;
-    height: 43px;
-  }
-  
-  
+/* .search-bar .input-group {
+  width: 80% !important;
+} */
+
+.search-bar button {
+  background-color: white;
+  border: white;
+}
+
+.search-bar button:hover {
+  background-color: rgba(255, 255, 255, 0.486);
+  border: white;
+}
+
+/*----------- Navbar B -----------*/
+.NavbarB {
+  background-color: white;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+}
+
+.NavbarB a {
+  text-decoration: none;
+}
+
+.NavbarB .logo {
+  padding-inline: 14px;
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.NavbarB .logo h1 {
+  color: #ff6600;
+}
+
+.NavbarB .text h1 {
+  color: black;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: white !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  padding-top: 0px !important;
+  padding-left: 3px !important;
+}
+
+.navbar-light .navbar-nav svg {
+  color: white;
+  width: 24px;
+  height: 24px;
+}

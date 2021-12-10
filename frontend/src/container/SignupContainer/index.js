@@ -1,49 +1,19 @@
-import React from "react";
 import { useMutation } from "@apollo/client";
-import { Col, Row, Form, FloatingLabel, Button } from "react-bootstrap";
+import { Col, Row, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import NavbarBootstrap from "../../components/NavbarBoostrap";
 import { CREATE_USER } from "../../Graphql/Mutations";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import NavbarBootstrap from "../../components/NavbarBoostrap";
 import InputMask from "react-input-mask";
 import Swal from "sweetalert2";
 import "./style.css";
 
 const SignupContainer = () => {
-  const [createUser, { error }] = useMutation(CREATE_USER);
-
-  const addUser = (data) => {
-    createUser({
-      variables: { input: data },
-    })
-      .then(() => {
-        Swal.fire({
-          title: "Sign up success!",
-          html: "Press Ok to login page",
-          icon: "success",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          didClose: () => {
-            window.location.replace("/login")
-          },
-        });
-      })
-      .catch((error) => {
-        const err = error.message;
-        Swal.fire({
-          title: "Oops! !",
-          html: err,
-          icon: "error",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        });
-      });
-  };
-
   const personalFormList = {
+    //list of input object properties
     inputs: [
       {
         label: "Email",
@@ -56,6 +26,12 @@ const SignupContainer = () => {
         name: "password",
         type: "password",
         placeholder: "Enter password",
+      },
+      {
+        label: "Confirm password",
+        name: "ConfirmPassword",
+        type: "password",
+        placeholder: "Enter confirm password",
       },
       {
         label: "First name",
@@ -73,6 +49,7 @@ const SignupContainer = () => {
   };
 
   const contactFormList = {
+    //list of input object properties
     inputs: [
       {
         label: "Phone",
@@ -89,12 +66,48 @@ const SignupContainer = () => {
     ],
   };
 
+  /*----------------------------------Submit------------------------------------------*/
+  const [createUser] = useMutation(CREATE_USER); //create user mutation
+  const addUser = (data) => {
+    //Add user function
+    createUser({
+      //create new user to graphQL
+      variables: { input: data },
+    })
+      .then(() => {
+        //if create success
+        Swal.fire({
+          title: "Sign up success!",
+          html: "Press Ok to login page",
+          icon: "success",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          didClose: () => {
+            window.location.replace("/login");
+          },
+        });
+      })
+      .catch((error) => {
+        //if create fail
+        const err = error.message;
+        Swal.fire({
+          title: "Oops! !",
+          html: err,
+          icon: "error",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        });
+      });
+  };
+
   const schema = yup.object().shape({
+    //form schema
     email: yup.string().required("Please enter your email"),
     password: yup
       .string()
       .required("Please enter your password")
       .min(7, "Please enter at least 7 characters password"),
+    ConfirmPassword: yup.string().required("Please enter your password"),
     firstname: yup.string().required("Please enter your first name"),
     lastname: yup.string().required("Please enter your last name"),
     phoneNumber: yup
@@ -111,23 +124,39 @@ const SignupContainer = () => {
     control,
     formState: { errors },
   } = useForm({
+    //form variables
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    const param = {
-      email: data.email,
-      password: data.password,
-      firstname: data.firstname,
-      lastname: data.lastname,
-      address: data.address,
-      phoneNumber: data.phoneNumber.replaceAll("-", ""),
-      role: "CUSTOMER",
-    };
-
-    addUser(param);
+    //submit function
+    if (data.ConfirmPassword === data.password) {
+      //if confirm password is equal to password
+      const param = {
+        //create parameter to create user
+        email: data.email,
+        password: data.password,
+        firstname: data.firstname,
+        lastname: data.lastname,
+        address: data.address,
+        phoneNumber: data.phoneNumber.replaceAll("-", ""), //replace to submit only phone number
+        role: "CUSTOMER",
+      };
+      addUser(param);
+    } else {
+      //if assword and confirm password is not equal
+      Swal.fire({
+        title: "Password and Confirm password is not the same",
+        html: "Press OK to continue",
+        icon: "error",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+    }
   };
+  /*----------------------------------Submit------------------------------------------*/
 
+  /*----------------------------------Input mask------------------------------------------*/
   const [valuePhone, setvaluePhone] = useState("");
 
   const beforeMaskedValueChange = (newState, oldState, userInput) => {
@@ -149,11 +178,11 @@ const SignupContainer = () => {
       selection,
     };
   };
-
+  /*----------------------------------Input mask------------------------------------------*/
   return (
     <>
       <div>
-        <NavbarBootstrap secondTheme={true} page={"Sign-up"}/>
+        <NavbarBootstrap secondTheme={true} page={"Sign-up"} />
         <Row className="bg-signup mx-0 justify-content-center">
           <Col md={4} className="form bg-light my-5">
             <div className="border-bottom border-dark py-3 mb-3">

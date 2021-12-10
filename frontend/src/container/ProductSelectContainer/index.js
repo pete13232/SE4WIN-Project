@@ -1,19 +1,51 @@
-import { Form, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GET_PRODUCT_INFO } from "../../Graphql/Queries";
+import ProductDescription from "../../components/ProductDescription";
 import NavbarBootstrap from "../../components/NavbarBoostrap";
 import Header from "../../components/Header";
 import ProductDetail from "../../components/ProductDetail";
-import ProductDescription from "../../components/ProductDescription";
 
 const ProductSelectContainer = () => {
+  const { id } = useParams(); //get id from url
+
+  const { data } = useQuery(GET_PRODUCT_INFO, {
+    // query product information
+    variables: { input: Number(id) },
+  });
+
+  const [product, setProduct] = useState(); //product state
+
+  useEffect(() => {
+    //initial product data when data change
+    if (data) {
+      setProduct(data.product);
+    }
+  }, [data]);
+
   return (
-    <div>
-      <NavbarBootstrap />
-      <Header text="Keyboard > Keychron K3 Ultra-slim Wireless Mechanical Keyboard (Version 2)" />
-      <ProductDetail />
-      <Header text="Description"/>
-      <ProductDescription/>
-    </div>
+    <>
+      {product && (
+        <div>
+          <NavbarBootstrap />
+          <Header text={product.name} />
+          <ProductDetail
+            picURL={product.picURL}
+            name={product.name}
+            price={product.price}
+            stock={product.stock}
+            s
+            productId={id}
+          />
+          <Header text="Description" />
+          <ProductDescription
+            category={product.category.name}
+            desc={product.desc}
+          />
+        </div>
+      )}
+    </>
   );
 };
 
