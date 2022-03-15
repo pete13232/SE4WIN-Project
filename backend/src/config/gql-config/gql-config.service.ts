@@ -11,6 +11,10 @@ export class GqlConfigService implements GqlOptionsFactory {
       playground: true,
       context: ({ req, connection }) =>
         connection ? { req: req } : { headers: req.headers },
+        cors: {
+          credentials: true,
+          origin: true,
+      },
       resolvers: {},
     };
   }
