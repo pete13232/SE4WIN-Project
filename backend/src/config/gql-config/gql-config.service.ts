@@ -9,10 +9,6 @@ export class GqlConfigService implements GqlOptionsFactory {
       autoSchemaFile: './graphql/schema.gql',
       debug: false,
       playground: true,
-      cors: {
-        origin: 'https://fapp-f8b75.web.app/',
-        credentials: true,
-      },
       context: ({ req, connection }) =>
         connection ? { req: req } : { headers: req.headers },
       resolvers: {},
