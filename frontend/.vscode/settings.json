@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/77fef640-aeca-4c54-a7bc-bbd06e39eb72/resourceGroups/SE_Project/providers/Microsoft.Web/sites/FAPP-E-COMMERCE",
+    "appService.deploySubpath": "."
+}

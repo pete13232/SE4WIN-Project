@@ -26,7 +26,7 @@ import AdminContainer from "./container/AdminContainer/index.js";
 function App() {
   /* ----------------- Graphql Setup ----------------------- */
 
-  const link = from([new HttpLink({ uri: "http://20.212.81.174/graphql" })]);
+  const link = from([new HttpLink({ uri: "http://20.24.37.227/graphql" })]);
 
   const token = localStorage.getItem("jwtToken") || "";
   const authMiddleware = new ApolloLink((operation, forward) => {
@@ -56,31 +56,31 @@ function App() {
   return (
     <AuthProvider>
       <ApolloProvider client={client}>
-          <Container className=" bg-container px-0">
-            <Switch>
-              <Route exact path="/">
-                <HomeContainer />
-              </Route>
-              <GuestRoute path="/signup" component={SignupContainer} />
-              <GuestRoute path="/login" component={LoginContainer} />
-              <UserRoute path="/order" component={OrderContainer} />
-              <UserRoute path="/profile" component={ProfileContainer} />
-              <AdminRoute path="/admin/:id" component={AdminContainer} />
-              <Route path="/products/:id">
-                <ProductSelectContainer />
-              </Route>
-              <Route exact path="/products">
-                <Redirect to="/" />
-              </Route>
-              <Route exact path="/admin">
-                <Redirect to="/admin/stock" />
-              </Route>
-              <Route path="/:id">
-                <p>Page not found</p>
-              </Route>
-            </Switch>
-            <Footer />
-          </Container>
+        <Container className=" bg-container px-0">
+          <Switch>
+            <Route exact path="/">
+              <HomeContainer />
+            </Route>
+            <GuestRoute path="/signup" component={SignupContainer} />
+            <GuestRoute path="/login" component={LoginContainer} />
+            <UserRoute path="/order" component={OrderContainer} />
+            <UserRoute path="/profile" component={ProfileContainer} />
+            <AdminRoute path="/admin/:id" component={AdminContainer} />
+            <Route path="/products/:id">
+              <ProductSelectContainer />
+            </Route>
+            <Route exact path="/products">
+              <Redirect to="/" />
+            </Route>
+            <Route exact path="/admin">
+              <Redirect to="/admin/stock" />
+            </Route>
+            <Route path="/:id">
+              <p>Page not found</p>
+            </Route>
+          </Switch>
+          <Footer />
+        </Container>
       </ApolloProvider>
     </AuthProvider>
   );
