@@ -26,7 +26,7 @@ import AdminContainer from "./container/AdminContainer/index.js";
 function App() {
   /* ----------------- Graphql Setup ----------------------- */
 
-  const link = from([new HttpLink({ uri: "http://20.24.37.227/graphql" })]);
+  const link = from([new HttpLink({ uri: "https://20.24.37.227/graphql" })]);
 
   const token = localStorage.getItem("jwtToken") || "";
   const authMiddleware = new ApolloLink((operation, forward) => {

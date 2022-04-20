@@ -10,7 +10,7 @@ export class GqlConfigService implements GqlOptionsFactory {
       debug: false,
       playground: true,
       cors: {
-        origin: 'http://localhost:3000',
+        origin: 'https://fapp-f8b75.web.app/',
         credentials: true,
       },
       context: ({ req, connection }) =>
